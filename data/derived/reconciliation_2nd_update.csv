@@ -1,0 +1,301 @@
+NOME,COD_area,Import_bio,Prior_acao,Area_ha,Estados,Acao2,Acao1,Acao3,Acao4,has_ficha,hybrids_within_2km,source
+Barreirinhas,1.0,Alta,Muito Alta,565285.401605,MA,ordenamento,CAR - Boas praticas,fomento ao uso sustentavel,,True,,MMA layer
+Chapadinha,2.0,Alta,Muito Alta,877339.319041,MA,fomento ao uso sustentavel,CAR - Boas praticas,ordenamento,,True,,MMA layer
+Rio Parnaiba,3.0,Alta,Alta,167523.333543,"MA, PI",fomento ao uso sustentavel,CAR - Boas praticas,ordenamento,,True,CAA_CerraPa001,MMA layer
+Lagoas Marginais,4.0,Alta,Alta,35473.5270718,PI,,fomento ao uso sustentavel,,,False,CAA_CerraPa001;CAA_CerraPa006,MMA layer
+Lagoa do Caju,5.0,Alta,Alta,38301.0295934,PI,,fomento ao uso sustentavel,,,True,,MMA layer
+Lagoa Alegre,6.0,Alta,Alta,91607.6837075,PI,fomento ao uso sustentavel,Criacao UCUS,,,True,,MMA layer
+Codó,7.0,Alta,Alta,33901.612165,MA,ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Teresina Timon I,8.0,Alta,Alta,154470.221817,"PI, MA",ordenamento,CAR - Boas praticas,,,True,CAA_CerraPa005;CAA_CerraPa008,MMA layer
+Matões,9.0,Alta,Muito Alta,216387.662002,MA,ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Teresina Timon III,10.0,Alta,Alta,34782.4610701,MA,ordenamento,CAR - Boas praticas,,,True,CAA_CerraPa002,MMA layer
+Teresina Timon II,11.0,Alta,Alta,5935.60881248,PI,ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Brejo do Itaperu,12.0,Alta,Alta,14757.9326245,"MA, PI",ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Sao Bento do Tocantins,13.0,Alta,Alta,62210.0516556,TO,,Criacao UC,,,False,AMZ_CerraPant036;AMZ_CerraPant045,MMA layer
+Entorno TI Bacuruzinho,14.0,Extremamente Alta,Muito Alta,169561.090827,MA,,Criacao UC,,,True,,MMA layer
+Entorno TI Kanela - TI Porquinhos,15.0,Muito Alta,Alta,53267.372621,MA,ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Rio Itapicuru,16.0,Muito Alta,Extremamente Alta,202252.867165,MA,ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Aragominas,17.0,Alta,Alta,36561.2750355,TO,,CAR - Boas praticas,,,False,AMZ_CerraPant038,MMA layer
+Entorno PN Chapada das Mesas,18.0,Alta,Muito Alta,675859.376088,"TO, MA",,fomento ao uso sustentavel,,,True,,MMA layer
+Rio das Balsas,19.0,Muito Alta,Extremamente Alta,383111.058279,MA,,Criacao UC,,,True,,MMA layer
+Rio Parnaiba - Balsas,20.0,Alta,Muito Alta,481041.084634,MA,ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Riacho Tucum,21.0,Alta,Muito Alta,94223.5745707,MA,,CAR - Boas praticas,,,True,,MMA layer
+Riozinho,22.0,Extremamente Alta,Extremamente Alta,387474.447033,PI,,Criacao UC,,,True,,MMA layer
+Bertolinea,23.0,Muito Alta,Extremamente Alta,455299.958703,PI,,Criacao UC,,,True,,MMA layer
+Rio Sucuriiju,24.0,Extremamente Alta,Extremamente Alta,766482.209152,MA,,Criacao UC,,,True,,MMA layer
+Ribeirao Arrais,25.0,Alta,Alta,26355.8695647,TO,,CAR - Boas praticas,,,True,,MMA layer
+Entorno TI Kraolandia,26.0,Muito Alta,Alta,34857.554653,TO,,fomento ao uso sustentavel,,,True,,MMA layer
+Guarai,27.0,Alta,Muito Alta,45782.2432023,TO,ordenamento,CAR - Boas praticas,,,False,AMZ_CerraPant041;AMZ_CerraPant042,MMA layer
+Rio Parnaiba II,28.0,Alta,Muito Alta,978837.803552,"MA, PI",fomento ao uso sustentavel,CAR - Boas praticas,corredor_mosaico,ordenamento,True,,MMA layer
+Nascente Uruçui,29.0,Extremamente Alta,Extremamente Alta,70176.5507075,PI,,Criacao UCUS,,,True,,MMA layer
+Couto de Magalhaes,30.0,Muita Alta,Muito alta,93629.2977618,TO,ordenamento,CAR - Boas praticas,,,False,AMZ_CerraPant033;AMZ_CerraPant034;AMZ_CerraPant035,MMA layer
+Recursolândia,31.0,Muito Alta,Alta,293154.749679,TO,ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Caseara,32.0,Muito Alta,Muito Alta,169665.13692,"TO, PA",fomento ao uso sustentavel,CAR - Boas praticas,ordenamento,,True,,MMA layer
+Entorno PN Serra das Confusões I,33.0,Alta,Alta,95690.0036655,PI,ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Rio Lajeado - TO,34.0,Alta,Muito Alta,574211.7439,TO,fomento ao uso sustentavel,CAR - Boas praticas,,,True,AMZ_CerraPant033;AMZ_CerraPant034,MMA layer
+Serra do Quilombo,35.0,Extremamente Alta,Extremamente Alta,113441.455367,PI,,Criacao UC,,,True,,MMA layer
+Lizarda,36.0,Extremamente Alta,Extremamente Alta,733514.230309,TO,,Criacao UC,,,True,,MMA layer
+Entorno TI Xerente,37.0,Extremamente Alta,Extremamente Alta,208803.28062,TO,ordenamento,CAR - Boas praticas,,,True,AMZ_CerraPant042,MMA layer
+Rio do Sono,38.0,Alta,Muito Alta,102811.87499,TO,,fomento ao uso sustentavel,,,True,,MMA layer
+Rio Uruçui-Vermelho,39.0,Muito Alta,Extremamente Alta,391907.310044,PI,fomento ao uso sustentavel,Criacao UC,,,True,,MMA layer
+Entorno PN Nascentes do Parnaíba,40.0,Extremamente Alta,Extremamente Alta,110356.437979,MA,,Criacao UC,,,True,,MMA layer
+Rio do Coco,41.0,Muito Alta,Muito Alta,336969.122532,TO,fomento ao uso sustentavel,CAR - Boas praticas,ordenamento,,True,AMZ_CerraPant008,MMA layer
+Entorno PN Serra das Confusoes II,42.0,Alta,Alta,56490.940544,"PI, BA",,Criacao UC,,,False,CAA_CerraPa003,MMA layer
+Lajeado,43.0,Alta,Alta,84703.2328863,TO,,fomento ao uso sustentavel,,,True,,MMA layer
+Luciara,44.0,Muito Alta,Muito Alta,289495.769097,MT,,compensacao,,,False,AMZ_CerraPant014;AMZ_CerraPant015;AMZ_CerraPant017;AMZ_CerraPant018;AMZ_CerraPant028;AMZ_CerraPant043;AMZ_CerraPant044,MMA layer
+Rio Sono,45.0,Muito Alta,Muito Alta,471187.813042,TO,Criacao de UC,ordenamento,CAR - Boas praticas,,True,,MMA layer
+Rio Araguaia I,46.0,Alta,Alta,77245.6069504,MT,,CAR - Boas praticas,,,True,AMZ_CerraPant043,MMA layer
+Ponte Alta,47.0,Muito Alta,Extremamente Alta,767572.829138,TO,CAR - Boas praticas,Criacao UC,ordenamento,,True,,MMA layer
+Lagoa do Tocantins,48.0,Muito Alta,Muito Alta,195643.493586,TO,CAR - Boas praticas,Criacao UC,ordenamento,,True,,MMA layer
+Ipucas,49.0,Muito Alta,Muito Alta,320139.371228,TO,fomento ao uso sustentavel,CAR - Boas praticas,,,True,,MMA layer
+Pium,50.0,Muito Alta,Extremamente Alta,320350.060423,TO,fomento ao uso sustentavel,CAR - Boas praticas,ordenamento,,True,,MMA layer
+Entorno ESEC Serra Geral do Tocantins,51.0,Alta,Alta,80323.475843,TO,,fomento ao uso sustentavel,,,True,,MMA layer
+Rio Galhão,52.0,Alta,Alta,123125.159869,"TO, BA",,fomento ao uso sustentavel,,,True,,MMA layer
+Rio Sapão,53.0,Extremamente Alta,Extremamente Alta,766361.783749,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Buritirama,54.0,Alta,Muito Alta,381778.524981,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Porto Nacional,55.0,Alta,Muito Alta,273580.485174,TO,,CAR - Boas praticas,,,True,,MMA layer
+Formosa do Rio Preto,56.0,Muito Alta,Extremamente Alta,1089566.57495,BA,CAR - Boas praticas,Criacao UCUS,,,True,,MMA layer
+Almas,58.0,Extremamente Alta,Muito Alta,111024.981837,TO,,Criacao UC,,,True,,MMA layer
+Rio Bagagem,59.0,Extremamente Alta,Extremamente Alta,107937.241544,TO,,Criacao UC,,,True,,MMA layer
+Aurora do Tocantins,60.0,Muito Alta,Alta,527385.478515,TO,corredor_mosaico,CAR - Boas praticas,ordenamento,,True,,MMA layer
+Córrego São Felipe,62.0,Alta,Muito Alta,19890.3707734,TO,ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Rio São Valério,63.0,Alta,Muito Alta,355136.696908,TO,fomento ao uso sustentavel,CAR - Boas praticas,,,True,,MMA layer
+Rio Sao Francisco 2,64.0,Alta,Alta,51837.3929343,BA,CAR - Boas praticas,Criacao UCUS,,,True,,MMA layer
+Rio de Janeiro,65.0,Extremamente Alta,Muito Alta,249755.728145,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Cotegipe,66.0,Muito Alta,Muito Alta,157811.583326,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Entorno PE Araguaia,67.0,Alta,Alta,133659.842274,MT,corredor_mosaico,Criacao UCPI,,,True,,MMA layer
+Rio Cristalino,68.0,Muito Alta,Muito Alta,1274972.57382,"MT, GO, TO",fomento ao uso sustentavel,recuperacao,corredor_mosaico,,True,,MMA layer
+Rio Tocantins,69.0,Alta,Alta,380613.091223,"TO, GO",ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Rio Ponte Alta,70.0,Extremamente Alta,Extremamente Alta,269067.549351,TO,,Criacao UC,,,True,,MMA layer
+Rio Santa Tereza,71.0,Alta,Muito Alta,274954.71959,"TO, GO",ordenamento,CAR - Boas praticas,,,True,,MMA layer
+Rio Murere,72.0,Alta,Alta,186198.363322,MT,fomento ao uso sustentavel,recuperacao,,,True,AMZ_CerraPant026,MMA layer
+Cristópolis,73.0,Muito Alta,Muito Alta,254274.356517,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Rio Papagaio,74.0,Muito Alta,Alta,288964.010055,MT,,fomento ao uso sustentavel,,,True,,MMA layer
+Rio de Ondas,75.0,Extremamente Alta,Extremamente Alta,259599.551167,BA,CAR - Boas praticas,Criacao UCPI,compensacao,,True,,MMA layer
+Muquem de São Francisco,76.0,Alta,Alta,95875.8721113,BA,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Rio do Fogo,77.0,Muito Alta,Extremamente Alta,105704.460227,TO,,fomento ao uso sustentavel,,,True,,MMA layer
+Conceição do Tocantins,78.0,Extremamente Alta,Extremamente Alta,434254.919064,TO,,Criacao UC,,,True,,MMA layer
+São Desidério,79.0,Muito Alta,Muito Alta,373229.400134,BA,CAR - Boas praticas,Criacao UCPI,compensacao,,True,,MMA layer
+Rio Sao Francisco 1,80.0,Alta,Alta,178702.344317,BA,CAR - Boas praticas,Criacao UCUS,,,True,,MMA layer
+Baianópolis,82.0,Muito Alta,Alta,53306.9983283,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Serra de Caldas,83.0,Extremamente Alta,Extremamente Alta,819650.559533,"TO, GO",,Criacao UC,,,True,,MMA layer
+Araguaaçu,84.0,Extremamente Alta,Muito Alta,265524.407017,"GO, TO",recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Ribeirao Cascalheira,85.0,Muito Alta,Extremamente Alta,73637.5564533,MT,fomento ao uso sustentavel,recuperacao,,,False,AMZ_CerraPant025;AMZ_CerraPant027,MMA layer
+Rio Cravari,86.0,Muito Alta,Alta,16132.806308,MT,,recuperacao,,,False,AMZ_CerraPant013,MMA layer
+Rio Teles Pires,87.0,Extremamente Alta,Extremamente Alta,709560.999151,MT,,Criacao UC,,,True,,MMA layer
+Rio do Sangue,88.0,Muito Alta,Alta,4881.67364591,MT,,recuperacao,,,False,AMZ_CerraPant012,MMA layer
+Correntina,89.0,Extremamente Alta,Extremamente Alta,748104.29839,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Serra da Prata,90.0,Muito Alta,Alta,307338.550656,"GO, TO",fomento ao uso sustentavel,Criacao UC,,,True,,MMA layer
+São Domingos,91.0,Alta,Alta,95071.3305076,"GO, BA",,corredor_mosaico,,,True,,MMA layer
+Rio Mutum,92.0,Muito Alta,Alta,36482.8055936,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Santa Maria da Vitória,94.0,Alta,Alta,26908.9420041,BA,,CAR - Boas praticas,,,True,,MMA layer
+Rio Ronuro,95.0,Muito Alta,Alta,388387.503887,MT,fomento ao uso sustentavel,Criacao UC,,,False,AMZ_CerraPant022;AMZ_CerraPant023;AMZ_CerraPant029,MMA layer
+Rio Sete de Setembro,96.0,Muito Alta,Extremamente Alta,88422.9037198,MT,fomento ao uso sustentavel,recuperacao,,,False,AMZ_CerraPant032,MMA layer
+Rio Arinos,97.0,Muito Alta,Muito Alta,509995.368791,MT,corredor_mosaico,recuperacao,,,True,,MMA layer
+Rio Claro,98.0,Muito Alta,Alta,72301.1322728,MT,corredor_mosaico,Criacao UC,,,False,AMZ_CerraPant009,MMA layer
+Entorno TI Areões I,99.0,Muito Alta,Alta,100706.984187,MT,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Rio Formiga,100.0,Muito Alta,Alta,23585.3312052,MT,,corredor_mosaico,,,True,,MMA layer
+Rio Culuene,101.0,Muito Alta,Muito Alta,425348.74188,MT,recuperacao,Criacao UC,,,True,,MMA layer
+Pouso Alto,102.0,Muito Alta,Muito Alta,311264.35263,GO,recuperacao,Criacao UC,,,True,,MMA layer
+Rio Curisevo,103.0,Alta,Alta,17617.9922996,MT,,fomento ao uso sustentavel,,,False,AMZ_CerraPant020;AMZ_CerraPant023;AMZ_CerraPant030,MMA layer
+São Felix do Coribe,104.0,Muito Alta,Alta,89297.1739776,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Riacho Pedra-Branca,105.0,Alta,Alta,51535.6382426,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Jaborandi,106.0,Muito Alta,Muito Alta,567136.955987,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Riacho do Ramalho,107.0,Muito Alta,Alta,85383.4780258,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Mambaí,108.0,Muito Alta,Muito Alta,513220.357278,GO,,corredor_mosaico,,,True,,MMA layer
+Rio Traíras,109.0,Muito Alta,Muito Alta,301984.979243,GO,corredor_mosaico,recuperacao,,,True,,MMA layer
+Serra de São Bartolomeu,110.0,Muito Alta,Muito Alta,188247.153824,GO,recuperacao,Criacao UCPI,fomento ao uso sustentavel,,True,,MMA layer
+Rio Arrojado,111.0,Extremamente Alta,Extremamente Alta,201410.411218,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Rio Juina,112.0,Muito Alta,Muito Alta,112406.063666,MT,,Criacao UC,,,True,AMZ_CerraPant004;AMZ_CerraPant005,MMA layer
+Rio Araguaia II,113.0,Muito Alta,Extremamente Alta,697857.115732,"GO, MT",fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Entorno PN Chapada dos Veadeiros,114.0,Muito Alta,Muito Alta,194651.873313,GO,,CAR - Boas praticas,,,True,,MMA layer
+Niquelândia,115.0,Muito Alta,Extremamente Alta,401955.247968,GO,,CAR - Boas praticas,,,True,,MMA layer
+Rio Areoes,116.0,Muito Alta,Muito Alta,135258.717794,MT,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Entorno TI Marechal Rondon,117.0,Muito Alta,Alta,9750.91869372,MT,fomento ao uso sustentavel,Criacao UC,,,True,AMZ_CerraPant023,MMA layer
+Foz do Carinhanha,118.0,Extremamente Alta,Muito Alta,102715.026217,"BA, MG",fomento ao uso sustentavel,Criacao UC,,,True,,MMA layer
+Uruaçu,119.0,Muito Alta,Muito Alta,260080.622391,GO,corredor_mosaico,recuperacao,,,True,,MMA layer
+Rio Corrente,120.0,Muito Alta,Muito Alta,388838.111438,"GO, MG",,fomento ao uso sustentavel,,,True,,MMA layer
+Lagoas do Rio São Francisco,121.0,Muito Alta,Alta,44276.141887,BA,CAR - Boas praticas,Criacao UCPI,compensacao,,True,,MMA layer
+Coribe,122.0,Muito Alta,Alta,11638.5319441,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Entorno TI Areões II,123.0,Muito Alta,Alta,35517.8848944,MT,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Entorno RVS Veredas,124.0,Extremamente Alta,Muito Alta,124559.760556,BA,CAR - Boas praticas,Criacao UCPI,recuperacao,,True,,MMA layer
+Cocos,125.0,Extremamente Alta,Muito Alta,14316.0758648,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Rio Cuiabá,126.0,Extremamente Alta,Extremamente Alta,452880.437239,MT,,Criacao UC,,,True,,MMA layer
+Nascentes do Rio Paraguai,127.0,Extremamente Alta,Extremamente Alta,144782.312184,MT,,recuperacao,,,True,,MMA layer
+Rio Paranã,128.0,Muito Alta,Extremamente Alta,215819.115087,GO,fomento ao uso sustentavel,CAR - Boas praticas,,,True,,MMA layer
+Cabeceiras do rio Jauru,129.0,Extremamente Alta,Extremamente Alta,320320.381429,MT,,Criacao UC,,,True,AMZ_CerraPant004;AMZ_CerraPant031,MMA layer
+Carinhana,130.0,Extremamente Alta,Extremamente Alta,306312.621661,"MG, BA",fomento ao uso sustentavel,Criacao UCPI,,,True,,MMA layer
+Entorno TI Areões III,131.0,Muito Alta,Alta,17288.197688,MT,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Rio Formoso,132.0,Extremamente Alta,Muito Alta,38351.2214488,BA,CAR - Boas praticas,Criacao UCPI,,,True,,MMA layer
+Nova Xavantina,133.0,Muito Alta,Alta,113024.2312,MT,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Rio Manso,134.0,Extremamente Alta,Extremamente Alta,918424.700651,MT,,corredor_mosaico,,,True,,MMA layer
+Iuiú,135.0,Muito Alta,Alta,73763.9039975,BA,,CAR - Boas praticas,,,True,,MMA layer
+Crixás,136.0,Extremamente Alta,Extremamente Alta,209193.660503,GO,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Rio dos Cavalos,137.0,Extremamente Alta,Extremamente Alta,171518.349842,MT,,fomento ao uso sustentavel,,,True,,MMA layer
+Rio Pindaíba,138.0,Muito Alta,Muito Alta,514110.51133,MT,fomento ao uso sustentavel,recuperacao,inventario,,True,,MMA layer
+Formoso,139.0,Muito Alta,Extremamente Alta,579021.91095,MG,fomento ao uso sustentavel,compensacao,,,True,,MMA layer
+Entorno TI Sangradouro / Volta Grande,140.0,Muito Alta,Muito Alta,240289.468739,MT,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Rio Sucuru,141.0,Alta,Alta,319281.53984,"MG, BA",,CAR - Boas praticas,,,True,,MMA layer
+Rio Maranhão,142.0,Muito Alta,Alta,123317.321357,GO,CAR - Boas praticas,Criacao UC,corredor_mosaico,,True,,MMA layer
+Jaiba,143.0,Muito Alta,Alta,30721.8901037,"MG, BA",recuperacao,CAR - Boas praticas,fomento ao uso sustentavel,,True,,MMA layer
+Rio Cana Brava,144.0,Alta,Muito Alta,218792.768295,GO,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Peruacu,145.0,Extremamente Alta,Muito Alta,69182.6101232,MG,,Criacao UCPI,,,True,,MMA layer
+Chapada da Contagem,146.0,Extremamente Alta,Extremamente Alta,501987.163369,"DF, GO",corredor_mosaico,Criacao UC,,,True,,MMA layer
+Pandeiros Conchá e Gibão,147.0,Extremamente Alta,Extremamente Alta,660932.917126,MG,fomento ao uso sustentavel,Criacao UCPI,corredor_mosaico,,True,,MMA layer
+Cavernas peruacu,148.0,Extremamente Alta,Muito Alta,4806.83248991,MG,fomento ao uso sustentavel,Criacao UCPI,,,True,,MMA layer
+Rio Jaguara,149.0,Muito Alta,Muito Alta,82169.6992508,MT,,corredor_mosaico,,,True,,MMA layer
+Rio Coxipó,150.0,Muito Alta,Muito Alta,369200.122325,MT,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Entorno TI Merure,151.0,Extremamente Alta,Muito Alta,80125.2571378,MT,,corredor_mosaico,,,True,,MMA layer
+Montezuma,152.0,Muito Alta,Alta,193768.996574,MG,corredor_mosaico,Criacao UCUS,,,False,CerraPa_MA004,MMA layer
+Corrego Sangradouro,153.0,Muito Alta,Muito Alta,729271.425053,MT,,corredor_mosaico,,,True,AMZ_CerraPant037,MMA layer
+Rio Paraguai,154.0,Alta,Alta,4491.11358748,MT,,fomento ao uso sustentavel,,,False,AMZ_CerraPant037,MMA layer
+Rio Aricá-Açu,155.0,Muito Alta,Muito Alta,119384.941316,MT,,fomento ao uso sustentavel,,,True,,MMA layer
+Rio Prata,156.0,Extremamente Alta,Extremamente Alta,554193.906592,MT,,Criacao UCPI,,,True,,MMA layer
+Rio Areial,157.0,Extremamente Alta,Extremamente Alta,338586.217928,MT,,recuperacao,,,True,,MMA layer
+Pirenópolis,158.0,Extremamente Alta,Extremamente Alta,207392.890717,GO,corredor_mosaico,Criacao UC,,,True,,MMA layer
+Rio São Bartolomeu,159.0,Extremamente Alta,Extremamente Alta,529900.905768,"DF, GO",,CAR - Boas praticas,,,True,,MMA layer
+Rio Urucuia,160.0,Muito Alta,Alta,11325.2032152,MG,recuperacao,Criacao UC,,,True,,MMA layer
+Rio Cuiabá-Mirim,161.0,Muito Alta,Muito Alta,267689.158863,MT,,fomento ao uso sustentavel,,,True,,MMA layer
+Ribeirão Barreiro,162.0,Muito Alta,Extremamente Alta,21542.9467296,GO,recuperacao,CAR - Boas praticas,fomento ao uso sustentavel,,True,,MMA layer
+Riacho Sao Felipe,163.0,Extremamente Alta,Muito Alta,46991.3444959,MG,corredor_mosaico,fomento ao uso sustentavel,,,True,CAA_CerraPa004,MMA layer
+Formosa,164.0,Muito Alta,Muito Alta,140407.430535,"DF, GO",,CAR - Boas praticas,,,True,,MMA layer
+Barra do Garças,165.0,Muito Alta,Extremamente Alta,531070.598716,"MT, GO",fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Rio do Cervo,166.0,Muito Alta,Extremamente Alta,336724.947422,GO,,recuperacao,,,True,,MMA layer
+Verdelandia,167.0,Muito Alta,Alta,9786.90345858,MG,,recuperacao,,,True,,MMA layer
+Rio Bento Gomes,168.0,Muito Alta,Muito Alta,1051488.26914,MT,fomento ao uso sustentavel,Criacao UCPI,,,True,AMZ_CerraPant001,MMA layer
+Ribeirão Mutum,169.0,Muito Alta,Extremamente Alta,258507.441401,MT,,recuperacao,,,True,,MMA layer
+Rio Macaubas,170.0,Muito Alta,Alta,123795.235075,MG,corredor_mosaico,fomento ao uso sustentavel,,,True,,MMA layer
+Rio Aguapei,172.0,Alta,Alta,49886.5156347,MT,,fomento ao uso sustentavel,,,True,AMZ_CerraPant001,MMA layer
+São Romão,173.0,Muito Alta,Extremamente Alta,470922.035733,MG,compensacao,CAR - Boas praticas,,,True,,MMA layer
+Santuario São Miguel,174.0,Muito Alta,Muito Alta,113056.51624,MG,,Criacao UCPI,,,True,,MMA layer
+Entorno PE Serra Dourada,175.0,Muito Alta,Muito Alta,128859.521988,GO,recuperacao,CAR - Boas praticas,ordenamento,,True,,MMA layer
+Rio Corumbá,176.0,Extremamente Alta,Extremamente Alta,293354.070035,"DF, GO",recuperacao,CAR - Boas praticas,fomento ao uso sustentavel,,True,,MMA layer
+Rio Caiapó,177.0,Extremamente Alta,Muito Alta,174675.908848,GO,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Montes Claros,178.0,Muito Alta,Extremamente Alta,453379.979863,MG,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Piranhas,179.0,Muito Alta,Extremamente Alta,241190.051111,GO,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Rio Piraim,180.0,Muito Alta,Muito Alta,238357.858176,MT,corredor_mosaico,fomento ao uso sustentavel,,,True,,MMA layer
+Riacho dos Machados,181.0,Muito Alta,Alta,49316.5054183,MG,,Criacao UCUS,,,True,,MMA layer
+Corixo do Guirá,182.0,Muito Alta,Muito Alta,238607.850913,MT,,corredor_mosaico,,,True,,MMA layer
+Rio da Meia Ponte,183.0,Extremamente Alta,Muito Alta,465395.064085,GO,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Unaí,184.0,Muito Alta,Muito Alta,183773.859546,MG,,recuperacao,,,True,,MMA layer
+Vazante do Inhatium,185.0,Muito Alta,Extremamente Alta,270022.922256,MT,,corredor_mosaico,,,True,AMZ_CerraPant001;AMZ_CerraPant019,MMA layer
+Rio Paracatu 2,186.0,Muito Alta,Alta,249935.816421,MG,,fomento ao uso sustentavel,,,True,,MMA layer
+Ribeirão Ticororó,187.0,Muito Alta,Alta,67965.1391931,MG,,Criacao UCPI,,,True,,MMA layer
+Bonfinópolis,188.0,Muito Alta,Extremamente Alta,326034.193905,MG,,fomento ao uso sustentavel,,,True,,MMA layer
+Rio São Lourenço,189.0,Muito Alta,Muito Alta,427539.038154,"MT, MS",,fomento ao uso sustentavel,,,True,,MMA layer
+Doverlândia,190.0,Muito Alta,Muito Alta,560113.899933,GO,,fomento ao uso sustentavel,,,True,,MMA layer
+Rio dos Bois,191.0,Muito Alta,Extremamente Alta,295568.795755,GO,CAR - Boas praticas,Criacao UC,recuperacao,,True,,MMA layer
+Ribeirão Ponte de Pedra,192.0,Extremamente Alta,Extremamente Alta,122316.130659,MT,,recuperacao,,,True,,MMA layer
+Rio Piracanjuba,193.0,Muito Alta,Extremamente Alta,101032.523158,GO,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Cavernas de Unaí,194.0,Alta,Alta,3362.72360598,MG,,CAR - Boas praticas,,,True,,MMA layer
+Córrego Pindaival,195.0,Muito Alta,Extremamente Alta,220748.188004,MT,,Criacao UCUS,,,True,,MMA layer
+Unaí II,196.0,Muito Alta,Muito Alta,79448.8095613,MG,,Criacao UCPI,,,True,,MMA layer
+Cristalina,197.0,Extremamente Alta,Extremamente Alta,83732.3177878,GO,,CAR - Boas praticas,,,True,,MMA layer
+Rio Turvo - GO,198.0,Muito Alta,Extremamente Alta,239183.476796,GO,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Alto Araguaia,199.0,Muito Alta,Extremamente Alta,352766.263204,"GO, MT",CAR - Boas praticas,Criacao UC,recuperacao,fomento ao uso sustentavel,True,,MMA layer
+Caiapônia,200.0,Muito Alta,Muito Alta,370387.353749,GO,recuperacao,Criacao UC,,,True,,MMA layer
+São Pedro,201.0,Alta,Alta,98002.6980565,MG,corredor_mosaico,Criacao UCPI,,,True,,MMA layer
+Riacho do Bano,202.0,Muito Alta,Muito Alta,65184.2668188,MG,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Rio Corumbá II,203.0,Muito Alta,Muita Alta,293357.773959,GO,,recuperacao,,,True,,MMA layer
+Rio Ponte de Pedra,204.0,Extremamente Alta,Extremamente Alta,299243.913538,GO,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Rio Itiquira - Pantanal,205.0,Muito Alta,Muito Alta,214239.413405,MT,,corredor_mosaico,,,True,,MMA layer
+Rio Itiquira,206.0,Extremamente Alta,Muito Alta,87503.4932599,MT,,recuperacao,,,True,,MMA layer
+Santa Cruz de Goiás,207.0,Muito Alta,Alta,113352.257594,GO,recuperacao,Criacao UC,,,True,,MMA layer
+João Pinheiro,208.0,Alta,Alta,63607.7108019,MG,compensacao,recuperacao,,,True,,MMA layer
+Rio Paracatu,209.0,Alta,Alta,183291.473648,MG,compensacao,recuperacao,fomento ao uso sustentavel,,True,,MMA layer
+Jequitaí,210.0,Muito Alta,Extremamente Alta,247614.841712,MG,corredor_mosaico,Criacao UCPI,,,True,,MMA layer
+Rio das Velhas,211.0,Muito Alta,Extremamente Alta,331375.865916,MG,corredor_mosaico,recuperacao,,,True,,MMA layer
+Rio São Marcos,212.0,Alta,Muito Alta,196847.782649,"GO, MG",fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Jataí,213.0,Muito Alta,Extremamente Alta,356232.797732,GO,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Rio Veríssimo,214.0,Alta,Muito Alta,351769.600883,GO,recuperacao,Criacao UC,,,True,,MMA layer
+Buritizeiro,215.0,Muito Alta,Alta,57910.7332842,MG,,Criacao UCPI,,,True,,MMA layer
+Rio Correntes,216.0,Extremamente Alta,Extremamente Alta,576137.185286,"MS, MT",corredor_mosaico,Criacao UCPI,,,True,,MMA layer
+Serranópolis,217.0,Muito Alta,Extremamente Alta,711338.89801,GO,recuperacao,Criacao UC,fomento ao uso sustentavel,,True,,MMA layer
+Diamantina,218.0,Extremamente Alta,Extremamente Alta,556983.657731,MG,corredor_mosaico,fomento ao uso sustentavel,,,True,,MMA layer
+Serra do Cabral,219.0,Extremamente Alta,Extremamente Alta,246509.207025,MG,corredor_mosaico,Criacao UCPI,,,True,,MMA layer
+Alto Rio Taquari,220.0,Muito Alta,Extremamente Alta,556916.229614,"MT, MS",,corredor_mosaico,,,True,,MMA layer
+Rio Borrachudo,221.0,Alta,Muito Alta,1286529.71447,MG,compensacao,recuperacao,fomento ao uso sustentavel,corredor_mosaico,True,,MMA layer
+São Bartolomeu,222.0,Alta,Alta,54876.7603325,MG,compensacao,recuperacao,fomento ao uso sustentavel,,True,,MMA layer
+Vazante,223.0,Alta,Alta,504787.244698,"MG, GO",corredor_mosaico,Criacao UCPI,,,True,,MMA layer
+Rio Paraguai - Corumbá,224.0,Alta,Alta,343160.407912,MS,,corredor_mosaico,,,True,,MMA layer
+Vazante Santa Maria,225.0,Muito Alta,Extremamente Alta,115550.278645,MS,,Criacao UCPI,,,True,,MMA layer
+Rio Doce,226.0,Muito Alta,Extremamente Alta,12855.3248356,GO,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Jacuba - Corrente,227.0,Muito Alta,Muito Alta,394314.346069,GO,,recuperacao,,,True,,MMA layer
+Rio das Tabocas,228.0,Alta,Alta,20437.3122527,MG,,Criacao UCPI,,,True,,MMA layer
+Rio Taquari,229.0,Extremamente Alta,Extremamente Alta,512037.918715,MS,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Presidente Olegário,230.0,Alta,Alta,209829.060308,MG,,Criacao UCPI,,,True,,MMA layer
+Rio da Prata,231.0,Muito Alta,Extremamente Alta,392448.924888,"MS, GO",fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Corinto,232.0,Muito Alta,Muito Alta,33383.5716828,MG,,compensacao,,,True,,MMA layer
+Rio Jauru -MS,233.0,Muito Alta,Extremamente Alta,175839.015008,MS,,Criacao UCPI,,,True,,MMA layer
+Vazante Riozinho,234.0,Muito Alta,Extremamente Alta,509135.648034,MS,,Criacao UCPI,,,True,,MMA layer
+Três Lagoas,235.0,Extremamente Alta,Extremamente Alta,460149.00877,MS,,recuperacao,,,True,,MMA layer
+Felixlândia,236.0,Muito Alta,Alta,164122.695231,MG,fomento ao uso sustentavel,Criacao UCUS,,,True,,MMA layer
+Mosaico Cipo Intendente,237.0,Extremamente Alta,Extremamente Alta,332113.920757,MG,fomento ao uso sustentavel,Criacao UCPI,corredor_mosaico,,True,,MMA layer
+Carste Lagoa Santa,238.0,Extremamente Alta,Extremamente Alta,558805.663802,MG,corredor_mosaico,Criacao UCPI,,,True,,MMA layer
+Rio Araguari,239.0,Muito Alta,Extremamente Alta,672835.730715,MG,,recuperacao,,,True,,MMA layer
+Rio Coxim,240.0,Alta,Muito Alta,241104.855252,MS,,recuperacao,,,True,,MMA layer
+Ituiutaba,241.0,Muito Alta,Extremamente Alta,979769.814591,MG,recuperacao,Criacao UCPI,,,True,,MMA layer
+Córrego Fundo,242.0,Muito Alta,Extremamente Alta,89620.8188703,MS,,Criacao UCPI,,,True,,MMA layer
+Vazante Grande,243.0,Muito Alta,Muito Alta,338022.680557,MS,,Criacao UCPI,,,True,,MMA layer
+Curvelo,244.0,Muito Alta,Alta,47564.3161225,MG,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Rio Negro,245.0,Muito Alta,Muito Alta,1074062.55731,MS,,corredor_mosaico,,,True,,MMA layer
+Corumbá,246.0,Extremamente Alta,Extremamente Alta,245725.15149,MS,,Criacao UCPI,,,True,,MMA layer
+Rio do Peixe,247.0,Muito Alta,Extremamente Alta,102288.213952,MS,,Criacao UCPI,,,True,,MMA layer
+Rio São Domingos,248.0,Muito Alta,Extremamente Alta,79988.3048975,MS,,recuperacao,,,True,,MMA layer
+Rio Negro - Serra Maracaju,249.0,Muito Alta,Alta,14070.7115664,MS,,Criacao UCPI,,,True,,MMA layer
+Ribeirão Aquidauana,250.0,Extremamente Alta,Extremamente Alta,439902.18315,MS,,recuperacao,,,True,,MMA layer
+Ibiá,251.0,Alta,Alta,59695.5062746,MG,fomento ao uso sustentavel,recuperacao,compensacao,,True,,MMA layer
+Rio Miranda,252.0,Muito Alta,Muito Alta,496811.376339,MS,,corredor_mosaico,,,True,,MMA layer
+Rio Paraopeba,253.0,Muito Alta,Muito Alta,257258.382623,MG,fomento ao uso sustentavel,Criacao UCUS,,,True,,MMA layer
+Araxá,254.0,Muito Alta,Extremamente Alta,147492.828796,MG,,CAR - Boas praticas,,,True,,MMA layer
+Rio Taboco,255.0,Muito Alta,Extremamente Alta,181139.105642,MS,,Criacao UCPI,,,True,,MMA layer
+Divinópolis,256.0,Muito Alta,Extremamente Alta,201482.834905,MG,,recuperacao,,,True,,MMA layer
+Córrego Agachi,257.0,Extremamente Alta,Extremamente Alta,148611.513062,MS,,Criacao UCPI,,,True,,MMA layer
+Rio Miranda - Pantanal,258.0,Extremamente Alta,Muito Alta,190658.098419,MS,,corredor_mosaico,,,True,,MMA layer
+Tapira,259.0,Alta,Alta,165416.196752,MG,corredor_mosaico,Criacao UCPI,,,True,,MMA layer
+Rio Nabileque,260.0,Alta,Alta,194867.892168,MS,,corredor_mosaico,,,True,,MMA layer
+Bodoquena,261.0,Alta,Alta,350777.839667,MS,,corredor_mosaico,,,True,,MMA layer
+Rio Preto,262.0,Alta,Alta,88790.2890483,SP,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Pedregulho,263.0,Muito Alta,Extremamente Alta,21130.782776,SP,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Sacramento,264.0,Muito Alta,Alta,76038.7282676,"MG, SP",compensacao,recuperacao,,,True,,MMA layer
+Rio Sapucaí,265.0,Alta,Muito Alta,310854.93352,"SP, MG",,recuperacao,,,True,,MMA layer
+Rio Pardo,266.0,Muito Alta,Muito Alta,345379.873926,SP,recuperacao,CAR - Boas praticas,,,True,CerraPa_MA001,MMA layer
+Carste Arcos e Pains,267.0,Muito Alta,Muito Alta,94178.141231,MG,,recuperacao,,,True,,MMA layer
+Rio Turvo - SP,268.0,Alta,Alta,68801.2378742,SP,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+São José dos Dourados,269.0,Alta,Alta,68304.4056463,SP,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Rio Verde,270.0,Extremamente Alta,Extremamente Alta,177418.250726,MS,,fomento ao uso sustentavel,,,True,,MMA layer
+Ribeirão Serrote,271.0,Muito Alta,Extremamente Alta,36145.413593,MS,,recuperacao,,,True,,MMA layer
+Córrego Belchior,272.0,Extremamente Alta,Extremamente Alta,79522.0764938,MS,fomento ao uso sustentavel,recuperacao,,,True,,MMA layer
+Nioaque,273.0,Extremamente Alta,Extremamente Alta,259488.914419,MS,,Criacao UC,,,True,,MMA layer
+Alpinópolis,274.0,Muito Alta,Alta,153413.480103,MG,corredor_mosaico,recuperacao,,,True,,MMA layer
+Ribeirão Cachoeira,275.0,Extremamente Alta,Muito Alta,252515.518989,MS,,recuperacao,,,True,,MMA layer
+Bonito,276.0,Alta,Alta,349715.936834,MS,,corredor_mosaico,,,True,,MMA layer
+Rio Aquidabã,277.0,Muito Alta,Muito Alta,317912.000026,MS,,corredor_mosaico,,,True,,MMA layer
+Córrego Piau,278.0,Extremamente Alta,Extremamente Alta,258258.229281,MS,,recuperacao,,,True,,MMA layer
+Rio Moji-Guaçu,279.0,Alta,Muito Alta,295549.193493,SP,recuperacao,CAR - Boas praticas,,,True,CerraPa_MA005,MMA layer
+Cristais,280.0,Muito Alta,Alta,3753.06380234,MG,,recuperacao,,,True,,MMA layer
+Furnas,281.0,Muito Alta,Alta,50953.326833,MG,,corredor_mosaico,,,True,,MMA layer
+Cavernas de Candeias,282.0,Alta,Alta,168.669181312,MG,,CAR - Boas praticas,,,True,,MMA layer
+Rio Perdido,283.0,Muito Alta,Muito Alta,209327.946114,MS,,recuperacao,,,True,,MMA layer
+Campos Gerais,284.0,Muito Alta,Alta,7158.42273385,MG,,recuperacao,,,True,,MMA layer
+Rio Tarumã,285.0,Alta,Muito Alta,304741.069328,MS,Criacao UC,Criacao UCUS,,,True,,MMA layer
+Rio Inhanduí,287.0,Extremamente Alta,Extremamente Alta,152892.651287,MS,,recuperacao,,,True,,MMA layer
+Rio Feio,288.0,Extremamente Alta,Extremamente Alta,161654.755236,MS,,recuperacao,,,True,,MMA layer
+Rio Caracol,289.0,Muito Alta,Muito Alta,83857.6115537,MS,,fomento ao uso sustentavel,,,True,,MMA layer
+Bela Vista,290.0,Alta,Muito Alta,117264.423091,MS,,recuperacao,,,True,,MMA layer
+Batalha,291.0,Alta,Muito Alta,136092.050537,SP,recuperacao,CAR - Boas praticas,,,True,CerraPa_MA002,MMA layer
+Rio Jacaré-Pepira,292.0,Muito Alta,Extremamente Alta,302365.595728,SP,recuperacao,CAR - Boas praticas,ordenamento,,True,,MMA layer
+Córrego Itá,293.0,Alta,Alta,37915.5565087,MS,,fomento ao uso sustentavel,,,True,,MMA layer
+Rio Apa,294.0,Alta,Alta,12282.9238,MS,,fomento ao uso sustentavel,,,True,,MMA layer
+Itirapina,295.0,Alta,Muito Alta,52777.5660624,SP,recuperacao,CAR - Boas praticas,fomento ao uso sustentavel,,True,,MMA layer
+Barra Bonita,296.0,Muito Alta,Extremamente Alta,263194.078185,SP,recuperacao,CAR - Boas praticas,,,True,CerraPa_MA003,MMA layer
+Itapetininga,297.0,Extremamente Alta,Muito Alta,3242.33270186,SP,recuperacao,CAR - Boas praticas,,,True,,MMA layer
+Jaguariaiva,298.0,Muito Alta,Alta,144514.467874,PR,,Criacao UCPI,,,True,,MMA layer
+Rio Lajeado - MS,299.0,Extremamente Alta,Extremamente Alta,34713.5263021,MS,,Criacao UCPI,,,True,,MMA layer
+Itararé,300.0,Extremamente Alta,Muito Alta,20698.9674085,"PR, SP",,Criacao UCPI,,,True,,MMA layer
+Mococa,,Muito Alta,,,"MG, SP",,,,,False,,"Annex I only (absent from MMA layer; free codes 57,61,81,93,171,286)"
+Rio Coronel Vanick,,Muito Alta,,,MT,,,,,False,,"Annex I only (absent from MMA layer; free codes 57,61,81,93,171,286)"
+Rio Cravari II,,Muito Alta,,,MT,,,,,False,,"Annex I only (absent from MMA layer; free codes 57,61,81,93,171,286)"
+Rio Jauru - MT,,Muito Alta,,,MT,,,,,False,,"Annex I only (absent from MMA layer; free codes 57,61,81,93,171,286)"
+Rio Cinta Larga,,Alta,,,MT,,,,,False,,"Annex I only (absent from MMA layer; free codes 57,61,81,93,171,286)"
+Xique-xique,,Alta,,,BA,,,,,False,,"Annex I only (absent from MMA layer; free codes 57,61,81,93,171,286)"

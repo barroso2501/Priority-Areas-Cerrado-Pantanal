@@ -1,0 +1,5 @@
+# Python >= 3.10. Also requires the poppler `pdftotext` CLI for scripts/parse_fichas.py
+geopandas>=1.0
+pyogrio>=0.7
+pandas>=2.0
+shapely>=2.0
