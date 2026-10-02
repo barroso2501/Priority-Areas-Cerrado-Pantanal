@@ -2,7 +2,12 @@
 
 State assessment of Brazil's **Priority Areas for Conservation, Sustainable Use and Benefit-Sharing of Biodiversity** (*Áreas Prioritárias para Conservação*, MMA) in the Cerrado and Pantanal biomes. We assess the areas across the two official revision cycles (1st update, 2006; 2nd update, 2012, legally recognized in 2016/2018) using MapBiomas time series of land use/cover, fire, surface water, pasture, agriculture and degradation.
 
-> **Status (2026-10-02): planning.** Sources are inventoried and reconciled. The work plan is v1. Five methodological decisions are still open (see [`docs/decisions/`](docs/decisions/)). No MapBiomas analysis has been run yet.
+## Purpose and audience
+- **Primary product:** a diagnostic for the **Ministry of Environment (MMA)** at the start of a new revision cycle of the priority areas. The revision will cover all biomes and the coastal-marine system.
+- **Secondary product:** a scientific publication.
+- **Scope:** the **Cerrado (with the Pantanal) is the pilot**. The pipeline is parameterized by biome so it can be extended; known limits of that extension are recorded in [D12](docs/decisions/D12_scope_generalization.md).
+
+> **Status (2026-10-02): planning.** Sources are inventoried and reconciled. The work plan is v1. Some methodological decisions are still open (see [`docs/decisions/`](docs/decisions/)). No MapBiomas analysis has been run yet.
 
 ## Questions
 | # | Question | Type |
@@ -23,8 +28,9 @@ docs/
   sources.md          inventory, provenance and structure of every source
   findings.md         verified findings from source reconciliation
   work_plan.md        assessment plan (v1)
-  open_issues.md      unresolved data issues (P1–P5)
-  decisions/          one record per methodological decision (D1–D5)
+  open_issues.md      unresolved data issues (P1–P9)
+  data_governance.md  lessons on data governance for the next revision cycle
+  decisions/          one record per methodological decision (D1–D12)
 scripts/
   parse_fichas.py           MMA fact sheets (PDF) -> tables
   reconcile_2nd_update.py   300-code reconciliation of the 2nd update
@@ -47,7 +53,7 @@ python scripts/reconcile_2nd_update.py
 ## Conventions
 - **Evidence tags** used throughout the docs: **[E]** evidence directly verified in the files · **[H]** plausible hypothesis, not verified · **[L]** known gap.
 - CRS for area computations: South America Albers Equal Area (SIRGAS 2000-based layers reprojected; the 2006 SAD69 layer is transformed with the official grid).
-- MapBiomas: a single collection is fixed for the whole analysis (Collection 11, to be confirmed in D1).
+- MapBiomas: Collection 11, 1985–2025, integrated national asset; no mixing of collections ([D6](docs/decisions/D6_mapbiomas_collection.md)).
 
 ## Data statement
 The repository is public by decision of the project lead (2026-10-02). All source data are already published by MMA. The species targets are **historical**: they reflect the threat and endemism lists used in 2011–2012, which have since been revised several times. They do not represent the current list of threatened species and must not be read as such.

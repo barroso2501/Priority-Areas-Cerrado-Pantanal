@@ -3,6 +3,17 @@
 *Status: v1, approved by the project lead as the planning baseline (2026-10-02). Open decisions are in [`decisions/`](decisions/).*
 Tags: **[E]** evidence · **[H]** hypothesis · **[L]** gap · **[D]** decision pending.
 
+## Audience, priorities and scope
+- **Audience.** The diagnostic is for MMA, at the start of a new revision cycle (all biomes + coastal-marine). A scientific paper is secondary.
+- **Priority order of questions:**
+  - **Q6, Q3 and Q1 first.** These feed a revision directly: what changed, which areas lost their rationale, which targets became gaps again.
+  - **Q4 and Q5 next.**
+  - **Q2 (causal effect) last.** It is mainly for the paper and carries the highest methodological risk. For MMA, a well-qualified description is worth more than a fragile causal estimate.
+- **Timing.** Phase 1 is the main deliverable, not a quick win. It must reach MMA while the new cycle is still defining its method.
+- **Evidence vs. recommendation.** The MMA report keeps findings (evidence) and recommendations in separate sections.
+- **Confirmatory vs. exploratory.** Analyses defined in `decisions/` before seeing the data are confirmatory; anything added afterwards is labelled exploratory. The decision log serves as a de facto pre-registration for the paper.
+- **Generalization.** The Cerrado is the pilot; the pipeline is parameterized by biome, with the limits set out in [D12](decisions/D12_scope_generalization.md).
+
 ## 0. Original proposal
 Use MapBiomas products (land use/cover, fire, water, pasture, agriculture, degradation, etc.) to assess the priority areas at three moments: before the 1st assessment, before the 2nd assessment, and after the 2nd assessment. Assessment parameters cover state, degradation and, if possible, cost variation.
 

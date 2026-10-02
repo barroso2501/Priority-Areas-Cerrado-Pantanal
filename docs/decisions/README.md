@@ -15,5 +15,6 @@ One file per methodological decision. Each record states context, options, recom
 | [D9](D9_fire_metrics.md) | Fire intervals by domain (native/use) with censoring | Accepted in principle |
 | [D10](D10_reprojection.md) | SAD69 → SIRGAS 2000 with official IBGE grid | Accepted |
 | [D11](D11_biome_limits.md) | Biome limits: 2004 and 2019 as markers; no biome clipping | Accepted |
+| [D12](D12_scope_generalization.md) | Cerrado as pilot; pipeline parameterized by biome; marine zone out of scope | Accepted |
 
 Template: `Context · Options · Recommendation · Status · Evidence/notes`.
