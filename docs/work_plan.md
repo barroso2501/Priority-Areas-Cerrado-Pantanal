@@ -58,7 +58,8 @@ State is measured at data years (T0, T2, T4). Attributable change is measured fr
 - **AP2012.** 294 areas + 54 `*CerraPa*` hybrids, with a hybrid flag and the post-harmonization class.
 - **Transition strata** (overlay of both layers): *both*, *2006 only (left)*, *2012 only (entered)*, *neither*. These are the basis of Q2 and Q6.
 - **Controls.** Grid cells (1 km² or H3) outside priority areas, protected areas and indigenous lands, matched on baseline covariates: % native vegetation, physiognomy, slope, agricultural suitability, distance to roads and towns, state, ecoregion, and neighbourhood conversion rate in the prior period. See [D5](decisions/D5_controls.md).
-- Clip to the IBGE 2019 biome limit, and report the area of each priority area falling outside it.
+- **No biome clipping** ([D11](decisions/D11_biome_limits.md)). The IBGE limit changed from 2004 to 2019 during the assessment period, and querying with the current limit leaves gaps where it moved. Both limits are zone markers; results can be reported under either.
+- Extraction runs on a flat partition of zones carrying every territorial marker ([D7](decisions/D7_extraction_zones.md)).
 
 ### 2.4 Indicators
 | Dimension | Indicator | Product / source | Caveat |
@@ -68,7 +69,7 @@ State is measured at data years (T0, T2, T4). Attributable change is measured fr
 | State | fragmentation: number of patches, core area, edge | Degradation module (edge, size, isolation) or own computation | check module coverage/period for the Cerrado [L] |
 | State (Pantanal) | surface-water anomaly | MapBiomas Water | normalize by climatology/regional hydrology |
 | Pressure | annual native-vegetation loss rate and destination (pasture, soy, sugarcane, silviculture) | LULC transitions; Alerta (2019+) | annualize; separate pressure types |
-| Degradation | fire-regime departure: frequency above physiognomy threshold, late-dry-season fire, fire in forest/vereda | MapBiomas Fire (monthly scars) | thresholds per physiognomy, see [D3](decisions/D3_fire_rule.md) |
+| Degradation | fire-return **intervals** per pixel in **areas stable during the analysis period** (transitioning pixels excluded from regime assessment), separated by domain (native vegetation vs. land use), including never-burned pixels and censored intervals; plus late-dry-season fire and fire in forest/vereda | MapBiomas Fire (monthly scars) × LULC of the same year | see [D9](decisions/D9_fire_metrics.md); departure thresholds in [D3](decisions/D3_fire_rule.md) |
 | Degradation | degradation vectors | Degradation module | new module; record version |
 | Opportunity | low-vigour pasture in and around the area | MapBiomas Pasture (vigour/quality) | restoration-opportunity indicator, not native-vegetation state |
 | Water/other pressure | irrigation (centre pivots), mining | Irrigation and Mining modules | — |
@@ -114,8 +115,9 @@ Uses:
 - **Solution stability** (Phase 3, optional): re-run Marxan with the Annex V parameters, Annex II goals, current native vegetation and the updated cost, and measure how much of the 2012 network would be re-selected (selection frequency).
 
 ### 2.7 Quality control
-- Fix **one** MapBiomas collection (Collection 11; confirm last year) and record every module version.
-- Compute areas in an equal-area CRS (Albers). Transform the 2006 SAD69 layer with the official grid. Repair invalid geometries (2 + 12 + those of 2006).
+- Collection 11, 1985–2025, integrated national asset ([D6](decisions/D6_mapbiomas_collection.md)); record every module version. Extract at the finest class and aggregate with the 4-level grouping table ([D8](decisions/D8_legend.md)).
+- Monitor classification seams at the 2019 biome boundary (MapBiomas trains per biome); flag zones near the line ([D11](decisions/D11_biome_limits.md)).
+- Compute areas in an equal-area CRS (Albers). Transform the 2006 SAD69 layer with the official IBGE grid ([D10](decisions/D10_reprojection.md)). Repair invalid geometries (2 + 12 + those of 2006).
 - Report MapBiomas accuracy per class and biome; flag changes smaller than map error.
 - Pantanal: treat flooded-grassland ↔ water swaps as natural dynamics.
 

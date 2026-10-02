@@ -12,8 +12,16 @@ Official page for the 2nd update (MMA): <https://www.gov.br/mma/pt-br/assuntos/b
 | `fichas_cerrado_pantanal_2a_atualizacao_2018-2.pdf` | Fact sheets per area (1,031 pp.) | [MMA PDF](https://www.gov.br/mma/pt-br/assuntos/biodiversidade-e-biomas/biomas-e-ecossistemas/conservacao-1/areas-prioritarias/fichas_cerrado_pantanal_2a_atualizacao_2018-2.pdf) | input of `parse_fichas.py` |
 | `publicacao_areasprioritarias_cerrado_pantanal_1.pdf` | WWF-Brasil/MMA (2015) methodological report of the 2nd update | WWF-Brasil | Annex I (area list) only as images; Annex II (targets) text-extractable |
 | `ap2006/` | `Areas_prioritarias_2006_{codigos,importancia,prioridade}.shp`: 1st update | MMA (copy provided by project lead; WWF-Brasil processing, Jun/2012) | SAD69 / Polyconic, CM −54°; contains invalid geometries |
+| `biomas_2004/` | IBGE biome limits, 2004 (1:5,000,000) | IBGE | needed for D7/D11 (open issue P9) |
+| `biomas_2019/` | IBGE biome limits, 2019 (1:250,000) | IBGE | same limit used by MapBiomas |
+| `uf/` | IBGE state limits | IBGE | zone marker |
 
 KML versions of the 2nd-update layers are also on the MMA page and are not used.
+
+## `data/reference/`
+| File | Description |
+|---|---|
+| `mapbiomas_col11_legend_groups.csv` | Collection 11 legend with the 4 MapBiomas hierarchical levels and project groupings (`nature`, `fire_domain`). Pixel values need verification (P8). Hierarchy and names from the official Collection 11 legend PDF. |
 
 ## `data/derived/`
 Small tables derived from the public sources above, committed for convenience and fully reproducible with `scripts/`:

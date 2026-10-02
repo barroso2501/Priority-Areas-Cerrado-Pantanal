@@ -1,0 +1,34 @@
+level1_code,level1_en,level2_code,level2_en,level3_code,level3_en,level4_code,level4_en,name_pt,pixel_id,pixel_id_status,nature,fire_domain
+1,Forest,1.1,Forest Formation,,,,,Formação Florestal,3,col10_verify,natural,native
+1,Forest,1.2,Floodable Forest,,,,,Floresta Alagável,6,col10_verify,natural,native
+1,Forest,1.3,Savanna Formation,,,,,Formação Savânica,4,col10_verify,natural,native
+1,Forest,1.4,Flooded Savanna (beta),,,,,Savana Alagada,,new_in_col11,natural,native
+1,Forest,1.5,Mangrove,,,,,Mangue,5,col10_verify,natural,native
+1,Forest,1.6,Wooded Sandbank Vegetation,,,,,Restinga Arbórea,49,col10_verify,natural,native
+2,Herbaceous/Shrubby Vegetation,2.1,Grassland Formation,,,,,Formação Campestre,12,col10_verify,natural,native
+2,Herbaceous/Shrubby Vegetation,2.2,Herbaceous and Shrub Formation,,,,,Formação Herbáceo Arbustiva,,new_in_col11,natural,native
+2,Herbaceous/Shrubby Vegetation,2.3,Wetland,,,,,Campo Alagado e Área Pantanosa,11,col10_verify,natural,native
+2,Herbaceous/Shrubby Vegetation,2.4,Salt Marsh (beta),,,,,Marisma,,new_in_col11,natural,native
+2,Herbaceous/Shrubby Vegetation,2.5,Herbaceous Sandbank Vegetation,,,,,Restinga Herbácea ou Arbustiva,50,col10_verify,natural,native
+2,Herbaceous/Shrubby Vegetation,2.6,Hypersaline Tidal Flat,,,,,Apicum,32,col10_verify,natural,native
+2,Herbaceous/Shrubby Vegetation,2.7,Rocky Outcrop,,,,,Afloramento Rochoso,29,col10_verify,natural,native
+3,Farming,3.1,Pasture,,,,,Pastagem,15,col10_verify,anthropic,use
+3,Farming,3.2,Agriculture,3.2.1,Temporary Crop,3.2.1.1,Soybean,Soja,39,col10_verify,anthropic,use
+3,Farming,3.2,Agriculture,3.2.1,Temporary Crop,3.2.1.2,Sugar cane,Cana,20,col10_verify,anthropic,use
+3,Farming,3.2,Agriculture,3.2.1,Temporary Crop,3.2.1.3,Rice,Arroz,40,col10_verify,anthropic,use
+3,Farming,3.2,Agriculture,3.2.1,Temporary Crop,3.2.1.4,Cotton (beta),Algodão,62,col10_verify,anthropic,use
+3,Farming,3.2,Agriculture,3.2.1,Temporary Crop,3.2.1.5,Other Temporary Crops,Outras Lavouras Temporárias,41,col10_verify,anthropic,use
+3,Farming,3.2,Agriculture,3.2.2,Perennial Crop,3.2.2.1,Coffee,Café,46,col10_verify,anthropic,use
+3,Farming,3.2,Agriculture,3.2.2,Perennial Crop,3.2.2.2,Citrus,Citrus,47,col10_verify,anthropic,use
+3,Farming,3.2,Agriculture,3.2.2,Perennial Crop,3.2.2.3,Palm Oil,Dendê,35,col10_verify,anthropic,use
+3,Farming,3.2,Agriculture,3.2.2,Perennial Crop,3.2.2.4,Other Perennial Crops,Outras Lavouras Perenes,48,col10_verify,anthropic,use
+3,Farming,3.3,Forest Plantation,,,,,Silvicultura,9,col10_verify,anthropic,use
+3,Farming,3.4,Mosaic of Uses,,,,,Mosaico de Usos,21,col10_verify,anthropic,use
+4,Non vegetated area,4.1,"Beach, Dune and Sand Spot",,,,,"Praia, Duna e Areal",23,col10_verify,natural,non_burnable
+4,Non vegetated area,4.2,Urban Area,,,,,Área Urbanizada,24,col10_verify,anthropic,use
+4,Non vegetated area,4.3,Mining,,,,,Mineração,30,col10_verify,anthropic,use
+4,Non vegetated area,4.4,Photovoltaic Power Plant,,,,,Usina Fotovoltaica,75,col10_verify,anthropic,use
+4,Non vegetated area,4.5,Wind farm (beta),,,,,Parque eólico,,new_in_col11,anthropic,use
+4,Non vegetated area,4.6,Other non Vegetated Areas,,,,,Outras Áreas não Vegetadas,25,col10_verify,ambiguous,use
+5,Water,5.1,"River, Lake and Ocean",,,,,"Rio, Lago e Oceano",33,col10_verify,natural,non_burnable
+5,Water,5.2,Aquaculture,,,,,Aquicultura,31,col10_verify,anthropic,use

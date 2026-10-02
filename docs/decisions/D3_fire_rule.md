@@ -1,6 +1,6 @@
 # D3 — Rule for fire as degradation
 
-**Status:** Open · **Raised:** 2026-10-02
+**Status:** Open · **Raised:** 2026-10-02 · Constrained by D9 (intervals by domain, with censoring)
 
 ## Context
 Fire belongs to the regime of Cerrado savannas and grasslands. Counting burned area as degradation penalizes well-conserved areas. Degradation is a departure from the expected regime.

@@ -1,6 +1,6 @@
 # D2 — Universe of analysis
 
-**Status:** Open · **Raised:** 2026-10-02
+**Status:** Open, but **deferred to the analysis stage**: the flat partition (D7) keeps every option recoverable without re-extraction · **Raised:** 2026-10-02
 
 ## Context
 - **2nd update.** 294 areas in the MMA layer, plus 54 Cerrado/Pantanal hybrid areas (1.91 Mha) carved out at biome borders. Hybrids carry re-assessed classes (`IB_pos`/`PA_pos`) and no link to their area of origin (see `../findings.md` §4–5).
