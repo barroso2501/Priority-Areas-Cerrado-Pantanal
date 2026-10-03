@@ -31,7 +31,11 @@ What can break, and how you would notice:
 """
 import ee
 
+import importlib
+
 import gee_common as gc
+
+gc = importlib.reload(gc)  # re-read config.yml if it was edited in the same Colab session
 
 gc.init()
 gc.check_verified()

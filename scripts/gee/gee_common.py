@@ -71,7 +71,10 @@ def zones_image() -> tuple[ee.Image, ee.Geometry]:
     """Rasterize zones in the MapBiomas grid; return (zone_id image, extent rectangle)."""
     fc = ee.FeatureCollection(CFG["zones_asset"])
     img = ee.Image().int32().paint(fc, "zone_id").rename("zone")
-    return img, fc.geometry().bounds(maxError=100)
+    # Region = precomputed bounding box. fc.geometry() would union all zones and fails
+    # ("Geometry has too many edges"). Pixels outside zones are masked by `img` anyway.
+    region = ee.Geometry.Rectangle(CFG["zones_bbox"], proj="EPSG:4674", geodesic=False)
+    return img, region
 
 
 def grid():
@@ -81,12 +84,20 @@ def grid():
 
 
 def grouped_sum(img_key_first: ee.Image, n_values: int, region: ee.Geometry) -> ee.List:
-    """Sum `n_values` bands grouped by the first band (integer key)."""
+    """Sum `n_values` bands grouped by an integer key.
+
+    Callers pass the key as the FIRST band, followed by the value bands. Earth Engine
+    requires the group band to come AFTER the reduced inputs, so the bands are reordered
+    here to [values..., key] and the group field is the last band (index n_values).
+    """
     crs, tr = grid()
-    reducer = ee.Reducer.sum().repeat(n_values).group(groupField=0, groupName="key") \
-        if n_values > 1 else ee.Reducer.sum().group(groupField=0, groupName="key")
-    out = img_key_first.reduceRegion(reducer=reducer, geometry=region, crs=crs, crsTransform=tr,
-                                     maxPixels=1e13, tileScale=CFG["export"]["tile_scale"])
+    key = img_key_first.select([0])
+    values = img_key_first.select(list(range(1, n_values + 1)))
+    img = values.addBands(key)
+    base = ee.Reducer.sum().repeat(n_values) if n_values > 1 else ee.Reducer.sum()
+    reducer = base.group(groupField=n_values, groupName="key")
+    out = img.reduceRegion(reducer=reducer, geometry=region, crs=crs, crsTransform=tr,
+                           maxPixels=1e13, tileScale=CFG["export"]["tile_scale"])
     return ee.List(out.get("groups"))
 
 

@@ -55,4 +55,7 @@ zs[~empty].to_file(out_dir / "zones.shp")
 with zipfile.ZipFile(INT / "zones_upload.zip", "w", zipfile.ZIP_DEFLATED) as zf:
     for f in out_dir.glob("zones.*"):
         zf.write(f, f.name)
+b = zs[~empty].total_bounds
+print("zones_bbox for config.yml:", [round(float(b[0]) - .05, 2), round(float(b[1]) - .05, 2),
+                                     round(float(b[2]) + .05, 2), round(float(b[3]) + .05, 2)])
 print(f"written {INT / 'zones_upload.zip'} ({(INT / 'zones_upload.zip').stat().st_size/1e6:.1f} MB)")

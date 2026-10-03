@@ -25,7 +25,11 @@ What can break, and how you would notice:
 import ee
 import pandas as pd
 
+import importlib
+
 import gee_common as gc
+
+gc = importlib.reload(gc)  # re-read config.yml if it was edited in the same Colab session
 
 gc.init()
 m = gc.CFG["mapbiomas"]
@@ -44,8 +48,7 @@ for root in m["search_roots"]:
     print(f"\n# {root}")
     walk(root)
 
-zones_fc = ee.FeatureCollection(gc.CFG["zones_asset"])
-extent = zones_fc.geometry().bounds(maxError=1000)
+zone_img, extent = gc.zones_image()  # zone raster + precomputed bounding box (config.yml, zones_bbox)
 
 # 2) LULC asset checks ----------------------------------------------------------------
 if m["lulc_asset"] != "VERIFY":
@@ -56,7 +59,7 @@ if m["lulc_asset"] != "VERIFY":
     print(f"\nLULC bands: {len(bands)} ({bands[0]} … {bands[-1]}); missing years: {missing or 'none'}")
     rows = []
     for y in (gc.years()[0], gc.years()[-1]):
-        h = img.select(m["lulc_band_pattern"].format(year=y)).reduceRegion(
+        h = img.select(m["lulc_band_pattern"].format(year=y)).updateMask(zone_img.mask()).reduceRegion(
             ee.Reducer.frequencyHistogram(), extent, scale=300, maxPixels=1e10, tileScale=4).getInfo()
         for k, v in list(h.values())[0].items():
             rows.append({"year": y, "pixel_value": int(float(k)), "n_samples_300m": v})

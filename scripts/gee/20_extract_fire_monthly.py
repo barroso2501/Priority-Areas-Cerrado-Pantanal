@@ -30,7 +30,11 @@ import argparse
 
 import ee
 
+import importlib
+
 import gee_common as gc
+
+gc = importlib.reload(gc)  # re-read config.yml if it was edited in the same Colab session
 
 ap = argparse.ArgumentParser()
 ap.add_argument("--test", action="store_true")

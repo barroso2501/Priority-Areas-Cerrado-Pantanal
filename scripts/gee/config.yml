@@ -5,6 +5,10 @@ gee_project: "ee-barroso2501"             # Cloud project registered for non-com
 
 # Zones uploaded from data/interim/zones_upload.zip (field: zone_id)
 zones_asset: "projects/ee-barroso2501/assets/zones_upload"   # uploaded 2026-10-03
+# Bounding box of the zones [xmin, ymin, xmax, ymax], EPSG:4674, padded by 0.05 deg.
+# Computed locally by 01_prepare_zones_upload.py: Earth Engine cannot union the zones
+# (2.8 M edges > 2 M limit), so the region is never derived from the collection.
+zones_bbox: [-60.53, -24.74, -41.22, -2.28]
 
 years: {first: 1985, last: 2025}
 
@@ -14,10 +18,10 @@ mapbiomas:
     - "projects/mapbiomas-public/assets/brazil/lulc"
     - "projects/mapbiomas-public/assets/brazil/fire"
   # LULC Collection 11, integrated national image, one band per year
-  lulc_asset: "VERIFY"                    # e.g. projects/mapbiomas-public/assets/brazil/lulc/collection11/<image>
+  lulc_asset: "projects/mapbiomas-public/assets/brazil/lulc/collection11/mapbiomas_brazil_collection11_coverage_v3"
   lulc_band_pattern: "classification_{year}"
-  # MapBiomas Fire Collection 5 (1985-2025): monthly burned area, value = month (1-12)
-  fire_monthly_asset: "VERIFY"
+  # MapBiomas Fire Collection 5.1 (1985-2025): monthly burned area, value = month (1-12)
+  fire_monthly_asset: "projects/mapbiomas-public/assets/brazil/fire/collection5_1/mapbiomas_fire_collection51_monthly_burned_v1"
   fire_monthly_band_pattern: "burned_monthly_{year}"
 
 export:
