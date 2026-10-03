@@ -1,0 +1,21 @@
+SAD69->SIRGAS grid shift (m): min 60.7, median 67.3, max 74.2
+zones: 3387; extent 234.421 Mha; zones sum 234.421 Mha; rel diff 1.68e-10
+sliver zones < 1 ha: 386 (82.0 ha in total)
+area (Mha) by priority status:
+s
+2006 only (left)        58.706
+2012 only (entered)     31.936
+both                    42.344
+hybrid only              1.133
+neither                100.302
+area (Mha) biome_2004 x biome_2019:
+biome_2019                                         Amazônia  Caatinga  Cerrado  Mata Atlântica  Pantanal   none
+biome_2004                                                                                                     
+Amazônia                                              0.101       NaN    2.746             NaN     0.061  0.000
+Caatinga                                                NaN     0.816    6.729             NaN       NaN  0.000
+Cerrado                                               4.045     9.170  182.955           5.545     1.020  0.014
+Massa Dagua Continental                               0.006     0.132    1.190           0.017     0.149  0.004
+Massa Dagua Costeira - Mar Territorial, 12 milhas       NaN       NaN    0.036             NaN       NaN  0.008
+Mata Atlântica                                          NaN     0.011    4.133           0.478       NaN  0.000
+Pantanal                                              0.466       NaN    0.629             NaN    13.794  0.054
+none                                                    NaN     0.000    0.039           0.000     0.072  0.002

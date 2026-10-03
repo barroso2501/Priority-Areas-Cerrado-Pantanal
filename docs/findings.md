@@ -34,3 +34,24 @@ Reproducible with `scripts/reconcile_2nd_update.py` unless noted. Tags: **[E]** 
 - Hybrid classes (`IB_pos`/`PA_pos`) may differ from the original class. Example: Xique-xique was Alta in Annex I; the neighbouring hybrid is Muito Alta importance / Extremamente Alta priority.
 - No attribute links a hybrid to its area of origin; the link is by geometry only (open issue P2).
 - Report statistics that use "priority" must be re-read as importance before any comparison by class.
+
+## 6. Self-overlaps in the 1st-update layer
+[E] Twenty pairs of 2006 areas overlap by more than 1 ha, 124 kha in total. The largest is Pa016 × Pa021 (109 kha); the others are mostly a few hundred to a few thousand hectares (Ce007 × Ce009, 8.6 kha). The 2nd-update layer and the hybrids have no self-overlaps. The partition keeps overlapping pieces with a multi-code marker (D7). Reports of the 2006 network area must use the flattened total (101.05 Mha), not the sum of individual areas.
+
+## 7. Effect of the biome-limit change on the priority areas
+[E] From the zone partition (`data/derived/zones_attributes.csv`):
+
+| Layer | Total (Mha) | Outside Cerrado+Pantanal, 2004 limit | Outside Cerrado+Pantanal, 2019 limit | Biome label differs 2004 vs. 2019 |
+|---|---|---|---|---|
+| 1st update (2006) | 101.05 | 2.68 (2.7%) | 6.80 (6.7%) | 7.70 (7.6%) |
+| 2nd update (2012) | 74.28 | 0.76 (1.0%) | 4.28 (5.8%) | 5.78 (7.8%) |
+| Cerrado/Pantanal hybrids | 1.91 | 0.16 (8.6%) | 0.55 (28.7%) | 0.51 (26.7%) |
+
+- Clipping by the current (2019) limit would discard 4.3 Mha of the 2nd-update areas and 6.8 Mha of the 1st-update areas. This confirms D11: biome is a marker, never a mask.
+- Within the extent, the biome reassignments between 2004 and 2019 are large:
+  - Cerrado (2004) → Caatinga 9.2, Atlantic Forest 5.5, Amazon 4.0, Pantanal 1.0 Mha;
+  - into Cerrado (2019) ← Caatinga 6.7, Atlantic Forest 4.1, Amazon 2.7, Pantanal 0.6 Mha.
+- Part of these differences reflects map scale (1:5,000,000 vs. 1:250,000) and is not a conceptual change of the limit. The two cannot be separated with these files.
+
+## 8. SAD69 → SIRGAS 2000 shift of the 1st-update layer
+[E] With the official IBGE grid, the 2006 polygons shift by 61–74 m (median 67 m). Overlaying them without the datum change would create spurious left/entered strips about two MapBiomas pixels wide.

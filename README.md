@@ -7,7 +7,7 @@ State assessment of Brazil's **Priority Areas for Conservation, Sustainable Use 
 - **Secondary product:** a scientific publication.
 - **Scope:** the **Cerrado (with the Pantanal) is the pilot**. The pipeline is parameterized by biome so it can be extended; known limits of that extension are recorded in [D12](docs/decisions/D12_scope_generalization.md).
 
-> **Status (2026-10-02): planning.** Sources are inventoried and reconciled. The work plan is v1. Some methodological decisions are still open (see [`docs/decisions/`](docs/decisions/)). No MapBiomas analysis has been run yet.
+> **Status (2026-10-02): planning.** Sources are inventoried and reconciled. The work plan is v1. Some methodological decisions are still open (see [`docs/decisions/`](docs/decisions/)). The extraction-zone partition is built; no MapBiomas analysis has been run yet.
 
 ## Questions
 | # | Question | Type |
@@ -34,6 +34,7 @@ docs/
 scripts/
   parse_fichas.py           MMA fact sheets (PDF) -> tables
   reconcile_2nd_update.py   300-code reconciliation of the 2nd update
+  build_zones.py            flat partition of extraction zones (D7)
 data/
   README.md           where to download each raw dataset (raw data is not versioned)
   derived/            small tables derived from public data
@@ -48,6 +49,7 @@ pip install -r requirements.txt          # plus poppler-utils for pdftotext
 # download raw data as described in data/README.md, then:
 python scripts/parse_fichas.py
 python scripts/reconcile_2nd_update.py
+python scripts/build_zones.py            # ~20 min; needs data/grids/br_ibge_SAD69_003.tif
 ```
 
 ## Conventions
