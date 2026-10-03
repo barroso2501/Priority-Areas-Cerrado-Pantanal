@@ -2,4 +2,7 @@
 geopandas>=1.0
 pyogrio>=0.7
 pandas>=2.0
-shapely>=2.0
+shapely>=2.1          # coverage_simplify
+pyarrow>=14           # Parquet outputs
+pyyaml>=6
+earthengine-api>=1.0  # scripts/gee/ only

@@ -1,0 +1,33 @@
+# Configuration of the Earth Engine extraction (decisions D6-D9).
+# Values marked VERIFY must be confirmed by 00_discover_assets.py before any extraction.
+
+gee_project: "ee-barroso2501"             # Cloud project registered for non-commercial EE use
+
+# Zones uploaded from data/interim/zones_upload.zip (field: zone_id)
+zones_asset: "projects/ee-barroso2501/assets/zones_upload"   # uploaded 2026-10-03
+
+years: {first: 1985, last: 2025}
+
+mapbiomas:
+  # Folder roots scanned by 00_discover_assets.py
+  search_roots:
+    - "projects/mapbiomas-public/assets/brazil/lulc"
+    - "projects/mapbiomas-public/assets/brazil/fire"
+  # LULC Collection 11, integrated national image, one band per year
+  lulc_asset: "VERIFY"                    # e.g. projects/mapbiomas-public/assets/brazil/lulc/collection11/<image>
+  lulc_band_pattern: "classification_{year}"
+  # MapBiomas Fire Collection 5 (1985-2025): monthly burned area, value = month (1-12)
+  fire_monthly_asset: "VERIFY"
+  fire_monthly_band_pattern: "burned_monthly_{year}"
+
+export:
+  # Earth Engine accepts only a folder NAME (not a path): it creates/uses this folder at the
+  # root of "My Drive". Move it under Trabalho/APCerrado afterwards if you wish.
+  drive_folder: "APCerrado_gee_exports"
+  tile_scale: 4                           # raise to 8/16 if tasks fail with memory errors
+
+fire_intervals:
+  # Analysis windows for D9 (stable native pixels only). The full series is the reference;
+  # period windows are added once D1 (milestones) is decided.
+  windows:
+    - {name: "w1985_2025", start: 1985, end: 2025}

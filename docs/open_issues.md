@@ -8,6 +8,6 @@
 | P4 | Land-system code crosswalk: Annex II (`AAcDnSa`) × GDB (`LANDSCAPE5` + `GRUPO_VEG`) | open | goals of ecosystem targets | infer the coding rule or request the legend |
 | P5 | Annex II (goals, % met) exists only as PDF | open; text is extractable | Q3 | extract to CSV |
 | P6 | Whether the 1st update (2006) used a formal cost surface | open. [L] Nothing in the available documents | defines whether cost at T0 is retrospective (see D4) | MMA (2007) *Biodiversidade 31* report |
-| P7 | MapBiomas Fire: collection/version and whether it covers 2025 consistently with LULC Collection 11 | open | D6, D9 | check MapBiomas Fire documentation and the GEE asset |
-| P8 | Pixel values of the Collection 11 legend (29 carried over from Col. 10 to verify; 4 new classes without value) | open | D8 grouping table | read class values from the Col. 11 asset/legend in GEE |
+| P7 | MapBiomas Fire: collection/version and whether it covers 2025 consistently with LULC Collection 11 | partly closed: MapBiomas Fire **Collection 5 covers 1985–2025** (MapBiomas Fire method page). Asset ID and band naming still to confirm | D6, D9 | `scripts/gee/00_discover_assets.py` |
+| P8 | Pixel values of the Collection 11 legend (29 carried over from Col. 10 to verify; 4 new classes without value) | open | D8 grouping table | `scripts/gee/00_discover_assets.py` (class histogram in the extent) |
 | P9 | IBGE 2004 biome limit (1:5,000,000) file to obtain | **closed** (2026-10-02): file provided by project lead | D7, D11 markers | — |
