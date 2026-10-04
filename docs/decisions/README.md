@@ -5,7 +5,7 @@ One file per methodological decision. Each record states context, options, recom
 | ID | Decision | Status |
 |---|---|---|
 | [D1](D1_milestones.md) | Temporal milestones: data years vs. act years | Open |
-| [D2](D2_universe.md) | Universe of analysis: hybrids, 2006 "Protegida" type | Open (deferred; enabled by D7) |
+| [D2](D2_universe.md) | Universe of analysis: hybrids, 2006 "Protegida" type | Open (deferred; enabled by D7). Hybrids: option (a) accepted for Product 1 (D13) |
 | [D3](D3_fire_rule.md) | Rule for fire as degradation | Open |
 | [D4](D4_cost.md) | Cost definition (accepted) + land-price component (D4b) + scale (D4c) | Partly accepted |
 | [D5](D5_controls.md) | Control design for Q2 | Open |
@@ -16,5 +16,6 @@ One file per methodological decision. Each record states context, options, recom
 | [D10](D10_reprojection.md) | SAD69 → SIRGAS 2000 with official IBGE grid | Accepted |
 | [D11](D11_biome_limits.md) | Biome limits: 2004 and 2019 as markers; no biome clipping | Accepted |
 | [D12](D12_scope_generalization.md) | Cerrado as pilot; pipeline parameterized by biome; marine zone out of scope | Accepted |
+| [D13](D13_product1_state_dynamics.md) | Product 1 for MMA: natural-vegetation state and dynamics 2012–2025; categories and flags | Accepted (incl. §5 amendment); thresholds provisional |
 
 Template: `Context · Options · Recommendation · Status · Evidence/notes`.
