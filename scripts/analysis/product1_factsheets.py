@@ -17,7 +17,8 @@ Inputs
   data/raw/areas_hibridas/... (hybrid actions; optional)
 Output
   data/derived/product1/fichas/ficha_<unit>.html   one self-contained page per unit
-  data/derived/product1/fichas/prototipo.html      the selected units on one page
+  data/derived/product1/fichas/prototipo.html      the selected units on one page (when --units is given)
+  data/derived/product1/fichas/index.html          table of all units with a text filter (--units all)
 
 Run from the repository root:
   python scripts/analysis/product1_factsheets.py                 # prototype units (29 252 244)
@@ -250,7 +251,7 @@ def map_section(u):
 def ficha(u):
     m = units.loc[u]
     hyb = bool(m.is_hybrid)
-    name = "Área híbrida " + u if hyb else str(m.NOME)
+    name = "Área híbrida" if hyb else str(m.NOME)
     bio = biome.loc[u]; bio_share = bio / bio.sum()
     dom_biome = bio_share.idxmax()
     ctx = f"OUTSIDE|{dom_biome}"
@@ -430,10 +431,11 @@ details{margin:8px 0;font-size:13px}.targets{color:var(--ink2);padding-left:18px
 footer{border-top:1px solid var(--rule);margin-top:28px;font-size:12px;color:var(--muted)}
 .mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
 @media (max-width:700px){.mapwrap{grid-template-columns:1fr}}
-.map{width:100%;height:auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.map{display:block;max-width:100%;max-height:560px;width:auto;height:auto;margin:0 auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
 .map.placeholder{padding:48px 16px;text-align:center;color:var(--muted);font-size:13px;background:var(--card)}
 .legend{list-style:none;margin:0;padding:0;font-size:13px}.legend li{display:grid;grid-template-columns:14px 1fr;column-gap:8px;margin-bottom:8px}
 .legend .sw{width:14px;height:14px;border-radius:3px;margin-top:3px;grid-row:span 2}.legend .lv{color:var(--muted);grid-column:2}
+table.idx td,table.idx th{text-align:left!important}table.idx td:nth-child(6),table.idx td:nth-child(8){text-align:right!important}
 nav.toc{font-size:14px;margin-bottom:24px}nav.toc a{color:var(--main);margin-right:16px}
 '''
 
@@ -450,6 +452,27 @@ for u in sel:
     f = ficha(u)
     (OUT / f"ficha_{u.replace('|', '_')}.html").write_text(page(f"Ficha {u}", f), encoding="utf-8")
     parts.append((u, f))
-toc = '<nav class="toc">' + "".join(f'<a href="#u{esc(u)}">{esc(u)} · {esc(str(units.loc[u].NOME) if not units.loc[u].is_hybrid else "híbrida")}</a>' for u, _ in parts) + "</nav>"
-(OUT / "prototipo.html").write_text(page("Fichas — protótipo", "<h1>Fichas de estado e dinâmica — protótipo</h1>" + toc + "".join(f for _, f in parts)), encoding="utf-8")
+if args.units != ["all"]:
+    toc = '<nav class="toc">' + "".join(f'<a href="#u{esc(u)}">{esc(u)} · {esc(str(units.loc[u].NOME) if not units.loc[u].is_hybrid else "híbrida")}</a>' for u, _ in parts) + "</nav>"
+    (OUT / "prototipo.html").write_text(page("Fichas — protótipo", "<h1>Fichas de estado e dinâmica — protótipo</h1>" + toc + "".join(f for _, f in parts)), encoding="utf-8")
+else:
+    # Index of all fact sheets: one row per unit, with a text filter (first step towards the
+    # online query tool; D13 §2 item 4). Keys and filters come from calibration_units.csv.
+    rows = []
+    sel = sorted(sel, key=lambda x: (not x.isdigit(), int(x) if x.isdigit() else 0, x))   # 1, 2, ... then hybrids
+    for u in sel:
+        m = units.loc[u]
+        name = "Área híbrida" if m.is_hybrid else str(m.NOME)
+        flags_ = ", ".join(lab for f, (lab, _) in FLAG_PT.items() if f in m and bool(m[f]))
+        rows.append(f'<tr><td><a href="ficha_{esc(u)}.html">{esc(u)}</a></td><td>{esc(name)}</td><td>{esc(str(m.Estados))}</td>'
+                    f'<td>{esc(str(m.Import_bio))}</td><td>{esc(str(m.Prior_acao))}</td><td>{fnum(m.nat_share_2025 * 100, 0)}%</td>'
+                    f'<td>{CAT_PT[m.category]}</td><td>{fsig(m.rate)}</td><td>{esc(flags_)}</td></tr>')
+    body = ('<h1>Áreas Prioritárias do Cerrado e Pantanal — estado e dinâmica 2012–2025</h1>'
+            f'<p class="muted">{len(sel)} fichas. Digite para filtrar (nome, UF, categoria, importância, alerta…).</p>'
+            '<input id="q" type="search" placeholder="Filtrar" style="width:100%;padding:8px;margin:8px 0 12px;font:inherit">'
+            '<table class="num idx" id="t"><thead><tr><th>Código</th><th>Nome</th><th>UF</th><th>Importância</th><th>Prioridade</th>'
+            '<th>Vegetação natural 2025</th><th>Dinâmica</th><th>%/ano</th><th>Alertas</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table>'
+            '<script>const q=document.getElementById("q"),rs=[...document.querySelectorAll("#t tbody tr")];'
+            'q.addEventListener("input",()=>{const v=q.value.toLowerCase();rs.forEach(r=>r.style.display=r.textContent.toLowerCase().includes(v)?"":"none")});</script>')
+    (OUT / "index.html").write_text(page("Fichas — índice", body), encoding="utf-8")
 print("written", len(parts), "fact sheets to", OUT)
