@@ -6,6 +6,8 @@ Key encodings (all integers, decoded by 90_collect_exports.py):
   LULC transitions  key = zone_id * 10000 + class_from * 100 + class_to      (classes < 100)
   Fire monthly      key = ((zone_id * 2 + stable) * 100 + class) * 13 + month
   Fire intervals    key = zone_id * 100 + modal_class
+  Product 1 direct transitions  key = zone_id * 10000 + class_start * 100 + class_end
+  Product 1 persistence         key = zone_id * 1000 + class_start
 Class values must be < 100; 00_discover_assets.py checks this.
 """
 from pathlib import Path
@@ -53,6 +55,20 @@ def legend() -> pd.DataFrame:
 def native_classes() -> list[int]:
     lg = legend()
     return lg.loc[lg.fire_domain == "native", "pixel_id"].tolist()
+
+
+def natural_vegetation_classes() -> list[int]:
+    """Natural vegetation for Product 1 (D13): MapBiomas level 1 = 1 (Forest) or 2
+    (Herbaceous/Shrubby Vegetation). Equals the `native` set of D8."""
+    lg = legend()
+    return lg.loc[lg.level1_code.isin([1, 2]), "pixel_id"].tolist()
+
+
+def anthropic_classes() -> list[int]:
+    """Classes that count as conversion in D13 section 5: nature = anthropic or ambiguous.
+    Water (33) and beach/dune/sand (23) are natural and therefore NOT in this list."""
+    lg = legend()
+    return lg.loc[lg.nature.isin(["anthropic", "ambiguous"]), "pixel_id"].tolist()
 
 
 def lulc(year: int) -> ee.Image:

@@ -36,6 +36,7 @@ scripts/
   parse_fichas.py           MMA fact sheets (PDF) -> tables
   reconcile_2nd_update.py   300-code reconciliation of the 2nd update
   build_zones.py            flat partition of extraction zones (D7)
+  zones_municipalities.py   zone x IBGE municipality areas (Product 1 filter, D13)
   analysis/phase1_q1_q6.py  Phase 1 descriptive results (strata, 2006/2012 units, Q6)
   gee/                      Earth Engine extraction (Phase 1); see scripts/gee/README.md
 notebooks/

@@ -35,3 +35,20 @@ fire_intervals:
   # period windows are added once D1 (milestones) is decided.
   windows:
     - {name: "w1985_2025", start: 1985, end: 2025}
+
+product1:
+  # Product 1 for MMA (D13): natural-vegetation state and dynamics 2012-2025.
+  # Direct transitions class(start) -> class(end) per zone; one export per pair.
+  transition_pairs:
+    - [2012, 2025]
+    - [2012, 2018]
+    - [2018, 2025]
+  # Persistence of natural vegetation present in the start year, per zone and start class.
+  # 1985-2025 gives the share never converted since the start of the series (old-growth proxy).
+  persistence_windows:
+    - {name: "p2012_2025", start: 2012, end: 2025}
+    - {name: "p1985_2025", start: 1985, end: 2025}
+  # "Possible reservoir" flag (D13 section 5): natural vegetation in the start year that is
+  # water (class below) in EVERY one of the last N years of the window.
+  water_class: 33
+  water_final_years: 6

@@ -13,6 +13,7 @@ Run order, from the repository root. Steps 1–2 are local; steps 3–6 need an 
 | 5 | `python scripts/gee/10_extract_lulc.py --test`, then without `--test` | Annual area per zone × class, and annual transitions |
 |   | `python scripts/gee/20_extract_fire_monthly.py --test`, then without | Monthly burned area per zone × class × stability flag |
 |   | `python scripts/gee/21_extract_fire_intervals.py` | Fire-return intervals in stable native vegetation, with censoring (D9) |
+|   | `python scripts/gee/30_extract_product1.py` | Product 1 (D13): direct transitions 2012→2025, 2012→2018, 2018→2025; persistence of natural vegetation (strict, never anthropic, persistent water) for 2012–2025 and 1985–2025 |
 | 6 | Download the Drive folder to `data/interim/gee_exports/`; run `python scripts/gee/90_collect_exports.py` | Decodes keys into long tables (Parquet) and runs the QC checks |
 
 Offline check of the encodings and of the interval algorithm: `python tests/test_gee_logic.py`.

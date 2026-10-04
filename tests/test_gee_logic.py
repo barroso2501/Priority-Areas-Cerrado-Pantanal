@@ -68,3 +68,33 @@ d = collect.decode_intervals(df)
 g = d.groupby("metric").ha.sum()
 assert g["never"] + g["left"] == g["stable"] == g["never"] + g["right"]
 print("intervals OK:", {k: int(v) for k, v in g.items()})
+
+# 3) Product 1 (D13): decoders and persistence masks -----------------------------------------
+r = collect.decode_p1_trans(pd.DataFrame({"key": [z*10000+c*100+c2], "sum": [1.0], "start": [2012], "end": [2025]})).iloc[0]
+assert [r.zone_id, r.class_start, r.class_end] == [z, c, c2]
+r = collect.decode_p1_persist(pd.DataFrame({"key": [z*1000+4], "sum": ["[10.0,6.0,8.0,1.0]"], "window": ["p"],
+                                            "start": [2012], "end": [2025], "k_water": [6]})).iloc[0]
+assert [r.zone_id, r.class_start, r.nat_start_ha, r.water_persistent_ha] == [z, 4, 10.0, 1.0]
+
+# Masks exactly as written for Earth Engine, on random class sequences
+NAT, ANT, WATER, K = {3, 4, 12}, {15, 39}, 33, 6
+pool = np.array([3, 4, 12, 15, 39, 33, 23])
+yrs = np.arange(2012, 2026)
+seq = pool[rng.integers(0, len(pool), size=(4000, len(yrs)))]
+seq[:500, -K:] = WATER                     # force some persistent water at the end
+nat_y = np.isin(seq, list(NAT)); ant_y = np.isin(seq, list(ANT))
+nat_start = nat_y[:, 0]
+strict = nat_start & nat_y.min(1)
+never_ant = nat_start & ~ant_y.max(1)
+water_p = nat_start & (seq[:, -K:] == WATER).min(1)
+# per-pixel definitions
+for i in range(len(seq)):
+    s_ = seq[i]
+    if s_[0] not in NAT:
+        assert not (strict[i] or never_ant[i] or water_p[i]); continue
+    assert strict[i] == all(v in NAT for v in s_)
+    assert never_ant[i] == all(v not in ANT for v in s_)
+    assert water_p[i] == all(v == WATER for v in s_[-K:])
+assert (strict <= never_ant).all() and (water_p & strict).sum() == 0
+print("product 1 OK: nat_start", nat_start.sum(), "strict", strict.sum(), "never_anthropic", never_ant.sum(),
+      "water_persistent", water_p.sum())

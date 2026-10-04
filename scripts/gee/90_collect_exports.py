@@ -8,6 +8,9 @@ Output: data/interim/extract/
           lulc_transitions.parquet  zone_id, year, class_from, class_to, ha   (year = t, to t+1)
           fire_month.parquet        zone_id, year, stable, class, month, ha
           fire_intervals.parquet    zone_id, window, modal_class, metric, length, ha
+          p1_transitions.parquet    zone_id, start, end, class_start, class_end, ha   (Product 1, D13)
+          p1_persistence.parquet    zone_id, window, start, end, k_water, class_start,
+                                    nat_start_ha, strict_ha, never_anthropic_ha, water_persistent_ha
         data/interim/extract/qc_report.txt
 
 Run from the repository root:
@@ -19,6 +22,9 @@ QC checks (printed and saved):
      Small zones lose/gain area at pixel edges; the report lists zones off by > 5%.
   2. Transitions: per zone, total transition area for t->t+1 equals LULC area in t.
   3. Fire intervals: never + sum(left) == stable and never + sum(right) == stable.
+  4. Product 1 direct transitions: per zone, total area equals the LULC area of the start year.
+  5. Product 1 persistence: nat_start equals the natural-vegetation area of the start year
+     in lulc_area; strict <= never_anthropic <= nat_start; water_persistent <= nat_start - strict.
 
 What can break, and how you would notice:
   - An unexpected file name pattern is skipped and listed as "unrecognized".
@@ -90,6 +96,29 @@ def decode_intervals(df):
     return pd.DataFrame(rows)
 
 
+def decode_p1_trans(df):
+    k = df["key"].astype(np.int64)
+    return pd.DataFrame({"zone_id": k // 10000, "start": df["start"], "end": df["end"],
+                         "class_start": (k % 10000) // 100, "class_end": k % 100, "ha": df["sum"]})
+
+
+P1_BANDS = ["nat_start_ha", "strict_ha", "never_anthropic_ha", "water_persistent_ha"]
+
+
+def decode_p1_persist(df):
+    # `sum` holds the four band totals as a list "[v1,v2,v3,v4]" (same format as intervals)
+    vals = df["sum"].map(lambda v: json.loads(v) if isinstance(v, str) else list(v))
+    out = pd.DataFrame(vals.tolist(), columns=P1_BANDS)
+    k = df["key"].astype(np.int64)
+    out.insert(0, "zone_id", k // 1000)
+    out.insert(1, "window", df["window"])
+    out.insert(2, "start", df["start"])
+    out.insert(3, "end", df["end"])
+    out.insert(4, "k_water", df["k_water"])
+    out.insert(5, "class_start", k % 1000)
+    return out
+
+
 def main():
     global SRC, OUT
     ap = argparse.ArgumentParser()
@@ -146,8 +175,43 @@ def main():
                 err = ((g["never"] + g[side]) / g["stable"] - 1).abs().max()
                 qc.append(f"Intervals: never + {side} vs stable, max relative difference {err:.2e}")
 
+    # --- Product 1 (D13) -----------------------------------------------------------------
+    lulc_pq = OUT / "lulc_area.parquet"
+    a_all = a if a is not None else (pd.read_parquet(lulc_pq) if lulc_pq.exists() else None)
+
+    p1t = read_all("product1_trans_*.csv")
+    if p1t is not None:
+        p1t = decode_p1_trans(p1t)
+        p1t.to_parquet(OUT / "p1_transitions.parquet")
+        if a_all is not None:
+            for (s0, e0), d in p1t.groupby(["start", "end"]):
+                c = d.groupby("zone_id").ha.sum().rename("t").to_frame().join(
+                    a_all[a_all.year == s0].groupby("zone_id").ha.sum().rename("a"), how="inner")
+                qc.append(f"P1 direct transitions {s0}->{e0} vs LULC area {s0}, "
+                          f"max relative difference: {(c.t / c.a - 1).abs().max():.2e}")
+
+    p1p = read_all("product1_persist_*.csv")
+    if p1p is not None:
+        p1p = decode_p1_persist(p1p)
+        p1p.to_parquet(OUT / "p1_persistence.parquet")
+        tol = 1e-6
+        order_bad = ((p1p.strict_ha > p1p.never_anthropic_ha + tol)
+                     | (p1p.never_anthropic_ha > p1p.nat_start_ha + tol)
+                     | (p1p.water_persistent_ha > p1p.nat_start_ha - p1p.strict_ha + tol)).sum()
+        qc.append(f"P1 persistence: rows violating strict <= never_anthropic <= nat_start or "
+                  f"water <= nat_start - strict: {order_bad}")
+        if a_all is not None:
+            lg = pd.read_csv(ROOT / "data/reference/mapbiomas_col11_legend_groups.csv")
+            nat = set(lg.loc[lg.level1_code.isin([1, 2]), "pixel_id"].astype(int))
+            for (wname, s0), d in p1p.groupby(["window", "start"]):
+                ref = a_all[(a_all.year == s0) & a_all["class"].isin(nat)].groupby("zone_id").ha.sum()
+                c = d.groupby("zone_id").nat_start_ha.sum().rename("p").to_frame().join(ref.rename("a"), how="inner")
+                qc.append(f"P1 persistence {wname}: nat_start vs LULC natural vegetation {s0}, "
+                          f"max relative difference: {(c.p / c.a - 1).abs().max():.2e}")
+
     unrec = [p.name for p in SRC.glob("*.csv")
-             if not re.match(r"(lulc_area|lulc_trans|fire_month|fire_intervals)_", p.name)]
+             if not re.match(r"(lulc_area|lulc_trans|fire_month|fire_intervals|product1_trans|product1_persist)_",
+                             p.name)]
     qc.append(f"unrecognized files: {unrec or 'none'}")
     (OUT / "qc_report.txt").write_text("\n".join(qc) + "\n", encoding="utf-8")
     print("\n".join(qc))
