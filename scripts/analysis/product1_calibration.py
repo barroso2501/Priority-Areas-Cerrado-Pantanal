@@ -56,12 +56,13 @@ Y0, YS, Y1 = 2012, 2018, 2025          # start, sub-period split, end (D13 §3)
 
 # Provisional thresholds (D13 §4). Rates in % per year of N(2012).
 T = dict(
-    stable_band=0.1,       # |rate| <= band  -> stable or turnover
+    stable_band=0.2,       # |rate| <= band  -> stable or turnover (0.1 was below trend noise; D13 §6)
     turnover_gross=0.5,    # gross conversion above this inside the band -> turnover
     moderate=1.0,          # rate between -band and -moderate -> moderate loss
     intense=2.0,           # between -moderate and -intense -> intense; beyond -> very intense
-    accel=0.5,             # acceleration flag: rate(2018-25) - rate(2012-18) < -accel
+    accel=0.5,             # acceleration flag: rate(2018-25) - rate(2012-18) < -accel ...
 )
+ACCEL_K_SE = 2.0           # ... AND the difference exceeds 2 standard errors of the difference
 GAIN_MIN_PP = 0.5          # net gain must also be >= 0.5 percentage points of land area ...
 GAIN_MIN_HA = 100.0        # ... and >= 100 ha over 2012-2025 (both provisional)
 SMALL_HA = 5000.0          # small-unit flag
@@ -146,9 +147,10 @@ for u, d in s.groupby(level="unit"):
         rows.append(rec); continue
     sl, sd, se, rho = trend(yrs, d.X.values)
     m1 = (yrs >= Y0) & (yrs <= YS); m2 = (yrs >= YS) & (yrs <= Y1)
-    sl1 = theilslopes(d.X.values[m1], yrs[m1])[0]
-    sl2 = theilslopes(d.X.values[m2], yrs[m2])[0]
+    sl1, _, se1, _ = trend(yrs[m1], d.X.values[m1])
+    sl2, _, se2, _ = trend(yrs[m2], d.X.values[m2])
     rec.update(rate=sl / n0 * 100, rate_2012_2018=sl1 / n0 * 100, rate_2018_2025=sl2 / n0 * 100,
+               se_accel=np.sqrt(se1 ** 2 + se2 ** 2) / n0 * 100,
                noise_pct=sd / n0 * 100, se_rate=se / n0 * 100, resid_autocorr=rho,
                net_ha=sl * (Y1 - Y0), net_pp_land=sl * (Y1 - Y0) / d.land.get(Y0) * 100,
                endpoint_rate=(d.X.get(Y1) - d.X.get(Y0)) / (Y1 - Y0) / n0 * 100)
@@ -192,7 +194,9 @@ units["category"] = categorize(units, T)
 bounds = np.array([T["stable_band"], -T["stable_band"], -T["moderate"], -T["intense"]])
 units["dist_to_boundary"] = units.rate.apply(lambda v: np.min(np.abs(bounds - v)) if pd.notna(v) else np.nan)
 units["low_confidence"] = units.dist_to_boundary < units.se_rate
-units["flag_acceleration"] = (units.rate_2018_2025 - units.rate_2012_2018) < -T["accel"]
+units["accel_diff"] = units.rate_2018_2025 - units.rate_2012_2018
+units["flag_acceleration"] = (units.accel_diff < -T["accel"]) & (-units.accel_diff > ACCEL_K_SE * units.se_accel)
+units["flag_acceleration_magnitude_only"] = units.accel_diff < -T["accel"]   # without the noise test
 units["flag_small"] = units.land_ha_2012 < SMALL_HA
 units["flag_hydro"] = units.hydro_share > HYDRO_SHARE
 units["flag_possible_reservoir"] = (units.water_persistent_ha >= RES_MIN_HA) & (units.water_persistent_pct >= RES_MIN_PCT)
@@ -234,7 +238,7 @@ for k in T:
     for f in (0.5, 1.5):
         T2 = dict(T); T2[k] = T[k] * f
         if k == "accel":
-            fl = (units.rate_2018_2025 - units.rate_2012_2018) < -T2[k]
+            fl = (units.accel_diff < -T2[k]) & (-units.accel_diff > ACCEL_K_SE * units.se_accel)
             sens.append({"threshold": k, "factor": f, "value": T2[k], "changed": int((fl != units.flag_acceleration).sum()),
                          **{"n_flag_acceleration": int(fl.sum())}})
             continue
@@ -262,7 +266,7 @@ L.append(f"Low confidence (within 1 SE of a boundary): {units.low_confidence.sum
 L.append("\nCategory x state 2025:")
 L.append(pd.crosstab(units.category, units.state_class_2025).to_string())
 L.append("\n== Flags ==")
-for f in ["flag_acceleration", "flag_small", "flag_hydro", "flag_possible_reservoir"]:
+for f in ["flag_acceleration", "flag_acceleration_magnitude_only", "flag_small", "flag_hydro", "flag_possible_reservoir"]:
     L.append(f"{f}: {units[f].sum()}")
 L.append("Dominant driver:\n" + units.driver.value_counts().to_string())
 L.append("\n== Gain candidates (rate > band) ==")

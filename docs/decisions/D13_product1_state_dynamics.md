@@ -1,6 +1,6 @@
 # D13 — Product 1: state and dynamics of natural vegetation in the 2012 priority areas
 
-**Status:** Accepted (2026-10-04, project lead), including the §5 amendment. The threshold values in §4 stay provisional until the calibration in §6.
+**Status:** Accepted (2026-10-04, project lead), including the §5 amendment and the calibrated thresholds of §4/§6.
 **Raised:** 2026-10-04
 
 ## 1. Context
@@ -28,34 +28,37 @@ It does **not** assess the efficiency or effectiveness of the areas as public po
 | Hybrids | Included in the same product (D2 option a), with a `hybrid` flag in every table, fact sheet and filter. |
 | Matrix outside the priority areas | Included in the executive summary as context, by biome (2019 limit) and UF. |
 
-## 4. Categories (values provisional, see §6)
-**Rate metric.** Robust trend (Theil–Sen slope) of the annual series, expressed as % per year of the natural vegetation area in 2012. The same metric is computed for each sub-period. Endpoint differences are reported but not used for classification, because the last year of a collection is the least stable [H].
+## 4. Categories (thresholds calibrated in §6, accepted 2026-10-04)
+**Rate metric.** Robust trend (Theil–Sen slope) of the annual **non-anthropic area** (§5), expressed as % per year of the natural vegetation area in 2012. Negative = loss. The same metric is computed for each sub-period. Endpoint differences are reported but not used for classification, because the last year of a collection is the least stable [H]. Each trend carries a standard error from the residuals around the line, inflated for lag-1 autocorrelation.
 
 **Axis A — state in 2025:** natural vegetation share of land area: ≥80%, 50–80%, 20–50%, <20%. The fact sheet also gives the remaining hectares.
 
 **Axis B — dynamics 2012–2025:**
 
-| Category | Rule (provisional) |
+| Category | Rule |
 |---|---|
-| Net gain | trend > +0.1%/yr **and** gain ≥ minimum absolute change |
-| Stable | \|trend\| ≤ 0.1%/yr **and** gross conversion ≤ 0.5%/yr |
-| Turnover | \|trend\| ≤ 0.1%/yr **and** gross conversion > 0.5%/yr |
-| Moderate loss | −1 ≤ trend < −0.1%/yr |
+| Net gain | trend > +0.2%/yr **and** net gain ≥ 0.5 percentage points of land area **and** ≥ 100 ha |
+| Stable | \|trend\| ≤ 0.2%/yr (or positive below the gain minima) **and** gross conversion ≤ 0.5%/yr |
+| Turnover | \|trend\| ≤ 0.2%/yr **and** gross conversion > 0.5%/yr |
+| Moderate loss | −1 ≤ trend < −0.2%/yr |
 | Intense loss | −2 ≤ trend < −1%/yr |
 | Very intense loss | trend < −2%/yr |
 
-At −1%/yr, half of the 2012 natural vegetation is gone in about 70 years; at −2%/yr, in about 35.
+At −0.2%/yr, half of the 2012 natural vegetation would be gone in about 350 years (stable at the planning horizon); at −1%/yr, in about 70; at −2%/yr, in about 35. Gross conversion = sum of annual natural → anthropic transitions, % of the 2012 natural vegetation per year.
 
 **Flags,** independent of the category:
-- acceleration: the 2018–2025 trend is lower than the 2012–2018 trend by more than 0.5 percentage points per year;
-- dominant conversion driver (pasture, soybean or other crops, forest plantation, mining, urban);
+- acceleration: the 2018–2025 trend is lower than the 2012–2018 trend by more than 0.5 percentage points per year **and** by more than 2 standard errors of the difference;
+- low confidence: the trend lies within one standard error of a category boundary;
+- dominant conversion driver: anthropic class in 2025 that received most of the converted 2012 natural vegetation (direct transition 2012 → 2025);
 - small area (< 5 kha; unstable rates);
 - coverage gap (`findings.md` §9);
 - hybrid;
-- hydrological dynamics (§5);
-- possible reservoir (§5).
+- hydrological dynamics (§5): exchanges with water or sand > 20% of all gross exchanges of natural vegetation;
+- possible reservoir (§5): persistent water ≥ 100 ha **and** ≥ 0.5% of the 2012 natural vegetation.
 
-**Minimum absolute change.** The relative rate inflates small changes in areas with little natural vegetation left. Exploratory 2012–2025 run [E]: 6 of the 9 areas with net gain had less than 30% natural vegetation in 2012. Gain therefore also requires a minimum change in percentage points of area and in hectares, to be set in §6.
+The fact sheet and the executive summary show the continuous rate next to the category, because the moderate/intense boundary is the most influential choice (§6).
+
+**Minimum absolute change.** The relative rate inflates small changes in areas with little natural vegetation left. Exploratory 2012–2025 run [E]: 6 of the 9 areas with net gain had less than 30% natural vegetation in 2012. Gain therefore also requires a minimum change in percentage points of area and in hectares (0.5 pp and 100 ha, §6).
 
 ## 5. Amendment (accepted 2026-10-04): conversion is natural → anthropic only
 **Evidence** [E] (annual transitions 2012–2025, `lulc_transitions`): in the Pantanal (2019 limit), **88%** of the gross transitions out of natural vegetation go to water or sand (classes 33, 23), and almost the same amount comes back (5.38 vs. 5.31 Mha summed over the years). In the Cerrado this share is 2%. In 36 of the 348 units, more than 20% of the gross "loss" is this kind of exchange, mostly Pantanal areas (e.g. 182, 224, 243, 252: 94–99%).
@@ -78,11 +81,17 @@ At −1%/yr, half of the 2012 natural vegetation is gone in about 70 years; at �
 
 [E] Order of magnitude: net natural → water over 2012–2025 exceeds 1% of the 2012 natural vegetation in 12 units, almost all in the Pantanal (largest: unit 182, 8.7%). Net values at the endpoints depend on the flood state of each year, so they do not identify reservoirs by themselves.
 
-## 6. Calibration before the thresholds are fixed
-- Estimate classification noise from the year-to-year residual around the trend, using the anthropic-area series of §5. The stability band (±0.1%/yr) must be larger than the trend uncertainty that this noise implies over 14 years.
-- Set the minimum absolute change for gain.
-- Report the number of areas per category under ±50% variations of each threshold (sensitivity), so the Directorate sees how robust each assignment is.
-- Thresholds become final only after the project lead approves the calibration.
+## 6. Calibration (run 2026-10-04, `scripts/analysis/product1_calibration.py`)
+Outputs in `data/derived/product1/` (`calibration_report.txt`, `calibration_units.csv`, `calibration_sensitivity.csv`). Tags [E] unless stated.
+
+- **Trend noise.** Median standard error of the 2012–2025 trend: 0.10%/yr (90th percentile 0.27). With the provisional band ±0.1%/yr, 2 × SE exceeded the band in 260 of 348 units. **Band widened to ±0.2%/yr** (169 units still exceed it; they carry the low-confidence flag when near a boundary). A noise-adaptive band per unit was rejected because it breaks the fixed-threshold rule (§3).
+- [H] The standard error is partly inflated by real curvature of the series (median lag-1 autocorrelation of residuals 0.64), so it is conservative.
+- **Moderate/intense boundary (−1%/yr)** is the most influential: at −0.5 it would move 103 units, at −1.5 it would move 41. Kept at −1 as a value judgement (half-life ≈ 70 years), with the continuous rate always shown.
+- **Acceleration.** Magnitude rule alone: 109 units; with the noise test: 103. At 0.25 or 0.75 pp/yr: 141 or 68 units.
+- **Gain minima** are robust: halving or doubling them changes 1–2 units.
+- **Result with the accepted thresholds** (348 units): moderate loss 201, intense loss 68, stable 38, turnover 22, very intense loss 12, net gain 7; low confidence 115. Very intense loss: six MMA areas (Matopiba and Rio Apa; soybean is the driver in three) and six Amazon–Cerrado hybrids (pasture).
+- **Matrix outside the units (context):** Cerrado −0.77%/yr; Pantanal −0.36%/yr.
+- **Source labels.** The MMA layers spell classes inconsistently ("Muita Alta" in areas 203 and 30, "Muito alta", "Extremamente alta" in hybrids). They are normalized in the script (see `data_governance.md`).
 
 ## 7. New extraction needed
 1. Direct transition 2012 → 2025 per zone. The sum of annual transitions is not the same thing.
@@ -97,3 +106,11 @@ Protected areas and indigenous lands are left out of Product 1, because they pul
 - [E] Only 17 units had net gain. With net-rate classes alone, about 65% of the units fall into a single "moderate loss" class. Hence the two axes and the flags.
 - [E] Gross loss (median 1.37%/yr) is more than twice the net loss; gross regrowth is 0.56%/yr; the two are correlated (ρ = 0.67).
 - [E] 135 units lost faster in 2018–2025 than in 2012–2018 by more than 0.5 percentage points per year.
+
+## 9. Next layer, outside Product 1 v1: land tenure
+The project lead will add land tenure later (private land, public land, protected areas, indigenous territories, other). Tenure sets the legal ceiling of conversion, so the same rate means different things: what matters is the rate relative to the **legally convertible remainder**. Candidate metric: legal headroom = natural vegetation − legally required minimum, and years to exhaust it at the current rate. Points to resolve before using it:
+- [E] Legal reserve rules differ inside the Cerrado (20% outside the Legal Amazon, 35% for Cerrado inside it) and are set per property, not per priority area; Permanent Preservation Areas add to it.
+- [H] Off-site compensation of legal reserve deficits and the consolidated-area rules of the 2012 Forest Code mean the area-level ceiling is not strictly binding.
+- Protected-area categories differ: Environmental Protection Areas (APA) allow private use and behave like private land for this purpose.
+- Tenure data (CAR/SICAR, SIGEF/SNCI, CNUC, FUNAI, land-tenure meshes) have overlaps and changed over 2012–2025; the reference year must be fixed.
+- This layer reads as vulnerability, not effectiveness, and keeps Product 1 within its scope only if framed that way.

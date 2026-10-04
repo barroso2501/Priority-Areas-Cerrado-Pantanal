@@ -16,6 +16,6 @@ One file per methodological decision. Each record states context, options, recom
 | [D10](D10_reprojection.md) | SAD69 → SIRGAS 2000 with official IBGE grid | Accepted |
 | [D11](D11_biome_limits.md) | Biome limits: 2004 and 2019 as markers; no biome clipping | Accepted |
 | [D12](D12_scope_generalization.md) | Cerrado as pilot; pipeline parameterized by biome; marine zone out of scope | Accepted |
-| [D13](D13_product1_state_dynamics.md) | Product 1 for MMA: natural-vegetation state and dynamics 2012–2025; categories and flags | Accepted (incl. §5 amendment); thresholds provisional |
+| [D13](D13_product1_state_dynamics.md) | Product 1 for MMA: natural-vegetation state and dynamics 2012–2025; categories and flags | Accepted (incl. §5 amendment and calibrated thresholds); land tenure noted as next layer |
 
 Template: `Context · Options · Recommendation · Status · Evidence/notes`.
