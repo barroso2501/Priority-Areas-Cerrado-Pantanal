@@ -1,0 +1,13 @@
+# Raw data is never versioned: download it as described in data/README.md
+data/raw/*
+!data/raw/.gitkeep
+# Large or intermediate outputs (GEE exports, rasters)
+data/interim/
+data/grids/
+*.tif
+*.gdb/
+*.zip
+# Python / notebooks
+__pycache__/
+.ipynb_checkpoints/
+.venv/
