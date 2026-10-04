@@ -39,7 +39,15 @@ OUT = ROOT / "data/interim/extract"
 
 
 def read_all(pattern):
-    files = sorted(SRC.glob(pattern))
+    # Re-running a task writes a second file with the same name; Drive then shows
+    # "name (1).csv". Keep only the most recent file per logical name, so a year is
+    # never counted twice.
+    latest = {}
+    for f in SRC.glob(pattern):
+        stem = re.sub(r" \(\d+\)$", "", f.stem)
+        if stem not in latest or f.stat().st_mtime > latest[stem].stat().st_mtime:
+            latest[stem] = f
+    files = sorted(latest.values())
     return pd.concat([pd.read_csv(f) for f in files], ignore_index=True) if files else None
 
 
@@ -99,8 +107,16 @@ def main():
         a.to_parquet(OUT / "lulc_area.parquet")
         tot = a.groupby(["zone_id", "year"]).ha.sum().reset_index().merge(zones, on="zone_id")
         tot["rel"] = tot.ha / tot.area_ha - 1
-        bad = tot[tot.rel.abs() > 0.05]
-        qc.append(f"LULC: {a.year.nunique()} years; zone-years off by >5%: {len(bad)} "
+        # Zones outside the 2019 national biome map (beyond the border or offshore) have no
+        # MapBiomas pixels by construction; report them apart from the QC of covered zones.
+        zb = pd.read_csv(ROOT / "data/derived/zones_attributes.csv")[["zone_id", "biome_2019"]]
+        tot = tot.merge(zb, on="zone_id")
+        outside = tot[tot.biome_2019 == "none"]
+        qc.append(f"Zones outside MapBiomas coverage (biome_2019 = none): {outside.zone_id.nunique()} "
+                  f"zones, {outside.groupby('zone_id').area_ha.first().sum():,.0f} ha")
+        tot = tot[tot.biome_2019 != "none"]
+        bad = tot[(tot.rel.abs() > 0.05) & (tot.area_ha > 10)]
+        qc.append(f"LULC: {a.year.nunique()} years; covered zone-years (> 10 ha) off by >5%: {len(bad)} "
                   f"(covering {bad.area_ha.sum() / tot.area_ha.sum():.2e} of area); "
                   f"overall area ratio {tot.ha.sum() / tot.area_ha.sum():.4f}")
 

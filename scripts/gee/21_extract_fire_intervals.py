@@ -49,9 +49,11 @@ for w in gc.CFG["fire_intervals"]["windows"]:
     W = len(ys)
 
     lulc = {y: gc.lulc(y) for y in ys}
-    is_nat = [lulc[y].remap(native, ee.List.repeat(1, native.size()), 0) for y in ys]
+    # Every image put in an ImageCollection must share the same pixel type (EE error
+    # "Expected a homogeneous image collection"), hence the explicit casts below.
+    is_nat = [lulc[y].remap(native, ee.List.repeat(1, native.size()), 0).toInt8() for y in ys]
     stable = ee.ImageCollection(is_nat).min().eq(1)
-    modal = ee.ImageCollection([lulc[y] for y in ys]).mode().rename("modal")
+    modal = ee.ImageCollection([lulc[y].toInt16() for y in ys]).mode().rename("modal")
     burned = {y: gc.fire_month(y).mask().gt(0).unmask(0) for y in ys}
 
     # Running "year of the previous fire" (0 = none yet); closed interval at each burn
@@ -62,7 +64,7 @@ for w in gc.CFG["fire_intervals"]["windows"]:
         closed_bands.append(b_y.And(prev.gt(0)).multiply(ee.Image(y).subtract(prev)))  # 0 if none
         prev = prev.where(b_y, y)
     last = prev  # last fire year, 0 if never
-    first = ee.ImageCollection([burned[y].multiply(y).selfMask() for y in ys]).min().unmask(0)
+    first = ee.ImageCollection([burned[y].multiply(y).toInt16().selfMask() for y in ys]).min().unmask(0)
     closed_stack = ee.Image.cat(closed_bands)
 
     bands = [area.rename("stable_ha"),
