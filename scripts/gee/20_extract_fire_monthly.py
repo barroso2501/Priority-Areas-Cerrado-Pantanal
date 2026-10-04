@@ -47,7 +47,7 @@ area = ee.Image.pixelArea().divide(1e4).rename("ha")
 native = ee.List(gc.native_classes())
 
 # Stable native (domain level): native in all years of the full series
-is_native = [gc.lulc(y).remap(native, ee.List.repeat(1, native.size()), 0) for y in gc.years()]
+is_native = [gc.lulc(y).remap(native, ee.List.repeat(1, native.size()), 0).toInt8() for y in gc.years()]
 stable = ee.ImageCollection(is_native).min().rename("stable")  # 1 only if native every year
 
 yrs = [gc.years()[-1]] if args.test else gc.years()

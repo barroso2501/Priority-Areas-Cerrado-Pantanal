@@ -55,3 +55,38 @@ Reproducible with `scripts/reconcile_2nd_update.py` unless noted. Tags: **[E]** 
 
 ## 8. SAD69 → SIRGAS 2000 shift of the 1st-update layer
 [E] With the official IBGE grid, the 2006 polygons shift by 61–74 m (median 67 m). Overlaying them without the datum change would create spurious left/entered strips about two MapBiomas pixels wide.
+
+## 9. First Earth Engine exports (2025 test year)
+[E] From `lulc_area_2025.csv` and `fire_month_2025.csv` (test run, 2026-10-03):
+- **Area closure.** For zones inside the national limits, the summed MapBiomas area equals the zone area: overall ratio 0.99998. Deviations above 5% occur only in very small zones (pixel-edge effects), 1.25 × 10⁻⁵ of the area.
+- **Coverage gap.** About 86 kha of zones lie outside the IBGE state limits (beyond the border with Bolivia/Paraguay, in the Pantanal, or offshore), where MapBiomas Brazil has no pixels. They include 28.6 kha of 1st-update areas (e.g. Pa016) and 13.1 kha of 2nd-update areas (e.g. codes 224, 252). These areas cannot be assessed with MapBiomas Brazil. They are reported separately and never counted as "no vegetation".
+- **2025 composition of the extent (234 Mha).** Natural 124.4 Mha; anthropic 109.8 Mha (pasture 61.2, soybean 22.7). Native cover in the 2nd-update areas is 59.7%.
+- **2025 fire.** 9.05 Mha burned in the extent: 85% in native vegetation, 15% in land use; peak in September–October (5.9 Mha). [H] To be cross-checked against MapBiomas Fire platform statistics for the same area. The stability flag in this test file may predate the corrected legend (class 7, D8); the full run supersedes it.
+
+## 10. Full Phase 1 extraction, QC (2026-10-03)
+[E] From `qc_report.txt` (`90_collect_exports.py`):
+- **LULC area.** 41 years (1985–2025); overall area ratio 1.0000. Covered zones above 10 ha that deviate by more than 5% represent 1.25 × 10⁻⁵ of the area (pixel-edge effects in small zones).
+- **Transitions.** Total transition area t→t+1 matches the LULC area of year t within 0.33% (maximum relative difference per zone-year).
+- **Fire.** Monthly burned area for 41 years, all 12 months present.
+- **Coverage gap.** 43 zones with pixels (70 kha) lie outside the 2019 national biome map; they are reported apart (see §9).
+- **Fire intervals.** Not in this collection run. The first task failed on an image-type error, fixed in commit ce813c4. The re-run export is analysed in §11.
+
+## 11. Fire-return intervals in stable native vegetation, 1985–2025 (first look)
+[E] From `fire_intervals_w1985_2025.csv` (9,993 zone × modal-class groups):
+- **QC.** never + Σ left = stable and never + Σ right = stable, exactly (maximum relative difference 0). The interval bookkeeping is consistent.
+- **Stable native vegetation** (native in all 41 years, domain level, D9): 105.6 Mha in the extent. **48% never burned** in 1985–2025.
+
+| Modal class | Stable area (Mha) | Never burned |
+|---|---|---|
+| Savanna formation | 52.3 | 36% |
+| Forest formation | 38.0 | 73% |
+| Grassland formation | 7.4 | 25% |
+| Wetland (campo alagado) | 6.4 | 22% |
+| Rocky outcrop | 1.1 | 49% |
+
+- **Closed intervals** (between two observed fires): the area-weighted median is about **3 years** in every major class, including forest formation.
+
+[H] Interpretation, not yet tested:
+1. In the Cerrado, "forest formation" includes cerradão and transition forests that can burn. Short intervals in this class may still signal degradation (D3), not a natural regime.
+2. Part of the short intervals may come from commission errors in MapBiomas Fire (spurious scars in consecutive years). This needs a sensitivity test, for example a minimum scar size or a confirmed-burn rule, before the result is reported.
+3. The closed-interval median ignores the 48% never-burned area and the censored intervals. The regime must be described with survival methods (D9), never with this median alone.
