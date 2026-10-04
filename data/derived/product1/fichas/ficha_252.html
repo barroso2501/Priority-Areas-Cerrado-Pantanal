@@ -35,6 +35,12 @@ tr.sub th,tr.sub td{font-weight:600;background:var(--card)}td.ind{padding-left:2
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
 details{margin:8px 0;font-size:13px}.targets{color:var(--ink2);padding-left:18px}
 footer{border-top:1px solid var(--rule);margin-top:28px;font-size:12px;color:var(--muted)}
+.mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
+@media (max-width:700px){.mapwrap{grid-template-columns:1fr}}
+.map{width:100%;height:auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.map.placeholder{padding:48px 16px;text-align:center;color:var(--muted);font-size:13px;background:var(--card)}
+.legend{list-style:none;margin:0;padding:0;font-size:13px}.legend li{display:grid;grid-template-columns:14px 1fr;column-gap:8px;margin-bottom:8px}
+.legend .sw{width:14px;height:14px;border-radius:3px;margin-top:3px;grid-row:span 2}.legend .lv{color:var(--muted);grid-column:2}
 nav.toc{font-size:14px;margin-bottom:24px}nav.toc a{color:var(--main);margin-right:16px}
 </style></head><body><main>
 <article class="ficha" id="u252">
@@ -69,6 +75,12 @@ nav.toc{font-size:14px;margin-bottom:24px}nav.toc a{color:var(--main);margin-rig
   </div>
 </section>
 <ul class="flags"><li><b>Dinâmica hidrológica</b> — trocas entre vegetação natural e água/areia são &gt; 20% das trocas brutas; não contam como perda</li></ul>
+
+<section>
+  <h3>Mapa de mudanças 2012–2025</h3>
+  <p class="muted">Comparação dos grupos de nível 1 do MapBiomas em 2012 e 2025. A área está em cores plenas e contornada; o entorno aparece esmaecido, como contexto. O mapa é ilustrativo; as áreas da legenda vêm das tabelas.</p>
+  <div class="mapwrap"><div class="map placeholder">Mapa ainda não gerado (scripts/gee/31_export_maps.py).</div><ul class="legend"><li><span class="sw" style="background:#1f6f3a"></span>Vegetação natural estável<span class="lv">437.095 ha · 88,8%</span></li><li><span class="sw" style="background:#eb6834"></span>Perda de vegetação natural<span class="lv">10.800 ha · 2,2%</span></li><li><span class="sw" style="background:#4a3aa7"></span>Ganho de vegetação natural<span class="lv">3.328 ha · 0,7%</span></li><li><span class="sw" style="background:#d8d2c4"></span>Uso antrópico estável<span class="lv">27.221 ha · 5,5%</span></li><li><span class="sw" style="background:#2a78d6"></span>Água ou areia estável<span class="lv">8.150 ha · 1,7%</span></li><li><span class="sw" style="background:#56b4e9"></span>Trocas com água ou areia<span class="lv">5.506 ha · 1,1%</span></li></ul></div>
+</section>
 
 <section>
   <h3>Trajetória da área não convertida</h3>

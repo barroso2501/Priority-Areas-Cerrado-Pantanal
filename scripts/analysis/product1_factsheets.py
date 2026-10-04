@@ -32,6 +32,7 @@ What can break, and how you would notice:
   - Charts are inline SVG: no internet or library needed to open the page.
 """
 import argparse
+import base64
 import html
 from datetime import date
 from pathlib import Path
@@ -99,6 +100,10 @@ ACTION_PT = {"recuperacao": "Recuperação", "car - boas praticas": "CAR – boa
              "corredor_mosaico": "Corredor / mosaico", "criacao uc": "Criação de UC", "criacao de uc": "Criação de UC",
              "ordenamento": "Ordenamento territorial", "compensacao": "Compensação",
              "criacao ucus": "Criação de UC de uso sustentável", "inventario": "Inventário"}
+MAP_CLASSES = [(1, "Vegetação natural estável", "#1f6f3a"), (2, "Perda de vegetação natural", "#eb6834"),
+               (3, "Ganho de vegetação natural", "#4a3aa7"), (4, "Uso antrópico estável", "#d8d2c4"),
+               (5, "Água ou areia estável", "#2a78d6"), (6, "Trocas com água ou areia", "#56b4e9")]
+MAPS = ROOT / "data/interim/maps"   # PNGs from scripts/gee/31_export_maps.py (not versioned)
 TARGET_PT = {"PLANTAS": "Plantas", "MAMIFEROS": "Mamíferos", "REPTEIS": "Répteis", "AVES": "Aves",
              "ANFIBIO": "Anfíbios", "PEIXES": "Peixes", "SISTEMAS_DE_TERRAS": "Sistemas de terras",
              "ECOSSISTEMA_AQUATICO": "Ecossistemas aquáticos"}
@@ -144,6 +149,12 @@ ANT = set(lg.loc[lg.nature.isin(["anthropic", "ambiguous"]), "pixel_id"].astype(
 nonant_year = a[~a["class"].isin(ANT)].groupby(["unit", "year"]).ha.sum()   # X(t) of D13
 dt = pd.read_parquet(EXT / "p1_transitions.parquet").query("start == @Y0 and end == @Y1").merge(zu, on="zone_id")
 dt["g0"], dt["g1"] = dt.class_start.map(group_of), dt.class_end.map(group_of)
+# Map class of each direct transition (same rule as 31_export_maps.py)
+_ant = set(lg.loc[lg.nature.isin(["anthropic", "ambiguous"]), "pixel_id"].astype(int)); _nnv = {23, 33}
+_n0, _n1 = dt.class_start.isin(NAT), dt.class_end.isin(NAT)
+_a0, _a1 = dt.class_start.isin(_ant), dt.class_end.isin(_ant)
+_w0, _w1 = dt.class_start.isin(_nnv), dt.class_end.isin(_nnv)
+dt["mapcls"] = np.select([_n0 & _n1, _n0 & _a1, _a0 & _n1, _a0 & _a1, _w0 & _w1], [1, 2, 3, 4, 5], 6)
 pers = pd.read_parquet(EXT / "p1_persistence.parquet").merge(zu, on="zone_id").groupby(["window", "unit"])[
     ["nat_start_ha", "strict_ha", "never_anthropic_ha", "water_persistent_ha"]].sum()
 biome = z.groupby(["unit", "biome_2019"]).area_ha.sum()
@@ -217,6 +228,22 @@ def svg_hbars(items, unit_label="ha"):
                  f'<text x="{l + w + 6:.1f}" y="{y + 16}" class="val">{fnum(v)} {unit_label}</text>')
     g.append("</svg>")
     return "".join(g)
+
+
+def map_section(u):
+    """Change map 2012 -> 2025 with a legend whose hectares come from the tables."""
+    ha = dt[dt.unit == u].groupby("mapcls").ha.sum()
+    tot = ha.sum()
+    leg = "".join(f'<li><span class="sw" style="background:{col}"></span>{lab}<span class="lv">{fnum(ha.get(k, 0))} ha · {fnum(ha.get(k, 0) / tot * 100, 1)}%</span></li>'
+                  for k, lab, col in MAP_CLASSES if ha.get(k, 0) >= 1)
+    png = MAPS / f"{u}.png"
+    img = (f'<img class="map" alt="Mapa de mudanças 2012–2025 da área {esc(u)}" src="data:image/png;base64,{base64.b64encode(png.read_bytes()).decode()}">'
+           if png.exists() else '<div class="map placeholder">Mapa ainda não gerado (scripts/gee/31_export_maps.py).</div>')
+    return f'''<section>
+  <h3>Mapa de mudanças 2012–2025</h3>
+  <p class="muted">Comparação dos grupos de nível 1 do MapBiomas em 2012 e 2025. A área está em cores plenas e contornada; o entorno aparece esmaecido, como contexto. O mapa é ilustrativo; as áreas da legenda vêm das tabelas.</p>
+  <div class="mapwrap">{img}<ul class="legend">{leg}</ul></div>
+</section>'''
 
 
 # --- One fact sheet ------------------------------------------------------------------------------
@@ -297,6 +324,8 @@ def ficha(u):
   </div>
 </section>
 {('<ul class="flags">' + "".join(f'<li><b>{esc(lab)}</b> — {esc(why)}</li>' for lab, why in flags) + '</ul>') if flags else '<p class="muted">Nenhum alerta.</p>'}
+
+{map_section(u)}
 
 <section>
   <h3>Trajetória da área não convertida</h3>
@@ -399,6 +428,12 @@ tr.sub th,tr.sub td{font-weight:600;background:var(--card)}td.ind{padding-left:2
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
 details{margin:8px 0;font-size:13px}.targets{color:var(--ink2);padding-left:18px}
 footer{border-top:1px solid var(--rule);margin-top:28px;font-size:12px;color:var(--muted)}
+.mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
+@media (max-width:700px){.mapwrap{grid-template-columns:1fr}}
+.map{width:100%;height:auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.map.placeholder{padding:48px 16px;text-align:center;color:var(--muted);font-size:13px;background:var(--card)}
+.legend{list-style:none;margin:0;padding:0;font-size:13px}.legend li{display:grid;grid-template-columns:14px 1fr;column-gap:8px;margin-bottom:8px}
+.legend .sw{width:14px;height:14px;border-radius:3px;margin-top:3px;grid-row:span 2}.legend .lv{color:var(--muted);grid-column:2}
 nav.toc{font-size:14px;margin-bottom:24px}nav.toc a{color:var(--main);margin-right:16px}
 '''
 
