@@ -17,6 +17,7 @@ Versioned inputs:
   data/interim/extract/p1_transitions.parquet   direct transitions (dominant driver)
 Outputs (data/derived/product1/):
   calibration_units.csv        one row per unit: metrics, noise, provisional category, flags
+  calibration_matrix.csv       the same metrics for the matrix outside the units, by biome
   calibration_sensitivity.csv  units per category when one threshold moves by -50% / +50%
   calibration_report.txt       the numbers quoted in docs/product1_calibration.md
 
@@ -188,6 +189,7 @@ def categorize(df, T, gain_pp=GAIN_MIN_PP, gain_ha=GAIN_MIN_HA):
     return pd.Series(cat, index=df.index)
 
 
+m[m.index.str.startswith("OUTSIDE|")].round(4).to_csv(OUT / "calibration_matrix.csv")   # context rows
 units = m[~m.index.str.startswith("OUTSIDE|")].copy()
 units["category"] = categorize(units, T)
 # Confidence: low when the trend is within one standard error of the nearest boundary

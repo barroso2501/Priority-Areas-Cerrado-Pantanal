@@ -1,0 +1,315 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Fichas — protótipo</title><style>
+:root{--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#6b6a66;--rule:#e4e2dc;--grid:#ecebe7;
+--main:#2a78d6;--ctx:#8a8984;--bar:#2a78d6;--card:#f4f3ef;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;
+--muted:#a3a29a;--rule:#383835;--grid:#2a2a28;--main:#3987e5;--ctx:#8f8e86;--bar:#3987e5;--card:#242422;color-scheme:dark}}
+:root[data-theme="dark"]{--surface:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--muted:#a3a29a;--rule:#383835;--grid:#2a2a28;
+--main:#3987e5;--ctx:#8f8e86;--bar:#3987e5;--card:#242422;color-scheme:dark}
+*{box-sizing:border-box}body{margin:0;background:var(--surface);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+main{max-width:920px;margin:0 auto;padding:24px 16px 64px}
+.ficha{border-top:3px solid var(--ink);padding-top:16px;margin-bottom:72px}
+.eyebrow{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:0}
+h2{font-size:26px;margin:4px 0 12px}h2 .code{font-size:14px;font-weight:400;color:var(--muted)}
+h3{font-size:16px;margin:28px 0 4px}
+.ident{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 24px;margin:0}
+.ident dt{font-size:12px;color:var(--muted)}.ident dd{margin:0}
+.verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:20px 0 8px}
+.kpi{background:var(--card);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.kpi-label{font-size:12px;color:var(--muted)}.kpi-value{font-size:30px;font-weight:600;line-height:1.1}
+.kpi-value.small{font-size:20px}.kpi-note{font-size:13px;color:var(--ink2)}
+.badge{align-self:flex-start;font-weight:600;font-size:17px;padding:3px 10px;border-radius:6px;border-left:6px solid var(--c);background:var(--surface)}
+.flags{margin:8px 0;padding-left:18px;color:var(--ink2);font-size:14px}
+.muted{color:var(--muted);font-size:13px;margin:2px 0 8px}
+table.num{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+table.num th,table.num td{padding:4px 8px;border-bottom:1px solid var(--rule);text-align:right}
+table.num th:first-child,table.num td:first-child{text-align:left}
+table.num thead th{font-weight:600;color:var(--ink2);font-size:12px}
+tr.sub th,tr.sub td{font-weight:600;background:var(--card)}td.ind{padding-left:20px!important}
+.chart{width:100%;height:auto;display:block}
+.chart .grid{stroke:var(--grid);stroke-width:1}.chart .split{stroke:var(--muted);stroke-dasharray:3 3}
+.chart .tick{fill:var(--muted);font-size:11px}.chart .val{fill:var(--ink2);font-size:12px}
+.chart .line{fill:none;stroke-width:2;stroke-linejoin:round}.chart .line.main{stroke:var(--main)}
+.chart .line.ctx{stroke:var(--ctx);stroke-dasharray:6 4}.chart .line.nat{stroke:var(--main);stroke-width:1.5;stroke-dasharray:1.5 3;opacity:.8}
+.chart .dlabel{font-size:12px;fill:var(--ink2)}.chart .hit{fill:transparent}.chart .hit:hover{fill:var(--main);fill-opacity:.25}
+.chart .bar{fill:var(--bar)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+details{margin:8px 0;font-size:13px}.targets{color:var(--ink2);padding-left:18px}
+footer{border-top:1px solid var(--rule);margin-top:28px;font-size:12px;color:var(--muted)}
+nav.toc{font-size:14px;margin-bottom:24px}nav.toc a{color:var(--main);margin-right:16px}
+</style></head><body><main><h1>Fichas de estado e dinâmica — protótipo</h1><nav class="toc"><a href="#u29">29 · Nascente Uruçui</a><a href="#u252">252 · Rio Miranda</a><a href="#u244">244 · Curvelo</a></nav>
+<article class="ficha" id="u29">
+<header>
+  <p class="eyebrow">Áreas Prioritárias do Cerrado e Pantanal · 2ª atualização · Ficha de estado e dinâmica 2012–2025</p>
+  <h2>Nascente Uruçui <span class="code">código 29</span></h2>
+  <dl class="ident">
+    <div><dt>UF</dt><dd>PI</dd></div>
+    <div><dt>Área</dt><dd>70.177 ha</dd></div>
+    <div><dt>Bioma (IBGE 2019)</dt><dd>Cerrado 100%</dd></div>
+    <div><dt>Importância biológica</dt><dd>Extremamente Alta</dd></div>
+    <div><dt>Prioridade de ação</dt><dd>Extremamente Alta</dd></div>
+    <div><dt>Ações</dt><dd>Criação de UC de uso sustentável</dd></div>
+  </dl>
+</header>
+
+<section class="verdict">
+  <div class="kpi">
+    <span class="kpi-label">Estado em 2025</span>
+    <span class="kpi-value">56%</span>
+    <span class="kpi-note">50–80% de vegetação natural · 39.229 ha</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Dinâmica 2012–2025</span>
+    <span class="badge" style="--c:#8f1d1d">Perda muito intensa</span>
+    <span class="kpi-note">−3,23 ± 0,52%/ano · tendência abaixo de −2%/ano</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Principal vetor de conversão</span>
+    <span class="kpi-value small">soja</span>
+    <span class="kpi-note">54% da vegetação convertida entre 2012 e 2025</span>
+  </div>
+</section>
+<ul class="flags"><li><b>Aceleração</b> — a perda em 2018–2025 foi maior que em 2012–2018 em mais de 0,5 p.p./ano, acima do ruído</li></ul>
+
+<section>
+  <h3>Trajetória da área não convertida</h3>
+  <p class="muted">Vegetação natural mais água e areia, índice 2012 = 100: é a base da categoria. A linha tracejada é a matriz fora das áreas prioritárias no bioma Cerrado, como <b>contexto</b>; não é uma avaliação de efeito.</p>
+  <svg viewBox="0 0 880 260" role="img" aria-label="Área não convertida, índice 2012 = 100" class="chart"><line x1="44" x2="690" y1="230.0" y2="230.0" class="grid"/><text x="38" y="234.0" class="tick" text-anchor="end">56</text><line x1="44" x2="690" y1="176.5" y2="176.5" class="grid"/><text x="38" y="180.5" class="tick" text-anchor="end">68</text><line x1="44" x2="690" y1="123.0" y2="123.0" class="grid"/><text x="38" y="127.0" class="tick" text-anchor="end">80</text><line x1="44" x2="690" y1="69.5" y2="69.5" class="grid"/><text x="38" y="73.5" class="tick" text-anchor="end">92</text><line x1="44" x2="690" y1="16.0" y2="16.0" class="grid"/><text x="38" y="20.0" class="tick" text-anchor="end">104</text><text x="44.0" y="252" class="tick" text-anchor="middle">2012</text><text x="193.1" y="252" class="tick" text-anchor="middle">2015</text><text x="342.2" y="252" class="tick" text-anchor="middle">2018</text><text x="491.2" y="252" class="tick" text-anchor="middle">2021</text><text x="690.0" y="252" class="tick" text-anchor="middle">2025</text><line x1="342.2" x2="342.2" y1="16" y2="230" class="split"/><text x="346.2" y="26" class="tick">2018</text><text x="698.0" y="88.1" class="dlabel ctx">Matriz do bioma 88,8</text><text x="698.0" y="216.2" class="dlabel main">Esta área 60,1</text><polyline points="44.0,33.8 93.7,37.8 143.4,41.2 193.1,44.2 242.8,46.8 292.5,49.1 342.2,51.2 391.8,54.2 441.5,57.9 491.2,61.5 540.9,65.9 590.6,71.5 640.3,75.2 690.0,84.1" class="line ctx"/><circle cx="44.0" cy="33.8" r="7" class="hit"><title>Matriz do bioma, 2012: 100,0</title></circle><circle cx="93.7" cy="37.8" r="7" class="hit"><title>Matriz do bioma, 2013: 99,1</title></circle><circle cx="143.4" cy="41.2" r="7" class="hit"><title>Matriz do bioma, 2014: 98,3</title></circle><circle cx="193.1" cy="44.2" r="7" class="hit"><title>Matriz do bioma, 2015: 97,7</title></circle><circle cx="242.8" cy="46.8" r="7" class="hit"><title>Matriz do bioma, 2016: 97,1</title></circle><circle cx="292.5" cy="49.1" r="7" class="hit"><title>Matriz do bioma, 2017: 96,6</title></circle><circle cx="342.2" cy="51.2" r="7" class="hit"><title>Matriz do bioma, 2018: 96,1</title></circle><circle cx="391.8" cy="54.2" r="7" class="hit"><title>Matriz do bioma, 2019: 95,5</title></circle><circle cx="441.5" cy="57.9" r="7" class="hit"><title>Matriz do bioma, 2020: 94,6</title></circle><circle cx="491.2" cy="61.5" r="7" class="hit"><title>Matriz do bioma, 2021: 93,8</title></circle><circle cx="540.9" cy="65.9" r="7" class="hit"><title>Matriz do bioma, 2022: 92,8</title></circle><circle cx="590.6" cy="71.5" r="7" class="hit"><title>Matriz do bioma, 2023: 91,6</title></circle><circle cx="640.3" cy="75.2" r="7" class="hit"><title>Matriz do bioma, 2024: 90,8</title></circle><circle cx="690.0" cy="84.1" r="7" class="hit"><title>Matriz do bioma, 2025: 88,8</title></circle><polyline points="44.0,33.8 93.7,45.3 143.4,53.5 193.1,60.4 242.8,61.7 292.5,67.9 342.2,74.7 391.8,102.3 441.5,123.2 491.2,132.5 540.9,169.0 590.6,191.3 640.3,206.2 690.0,212.2" class="line main"/><circle cx="44.0" cy="33.8" r="7" class="hit"><title>Esta área, 2012: 100,0</title></circle><circle cx="93.7" cy="45.3" r="7" class="hit"><title>Esta área, 2013: 97,4</title></circle><circle cx="143.4" cy="53.5" r="7" class="hit"><title>Esta área, 2014: 95,6</title></circle><circle cx="193.1" cy="60.4" r="7" class="hit"><title>Esta área, 2015: 94,1</title></circle><circle cx="242.8" cy="61.7" r="7" class="hit"><title>Esta área, 2016: 93,8</title></circle><circle cx="292.5" cy="67.9" r="7" class="hit"><title>Esta área, 2017: 92,4</title></circle><circle cx="342.2" cy="74.7" r="7" class="hit"><title>Esta área, 2018: 90,9</title></circle><circle cx="391.8" cy="102.3" r="7" class="hit"><title>Esta área, 2019: 84,7</title></circle><circle cx="441.5" cy="123.2" r="7" class="hit"><title>Esta área, 2020: 80,0</title></circle><circle cx="491.2" cy="132.5" r="7" class="hit"><title>Esta área, 2021: 77,9</title></circle><circle cx="540.9" cy="169.0" r="7" class="hit"><title>Esta área, 2022: 69,8</title></circle><circle cx="590.6" cy="191.3" r="7" class="hit"><title>Esta área, 2023: 64,8</title></circle><circle cx="640.3" cy="206.2" r="7" class="hit"><title>Esta área, 2024: 61,5</title></circle><circle cx="690.0" cy="212.2" r="7" class="hit"><title>Esta área, 2025: 60,1</title></circle></svg>
+  <table class="num">
+    <thead><tr><th></th><th>2012–2025</th><th>2012–2018</th><th>2018–2025</th><th>Matriz do bioma 2012–2025</th></tr></thead>
+    <tbody>
+      <tr><td>Tendência líquida (%/ano da vegetação de 2012)</td><td>−3,23</td><td>−1,45</td><td>−4,67</td><td>−0,77</td></tr>
+      <tr><td>Conversão bruta (%/ano)</td><td>3,14</td><td></td><td></td><td>1,33</td></tr>
+      <tr><td>Regeneração bruta (%/ano)</td><td>0,08</td><td></td><td></td><td>0,45</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h3>Composição da paisagem (ha)</h3>
+  <table class="num">
+    <thead><tr><th></th><th>2012</th><th>2025</th><th>Variação</th></tr></thead>
+    <tbody><tr class="sub"><th>Vegetação natural</th><td>65.243</td><td>39.229</td><td>−26.014</td></tr><tr><td class="ind">Formação florestal</td><td>2.724</td><td>2.692</td><td>−32</td></tr><tr><td class="ind">Formação savânica</td><td>61.754</td><td>35.775</td><td>−25.979</td></tr><tr><td class="ind">Formação campestre</td><td>123</td><td>54</td><td>−69</td></tr><tr><td class="ind">Campo alagado</td><td>19</td><td>85</td><td>+66</td></tr><tr><td class="ind">Outras formações naturais</td><td>623</td><td>623</td><td>+1</td></tr><tr class="sub"><th>Uso antrópico</th><td>4.936</td><td>30.950</td><td>+26.014</td></tr><tr><td class="ind">Pastagem</td><td>36</td><td>674</td><td>+638</td></tr><tr><td class="ind">Soja</td><td>1.076</td><td>18.931</td><td>+17.855</td></tr><tr><td class="ind">Outras lavouras</td><td>3.704</td><td>3.932</td><td>+228</td></tr><tr><td class="ind">Mosaico de usos</td><td>120</td><td>7.398</td><td>+7.277</td></tr><tr><td class="ind">Urbano, mineração e outros</td><td>0</td><td>16</td><td>+16</td></tr></tbody>
+  </table>
+  <p class="muted">Vegetação natural: 93,0% da área terrestre em 2012 e 55,9% em 2025.</p>
+</section>
+
+<section class="two">
+  <div>
+    <h3>Para onde foi a vegetação natural de 2012</h3>
+    <p class="muted">Vegetação natural em 2012 que era uso antrópico em 2025 (transição direta).</p>
+    <svg viewBox="0 0 430 126" class="chart" role="img"><text x="157" y="19" class="tick" text-anchor="end">Soja</text><rect x="165" y="7" width="185.0" height="16" rx="3" class="bar"><title>Soja: 14.150 ha</title></rect><text x="356.0" y="19" class="val">14.150 ha</text><text x="157" y="43" class="tick" text-anchor="end">Mosaico de usos</text><rect x="165" y="31" width="96.6" height="16" rx="3" class="bar"><title>Mosaico de usos: 7.390 ha</title></rect><text x="267.6" y="43" class="val">7.390 ha</text><text x="157" y="67" class="tick" text-anchor="end">Outras lavouras</text><rect x="165" y="55" width="50.1" height="16" rx="3" class="bar"><title>Outras lavouras: 3.833 ha</title></rect><text x="221.1" y="67" class="val">3.833 ha</text><text x="157" y="91" class="tick" text-anchor="end">Pastagem</text><rect x="165" y="79" width="8.5" height="16" rx="3" class="bar"><title>Pastagem: 651 ha</title></rect><text x="179.5" y="91" class="val">651 ha</text><text x="157" y="115" class="tick" text-anchor="end">Urbano, mineração e outros</text><rect x="165" y="103" width="2.0" height="16" rx="3" class="bar"><title>Urbano, mineração e outros: 16 ha</title></rect><text x="173.0" y="115" class="val">16 ha</text></svg>
+  </div>
+  <div>
+    <h3>De onde veio a regeneração</h3>
+    <p class="muted">Uso antrópico em 2012 que era vegetação natural em 2025.</p>
+    <svg viewBox="0 0 430 78" class="chart" role="img"><text x="157" y="19" class="tick" text-anchor="end">Pastagem</text><rect x="165" y="7" width="185.0" height="16" rx="3" class="bar"><title>Pastagem: 19 ha</title></rect><text x="356.0" y="19" class="val">19 ha</text><text x="157" y="43" class="tick" text-anchor="end">Outras lavouras</text><rect x="165" y="31" width="44.0" height="16" rx="3" class="bar"><title>Outras lavouras: 4 ha</title></rect><text x="215.0" y="43" class="val">4 ha</text><text x="157" y="67" class="tick" text-anchor="end">Mosaico de usos</text><rect x="165" y="55" width="28.2" height="16" rx="3" class="bar"><title>Mosaico de usos: 3 ha</title></rect><text x="199.2" y="67" class="val">3 ha</text></svg>
+  </div>
+</section>
+
+
+<section>
+  <h3>Persistência</h3>
+  <table class="num">
+    <tbody>
+      <tr><td>Vegetação natural de 2012 nunca convertida em uso até 2025</td><td>39.153 ha</td><td>60,0%</td></tr>
+      <tr><td>Vegetação natural de 1985 nunca convertida em uso até 2025</td><td>39.119 ha</td><td>55,8%</td></tr>
+      <tr><td>Parcela da vegetação natural de 2025 nunca convertida desde 1985</td><td></td><td>99,7%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">A diferença entre a vegetação de 2025 e a vegetação nunca convertida é vegetação secundária ou regenerada, que conta como natural no MapBiomas.</p>
+</section>
+
+<section>
+  <h3>Alvos de conservação da área (2ª atualização, listas de 2011–2012)</h3>
+  <table class="num"><thead><tr><th>Grupo</th><th>Alvos</th></tr></thead><tbody><tr><td>Plantas</td><td>23</td></tr><tr><td>Mamíferos</td><td>15</td></tr><tr><td>Répteis</td><td>8</td></tr><tr><td>Aves</td><td>4</td></tr><tr><td>Anfíbios</td><td>3</td></tr><tr><td>Sistemas de terras</td><td>3</td></tr></tbody></table><details><summary>Lista de alvos</summary><ul class="targets"><li><b>Anfíbios:</b> Dendropsophus cruzi, Rhinella ocellata, Scinax constrictus</li><li><b>Aves:</b> Alipiopsitta xanthops, Anodorhychus hyacinthinus, Conothraupis mesoleuca, Suiriri islerorum</li><li><b>Mamíferos:</b> Carterodon sulcidens, Chrysocyon brachyurus, Cuniculus paca, Leopardus wiedii, Monodelphis kunsi, Myrmechophaga tridactyla, Ozotoceros bezoarticus, Panthera onca, Priodontes maximus, Pteronura brasiliensis, Puma concolor, Tapirus terrestris, Tayassu pecari, Thalpomys cerradensis, Thyroptera devivoi</li><li><b>Plantas:</b> Callisthene fasciculata mart., Callisthene major mart. &amp; zucc., Chrysolaena obovata (less.) dematt., Eugenia dysenterica dc., Guadua paniculata munro, Handroanthus impetiginosus mattos, Handroanthus ochraceus (cham.) mattos, Jacaranda brasiliana (lam.) pers., Lafoensia densiflora pohl, Myrsine guianensis (aubl.) kuntze, Piptocarpha rotundifolia (less.) baker, Psidium myrsinites dc., Qualea grandiflora mart., Qualea jundiahy warm., Qualea multiflora mart., Qualea parviflora mart., Salvertia convallariodora a.st.-hil., Tabebuia aurea (silva manso) benth. &amp; hook.f. ex *, Vernonanthura ferruginea (less.) h.rob., Vochysia cinnamomea pohl, Vochysia gardneri warm., Vochysia haenkeana mart., Zeyheria digitalis (vell.) hoehne &amp; kuhlm.</li><li><b>Répteis:</b> Apostolepis flavotorquata, Bothrops lutzi, Bothrops marmoratus, Chironius flavolineatus, Coleodactylus brachystoma, Hoplocercus spinosus, Phalotris nasutus, Xenodon nattereri</li><li><b>Sistemas de terras:</b> 1bc8n, 1da1n, 1fc3n</li></ul></details>
+  <p class="muted">As listas são históricas e não representam a lista vigente de espécies ameaçadas.</p>
+</section>
+
+<footer>
+  <p>Fonte: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias MMA (Portarias 223/2016 e 463/2018). Método: decisão D13 do projeto. Tendência robusta (Theil–Sen) da área não antrópica, em % ao ano da vegetação natural de 2012; perda e ganho contam só trocas com uso antrópico. Protótipo gerado em 04/10/2026; números sujeitos a revisão.</p>
+</footer>
+</article>
+<article class="ficha" id="u252">
+<header>
+  <p class="eyebrow">Áreas Prioritárias do Cerrado e Pantanal · 2ª atualização · Ficha de estado e dinâmica 2012–2025</p>
+  <h2>Rio Miranda <span class="code">código 252</span></h2>
+  <dl class="ident">
+    <div><dt>UF</dt><dd>MS</dd></div>
+    <div><dt>Área</dt><dd>496.811 ha</dd></div>
+    <div><dt>Bioma (IBGE 2019)</dt><dd>Pantanal 83%; Cerrado 16%</dd></div>
+    <div><dt>Importância biológica</dt><dd>Muito Alta</dd></div>
+    <div><dt>Prioridade de ação</dt><dd>Muito Alta</dd></div>
+    <div><dt>Ações</dt><dd>Corredor / mosaico</dd></div>
+  </dl>
+</header>
+
+<section class="verdict">
+  <div class="kpi">
+    <span class="kpi-label">Estado em 2025</span>
+    <span class="kpi-value">92%</span>
+    <span class="kpi-note">≥ 80% de vegetação natural · 445.274 ha</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Dinâmica 2012–2025</span>
+    <span class="badge" style="--c:#8a8984">Estável</span>
+    <span class="kpi-note">−0,14 ± 0,04%/ano · tendência entre −0,2 e +0,2%/ano e conversão bruta ≤ 0,5%/ano</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Principal vetor de conversão</span>
+    <span class="kpi-value small">pastagem</span>
+    <span class="kpi-note">62% da vegetação convertida entre 2012 e 2025</span>
+  </div>
+</section>
+<ul class="flags"><li><b>Dinâmica hidrológica</b> — trocas entre vegetação natural e água/areia são &gt; 20% das trocas brutas; não contam como perda</li></ul>
+
+<section>
+  <h3>Trajetória da área não convertida</h3>
+  <p class="muted">Vegetação natural mais água e areia, índice 2012 = 100: é a base da categoria. A linha tracejada é a matriz fora das áreas prioritárias no bioma Pantanal, como <b>contexto</b>; não é uma avaliação de efeito. A linha pontilhada mostra só a vegetação natural da área: a oscilação vem das cheias, que não contam como perda.</p>
+  <svg viewBox="0 0 880 260" role="img" aria-label="Área não convertida, índice 2012 = 100" class="chart"><line x1="44" x2="690" y1="230.0" y2="230.0" class="grid"/><text x="38" y="234.0" class="tick" text-anchor="end">80</text><line x1="44" x2="690" y1="176.5" y2="176.5" class="grid"/><text x="38" y="180.5" class="tick" text-anchor="end">85</text><line x1="44" x2="690" y1="123.0" y2="123.0" class="grid"/><text x="38" y="127.0" class="tick" text-anchor="end">91</text><line x1="44" x2="690" y1="69.5" y2="69.5" class="grid"/><text x="38" y="73.5" class="tick" text-anchor="end">96</text><line x1="44" x2="690" y1="16.0" y2="16.0" class="grid"/><text x="38" y="20.0" class="tick" text-anchor="end">102</text><text x="44.0" y="252" class="tick" text-anchor="middle">2012</text><text x="193.1" y="252" class="tick" text-anchor="middle">2015</text><text x="342.2" y="252" class="tick" text-anchor="middle">2018</text><text x="491.2" y="252" class="tick" text-anchor="middle">2021</text><text x="690.0" y="252" class="tick" text-anchor="middle">2025</text><line x1="342.2" x2="342.2" y1="16" y2="230" class="split"/><text x="346.2" y="26" class="tick">2018</text><text x="698.0" y="44.8" class="dlabel nat">Vegetação natural (área) 99,3</text><text x="698.0" y="59.8" class="dlabel main">Esta área 98,4</text><text x="698.0" y="77.4" class="dlabel ctx">Matriz do bioma 95,9</text><polyline points="44.0,33.8 93.7,68.9 143.4,212.2 193.1,62.1 242.8,110.5 292.5,72.1 342.2,197.7 391.8,71.1 441.5,45.4 491.2,55.2 540.9,41.4 590.6,59.9 640.3,40.1 690.0,40.8" class="line nat"/><circle cx="44.0" cy="33.8" r="7" class="hit"><title>Vegetação natural (área), 2012: 100,0</title></circle><circle cx="93.7" cy="68.9" r="7" class="hit"><title>Vegetação natural (área), 2013: 96,3</title></circle><circle cx="143.4" cy="212.2" r="7" class="hit"><title>Vegetação natural (área), 2014: 81,4</title></circle><circle cx="193.1" cy="62.1" r="7" class="hit"><title>Vegetação natural (área), 2015: 97,1</title></circle><circle cx="242.8" cy="110.5" r="7" class="hit"><title>Vegetação natural (área), 2016: 92,0</title></circle><circle cx="292.5" cy="72.1" r="7" class="hit"><title>Vegetação natural (área), 2017: 96,0</title></circle><circle cx="342.2" cy="197.7" r="7" class="hit"><title>Vegetação natural (área), 2018: 82,9</title></circle><circle cx="391.8" cy="71.1" r="7" class="hit"><title>Vegetação natural (área), 2019: 96,1</title></circle><circle cx="441.5" cy="45.4" r="7" class="hit"><title>Vegetação natural (área), 2020: 98,8</title></circle><circle cx="491.2" cy="55.2" r="7" class="hit"><title>Vegetação natural (área), 2021: 97,8</title></circle><circle cx="540.9" cy="41.4" r="7" class="hit"><title>Vegetação natural (área), 2022: 99,2</title></circle><circle cx="590.6" cy="59.9" r="7" class="hit"><title>Vegetação natural (área), 2023: 97,3</title></circle><circle cx="640.3" cy="40.1" r="7" class="hit"><title>Vegetação natural (área), 2024: 99,3</title></circle><circle cx="690.0" cy="40.8" r="7" class="hit"><title>Vegetação natural (área), 2025: 99,3</title></circle><polyline points="44.0,33.8 93.7,35.5 143.4,36.0 193.1,36.8 242.8,38.9 292.5,39.9 342.2,40.1 391.8,44.8 441.5,50.2 491.2,54.7 540.9,59.4 590.6,65.5 640.3,71.2 690.0,73.4" class="line ctx"/><circle cx="44.0" cy="33.8" r="7" class="hit"><title>Matriz do bioma, 2012: 100,0</title></circle><circle cx="93.7" cy="35.5" r="7" class="hit"><title>Matriz do bioma, 2013: 99,8</title></circle><circle cx="143.4" cy="36.0" r="7" class="hit"><title>Matriz do bioma, 2014: 99,8</title></circle><circle cx="193.1" cy="36.8" r="7" class="hit"><title>Matriz do bioma, 2015: 99,7</title></circle><circle cx="242.8" cy="38.9" r="7" class="hit"><title>Matriz do bioma, 2016: 99,5</title></circle><circle cx="292.5" cy="39.9" r="7" class="hit"><title>Matriz do bioma, 2017: 99,4</title></circle><circle cx="342.2" cy="40.1" r="7" class="hit"><title>Matriz do bioma, 2018: 99,3</title></circle><circle cx="391.8" cy="44.8" r="7" class="hit"><title>Matriz do bioma, 2019: 98,9</title></circle><circle cx="441.5" cy="50.2" r="7" class="hit"><title>Matriz do bioma, 2020: 98,3</title></circle><circle cx="491.2" cy="54.7" r="7" class="hit"><title>Matriz do bioma, 2021: 97,8</title></circle><circle cx="540.9" cy="59.4" r="7" class="hit"><title>Matriz do bioma, 2022: 97,3</title></circle><circle cx="590.6" cy="65.5" r="7" class="hit"><title>Matriz do bioma, 2023: 96,7</title></circle><circle cx="640.3" cy="71.2" r="7" class="hit"><title>Matriz do bioma, 2024: 96,1</title></circle><circle cx="690.0" cy="73.4" r="7" class="hit"><title>Matriz do bioma, 2025: 95,9</title></circle><polyline points="44.0,33.8 93.7,34.4 143.4,38.0 193.1,41.9 242.8,44.0 292.5,46.0 342.2,45.9 391.8,46.4 441.5,48.5 491.2,50.9 540.9,51.5 590.6,49.7 640.3,49.4 690.0,49.4" class="line main"/><circle cx="44.0" cy="33.8" r="7" class="hit"><title>Esta área, 2012: 100,0</title></circle><circle cx="93.7" cy="34.4" r="7" class="hit"><title>Esta área, 2013: 99,9</title></circle><circle cx="143.4" cy="38.0" r="7" class="hit"><title>Esta área, 2014: 99,6</title></circle><circle cx="193.1" cy="41.9" r="7" class="hit"><title>Esta área, 2015: 99,2</title></circle><circle cx="242.8" cy="44.0" r="7" class="hit"><title>Esta área, 2016: 98,9</title></circle><circle cx="292.5" cy="46.0" r="7" class="hit"><title>Esta área, 2017: 98,7</title></circle><circle cx="342.2" cy="45.9" r="7" class="hit"><title>Esta área, 2018: 98,7</title></circle><circle cx="391.8" cy="46.4" r="7" class="hit"><title>Esta área, 2019: 98,7</title></circle><circle cx="441.5" cy="48.5" r="7" class="hit"><title>Esta área, 2020: 98,5</title></circle><circle cx="491.2" cy="50.9" r="7" class="hit"><title>Esta área, 2021: 98,2</title></circle><circle cx="540.9" cy="51.5" r="7" class="hit"><title>Esta área, 2022: 98,2</title></circle><circle cx="590.6" cy="49.7" r="7" class="hit"><title>Esta área, 2023: 98,4</title></circle><circle cx="640.3" cy="49.4" r="7" class="hit"><title>Esta área, 2024: 98,4</title></circle><circle cx="690.0" cy="49.4" r="7" class="hit"><title>Esta área, 2025: 98,4</title></circle></svg>
+  <table class="num">
+    <thead><tr><th></th><th>2012–2025</th><th>2012–2018</th><th>2018–2025</th><th>Matriz do bioma 2012–2025</th></tr></thead>
+    <tbody>
+      <tr><td>Tendência líquida (%/ano da vegetação de 2012)</td><td>−0,14</td><td>−0,25</td><td>−0,05</td><td>−0,36</td></tr>
+      <tr><td>Conversão bruta (%/ano)</td><td>0,24</td><td></td><td></td><td>0,46</td></tr>
+      <tr><td>Regeneração bruta (%/ano)</td><td>0,11</td><td></td><td></td><td>0,13</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h3>Composição da paisagem (ha)</h3>
+  <table class="num">
+    <thead><tr><th></th><th>2012</th><th>2025</th><th>Variação</th></tr></thead>
+    <tbody><tr class="sub"><th>Vegetação natural</th><td>448.523</td><td>445.274</td><td>−3.249</td></tr><tr><td class="ind">Formação florestal</td><td>44.422</td><td>49.052</td><td>+4.630</td></tr><tr><td class="ind">Formação savânica</td><td>127.347</td><td>107.574</td><td>−19.773</td></tr><tr><td class="ind">Savana alagada</td><td>2.443</td><td>2.866</td><td>+422</td></tr><tr><td class="ind">Formação campestre</td><td>260.697</td><td>256.840</td><td>−3.857</td></tr><tr><td class="ind">Campo alagado</td><td>13.614</td><td>28.942</td><td>+15.329</td></tr><tr class="sub"><th>Uso antrópico</th><td>30.560</td><td>38.036</td><td>+7.476</td></tr><tr><td class="ind">Pastagem</td><td>27.054</td><td>24.813</td><td>−2.241</td></tr><tr><td class="ind">Soja</td><td>86</td><td>6.811</td><td>+6.725</td></tr><tr><td class="ind">Outras lavouras</td><td>1.165</td><td>2.630</td><td>+1.465</td></tr><tr><td class="ind">Mosaico de usos</td><td>2.141</td><td>3.552</td><td>+1.411</td></tr><tr><td class="ind">Silvicultura</td><td>87</td><td>190</td><td>+103</td></tr><tr><td class="ind">Urbano, mineração e outros</td><td>27</td><td>40</td><td>+13</td></tr><tr class="sub"><th>Natural não vegetado</th><td>13.016</td><td>8.789</td><td>−4.227</td></tr><tr><td class="ind">Água</td><td>13.016</td><td>8.789</td><td>−4.227</td></tr></tbody>
+  </table>
+  <p class="muted">Vegetação natural: 93,6% da área terrestre em 2012 e 92,1% em 2025.</p>
+</section>
+
+<section class="two">
+  <div>
+    <h3>Para onde foi a vegetação natural de 2012</h3>
+    <p class="muted">Vegetação natural em 2012 que era uso antrópico em 2025 (transição direta).</p>
+    <svg viewBox="0 0 430 150" class="chart" role="img"><text x="157" y="19" class="tick" text-anchor="end">Pastagem</text><rect x="165" y="7" width="185.0" height="16" rx="3" class="bar"><title>Pastagem: 6.652 ha</title></rect><text x="356.0" y="19" class="val">6.652 ha</text><text x="157" y="43" class="tick" text-anchor="end">Outras lavouras</text><rect x="165" y="31" width="46.1" height="16" rx="3" class="bar"><title>Outras lavouras: 1.656 ha</title></rect><text x="217.1" y="43" class="val">1.656 ha</text><text x="157" y="67" class="tick" text-anchor="end">Soja</text><rect x="165" y="55" width="38.1" height="16" rx="3" class="bar"><title>Soja: 1.370 ha</title></rect><text x="209.1" y="67" class="val">1.370 ha</text><text x="157" y="91" class="tick" text-anchor="end">Mosaico de usos</text><rect x="165" y="79" width="30.8" height="16" rx="3" class="bar"><title>Mosaico de usos: 1.107 ha</title></rect><text x="201.8" y="91" class="val">1.107 ha</text><text x="157" y="115" class="tick" text-anchor="end">Urbano, mineração e outros</text><rect x="165" y="103" width="2.0" height="16" rx="3" class="bar"><title>Urbano, mineração e outros: 12 ha</title></rect><text x="173.0" y="115" class="val">12 ha</text><text x="157" y="139" class="tick" text-anchor="end">Silvicultura</text><rect x="165" y="127" width="2.0" height="16" rx="3" class="bar"><title>Silvicultura: 3 ha</title></rect><text x="173.0" y="139" class="val">3 ha</text></svg>
+  </div>
+  <div>
+    <h3>De onde veio a regeneração</h3>
+    <p class="muted">Uso antrópico em 2012 que era vegetação natural em 2025.</p>
+    <svg viewBox="0 0 430 102" class="chart" role="img"><text x="157" y="19" class="tick" text-anchor="end">Pastagem</text><rect x="165" y="7" width="185.0" height="16" rx="3" class="bar"><title>Pastagem: 3.031 ha</title></rect><text x="356.0" y="19" class="val">3.031 ha</text><text x="157" y="43" class="tick" text-anchor="end">Mosaico de usos</text><rect x="165" y="31" width="17.8" height="16" rx="3" class="bar"><title>Mosaico de usos: 292 ha</title></rect><text x="188.8" y="43" class="val">292 ha</text><text x="157" y="67" class="tick" text-anchor="end">Soja</text><rect x="165" y="55" width="2.0" height="16" rx="3" class="bar"><title>Soja: 2 ha</title></rect><text x="173.0" y="67" class="val">2 ha</text><text x="157" y="91" class="tick" text-anchor="end">Outras lavouras</text><rect x="165" y="79" width="2.0" height="16" rx="3" class="bar"><title>Outras lavouras: 2 ha</title></rect><text x="173.0" y="91" class="val">2 ha</text></svg>
+  </div>
+</section>
+<p class="muted">Dinâmica hidrológica (fora da contabilidade): 628 ha de vegetação natural de 2012 eram água ou areia em 2025, e 4.851 ha fizeram o caminho inverso. Vegetação que virou água e ficou água em 2020–2025 (possível reservatório): 83 ha.</p>
+
+<section>
+  <h3>Persistência</h3>
+  <table class="num">
+    <tbody>
+      <tr><td>Vegetação natural de 2012 nunca convertida em uso até 2025</td><td>435.863 ha</td><td>97,2%</td></tr>
+      <tr><td>Vegetação natural de 1985 nunca convertida em uso até 2025</td><td>307.966 ha</td><td>90,4%</td></tr>
+      <tr><td>Parcela da vegetação natural de 2025 nunca convertida desde 1985</td><td></td><td>69,2%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">A diferença entre a vegetação de 2025 e a vegetação nunca convertida é vegetação secundária ou regenerada, que conta como natural no MapBiomas. <b>Nesta área há dinâmica hidrológica:</b> parte da diferença é vegetação que estava alagada em 1985 (água), não vegetação secundária; a terceira linha subestima a vegetação antiga.</p>
+</section>
+
+<section>
+  <h3>Alvos de conservação da área (2ª atualização, listas de 2011–2012)</h3>
+  <table class="num"><thead><tr><th>Grupo</th><th>Alvos</th></tr></thead><tbody><tr><td>Plantas</td><td>39</td></tr><tr><td>Mamíferos</td><td>16</td></tr><tr><td>Répteis</td><td>14</td></tr><tr><td>Aves</td><td>4</td></tr><tr><td>Sistemas de terras</td><td>3</td></tr></tbody></table><details><summary>Lista de alvos</summary><ul class="targets"><li><b>Aves:</b> Alipiopsitta xanthops, Anodorhychus hyacinthinus, Polystictus pectoralis, Sporophila cinnamomea</li><li><b>Mamíferos:</b> Blastocerus dichotomus, Chrysocyon brachyurus, Clyomys laticeps, Cuniculus paca, Leontophitecus chrysopygus, Monodelphis kunsi, Myrmechophaga tridactyla, Oecomys cleberi, Ozotoceros bezoarticus, Panthera onca, Priodontes maximus, Pteronura brasiliensis, Puma concolor, Speothos venaticus, Tapirus terrestris, Thylamys velutinus</li><li><b>Plantas:</b> Annona emarginata (schltdl.) h.rainer, Baccharis dracunculifolia dc., Blepharocalyx salicifolius (kunth) o.berg, Bumelia obtusifolia roem. &amp; schult., Callisthene major mart. &amp; zucc., Caperonia palustris (l.) a.st.-hil., Crateva tapia l., Dasyphyllum brasiliense var. latifolium (d.don) c*, Echinodorus paniculatus micheli, Erythroxylum anguifugum mart., Eugenia aurata o.berg, Eugenia punicifolia (hbk) dc., Ficus calyptroceras (miq.) miq., Ficus krukovii standl., Genipa americana l., Handroanthus impetiginosus mattos, Handroanthus ochraceus (cham.) mattos, Jacaranda caroba (vell.) dc., Jacaranda cuspidifolia mart., Jacaranda decurrens cham., Lessingianthus grandiflorus (less.) h.rob., Myrcia tomentosa (aubl.) dc., Myrsine guianensis (aubl.) kuntze, Paspalum virgatum l., Pfaffia glomerata (spreng.) pedersen, Qualea dichotoma (mart.) warm., Qualea grandiflora mart., Qualea multiflora mart., Qualea parviflora mart., Tabebuia aurea (silva manso) benth. &amp; hook.f. ex *, Tabebuia insignis (miq.) sandwith, Tabebuia roseoalba (ridl.) sandwith, Tetrapterys microphylla (a.juss.) nied., Vernonanthura ferruginea (less.) h.rob., Vernonia rubriramea mart. ex dc., Vochysia cinnamomea pohl, Vochysia divergens pohl, Vochysia tucanorum mart., Zeyheria digitalis (vell.) hoehne &amp; kuhlm.</li><li><b>Répteis:</b> Anolis meridionalis, Bothrops mattogrossensis, Clelia bicolor, Coleodactylus brachystoma, Drymoluber brazili, Eunectes notaeus, Hoplocercus spinosus, Mabuya guaporicola, Micrurus tricolor, Philodryas livida, Phimophis guerini, Psomophis genimaculatus, Tropidurus itambere, Xenodon matogrossensis</li><li><b>Sistemas de terras:</b> 3ac3c, 5ap1n, 5ap5n</li></ul></details>
+  <p class="muted">As listas são históricas e não representam a lista vigente de espécies ameaçadas.</p>
+</section>
+
+<footer>
+  <p>Fonte: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias MMA (Portarias 223/2016 e 463/2018). Método: decisão D13 do projeto. Tendência robusta (Theil–Sen) da área não antrópica, em % ao ano da vegetação natural de 2012; perda e ganho contam só trocas com uso antrópico. Protótipo gerado em 04/10/2026; números sujeitos a revisão.</p>
+</footer>
+</article>
+<article class="ficha" id="u244">
+<header>
+  <p class="eyebrow">Áreas Prioritárias do Cerrado e Pantanal · 2ª atualização · Ficha de estado e dinâmica 2012–2025</p>
+  <h2>Curvelo <span class="code">código 244</span></h2>
+  <dl class="ident">
+    <div><dt>UF</dt><dd>MG</dd></div>
+    <div><dt>Área</dt><dd>47.564 ha</dd></div>
+    <div><dt>Bioma (IBGE 2019)</dt><dd>Cerrado 100%</dd></div>
+    <div><dt>Importância biológica</dt><dd>Muito Alta</dd></div>
+    <div><dt>Prioridade de ação</dt><dd>Alta</dd></div>
+    <div><dt>Ações</dt><dd>Recuperação; Fomento ao uso sustentável</dd></div>
+  </dl>
+</header>
+
+<section class="verdict">
+  <div class="kpi">
+    <span class="kpi-label">Estado em 2025</span>
+    <span class="kpi-value">33%</span>
+    <span class="kpi-note">20–50% de vegetação natural · 15.533 ha</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Dinâmica 2012–2025</span>
+    <span class="badge" style="--c:#256abf">Ganho líquido</span>
+    <span class="kpi-note">+0,54 ± 0,10%/ano · tendência > +0,2%/ano, com ganho ≥ 0,5 p.p. da área e ≥ 100 ha</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Principal vetor de conversão</span>
+    <span class="kpi-value small">pastagem</span>
+    <span class="kpi-note">58% da vegetação convertida entre 2012 e 2025</span>
+  </div>
+</section>
+<p class="muted">Nenhum alerta.</p>
+
+<section>
+  <h3>Trajetória da área não convertida</h3>
+  <p class="muted">Vegetação natural mais água e areia, índice 2012 = 100: é a base da categoria. A linha tracejada é a matriz fora das áreas prioritárias no bioma Cerrado, como <b>contexto</b>; não é uma avaliação de efeito.</p>
+  <svg viewBox="0 0 880 260" role="img" aria-label="Área não convertida, índice 2012 = 100" class="chart"><line x1="44" x2="690" y1="230.0" y2="230.0" class="grid"/><text x="38" y="234.0" class="tick" text-anchor="end">87</text><line x1="44" x2="690" y1="176.5" y2="176.5" class="grid"/><text x="38" y="180.5" class="tick" text-anchor="end">92</text><line x1="44" x2="690" y1="123.0" y2="123.0" class="grid"/><text x="38" y="127.0" class="tick" text-anchor="end">97</text><line x1="44" x2="690" y1="69.5" y2="69.5" class="grid"/><text x="38" y="73.5" class="tick" text-anchor="end">102</text><line x1="44" x2="690" y1="16.0" y2="16.0" class="grid"/><text x="38" y="20.0" class="tick" text-anchor="end">107</text><text x="44.0" y="252" class="tick" text-anchor="middle">2012</text><text x="193.1" y="252" class="tick" text-anchor="middle">2015</text><text x="342.2" y="252" class="tick" text-anchor="middle">2018</text><text x="491.2" y="252" class="tick" text-anchor="middle">2021</text><text x="690.0" y="252" class="tick" text-anchor="middle">2025</text><line x1="342.2" x2="342.2" y1="16" y2="230" class="split"/><text x="346.2" y="26" class="tick">2018</text><text x="698.0" y="59.3" class="dlabel main">Esta área 103,5</text><text x="698.0" y="216.2" class="dlabel ctx">Matriz do bioma 88,8</text><polyline points="44.0,92.7 93.7,102.2 143.4,110.2 193.1,117.3 242.8,123.5 292.5,128.9 342.2,134.0 391.8,141.0 441.5,149.8 491.2,158.4 540.9,168.9 590.6,182.3 640.3,191.0 690.0,212.2" class="line ctx"/><circle cx="44.0" cy="92.7" r="7" class="hit"><title>Matriz do bioma, 2012: 100,0</title></circle><circle cx="93.7" cy="102.2" r="7" class="hit"><title>Matriz do bioma, 2013: 99,1</title></circle><circle cx="143.4" cy="110.2" r="7" class="hit"><title>Matriz do bioma, 2014: 98,3</title></circle><circle cx="193.1" cy="117.3" r="7" class="hit"><title>Matriz do bioma, 2015: 97,7</title></circle><circle cx="242.8" cy="123.5" r="7" class="hit"><title>Matriz do bioma, 2016: 97,1</title></circle><circle cx="292.5" cy="128.9" r="7" class="hit"><title>Matriz do bioma, 2017: 96,6</title></circle><circle cx="342.2" cy="134.0" r="7" class="hit"><title>Matriz do bioma, 2018: 96,1</title></circle><circle cx="391.8" cy="141.0" r="7" class="hit"><title>Matriz do bioma, 2019: 95,5</title></circle><circle cx="441.5" cy="149.8" r="7" class="hit"><title>Matriz do bioma, 2020: 94,6</title></circle><circle cx="491.2" cy="158.4" r="7" class="hit"><title>Matriz do bioma, 2021: 93,8</title></circle><circle cx="540.9" cy="168.9" r="7" class="hit"><title>Matriz do bioma, 2022: 92,8</title></circle><circle cx="590.6" cy="182.3" r="7" class="hit"><title>Matriz do bioma, 2023: 91,6</title></circle><circle cx="640.3" cy="191.0" r="7" class="hit"><title>Matriz do bioma, 2024: 90,8</title></circle><circle cx="690.0" cy="212.2" r="7" class="hit"><title>Matriz do bioma, 2025: 88,8</title></circle><polyline points="44.0,92.7 93.7,103.1 143.4,114.0 193.1,112.5 242.8,101.4 292.5,100.6 342.2,71.7 391.8,66.0 441.5,70.8 491.2,66.8 540.9,51.5 590.6,46.4 640.3,33.8 690.0,55.3" class="line main"/><circle cx="44.0" cy="92.7" r="7" class="hit"><title>Esta área, 2012: 100,0</title></circle><circle cx="93.7" cy="103.1" r="7" class="hit"><title>Esta área, 2013: 99,0</title></circle><circle cx="143.4" cy="114.0" r="7" class="hit"><title>Esta área, 2014: 98,0</title></circle><circle cx="193.1" cy="112.5" r="7" class="hit"><title>Esta área, 2015: 98,1</title></circle><circle cx="242.8" cy="101.4" r="7" class="hit"><title>Esta área, 2016: 99,2</title></circle><circle cx="292.5" cy="100.6" r="7" class="hit"><title>Esta área, 2017: 99,3</title></circle><circle cx="342.2" cy="71.7" r="7" class="hit"><title>Esta área, 2018: 102,0</title></circle><circle cx="391.8" cy="66.0" r="7" class="hit"><title>Esta área, 2019: 102,5</title></circle><circle cx="441.5" cy="70.8" r="7" class="hit"><title>Esta área, 2020: 102,1</title></circle><circle cx="491.2" cy="66.8" r="7" class="hit"><title>Esta área, 2021: 102,4</title></circle><circle cx="540.9" cy="51.5" r="7" class="hit"><title>Esta área, 2022: 103,9</title></circle><circle cx="590.6" cy="46.4" r="7" class="hit"><title>Esta área, 2023: 104,3</title></circle><circle cx="640.3" cy="33.8" r="7" class="hit"><title>Esta área, 2024: 105,5</title></circle><circle cx="690.0" cy="55.3" r="7" class="hit"><title>Esta área, 2025: 103,5</title></circle></svg>
+  <table class="num">
+    <thead><tr><th></th><th>2012–2025</th><th>2012–2018</th><th>2018–2025</th><th>Matriz do bioma 2012–2025</th></tr></thead>
+    <tbody>
+      <tr><td>Tendência líquida (%/ano da vegetação de 2012)</td><td>+0,54</td><td>+0,14</td><td>+0,47</td><td>−0,77</td></tr>
+      <tr><td>Conversão bruta (%/ano)</td><td>2,02</td><td></td><td></td><td>1,33</td></tr>
+      <tr><td>Regeneração bruta (%/ano)</td><td>2,27</td><td></td><td></td><td>0,45</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h3>Composição da paisagem (ha)</h3>
+  <table class="num">
+    <thead><tr><th></th><th>2012</th><th>2025</th><th>Variação</th></tr></thead>
+    <tbody><tr class="sub"><th>Vegetação natural</th><td>15.036</td><td>15.533</td><td>+497</td></tr><tr><td class="ind">Formação florestal</td><td>6.753</td><td>6.837</td><td>+83</td></tr><tr><td class="ind">Formação savânica</td><td>4.837</td><td>6.112</td><td>+1.275</td></tr><tr><td class="ind">Formação campestre</td><td>3.062</td><td>2.331</td><td>−731</td></tr><tr><td class="ind">Campo alagado</td><td>383</td><td>254</td><td>−129</td></tr><tr class="sub"><th>Uso antrópico</th><td>32.472</td><td>31.942</td><td>−530</td></tr><tr><td class="ind">Pastagem</td><td>25.885</td><td>21.815</td><td>−4.069</td></tr><tr><td class="ind">Soja</td><td>0</td><td>56</td><td>+56</td></tr><tr><td class="ind">Outras lavouras</td><td>97</td><td>366</td><td>+269</td></tr><tr><td class="ind">Mosaico de usos</td><td>3.173</td><td>4.386</td><td>+1.213</td></tr><tr><td class="ind">Silvicultura</td><td>2.794</td><td>4.675</td><td>+1.882</td></tr><tr><td class="ind">Urbano, mineração e outros</td><td>524</td><td>643</td><td>+119</td></tr><tr class="sub"><th>Natural não vegetado</th><td>54</td><td>87</td><td>+33</td></tr><tr><td class="ind">Água</td><td>54</td><td>87</td><td>+33</td></tr></tbody>
+  </table>
+  <p class="muted">Vegetação natural: 31,6% da área terrestre em 2012 e 32,7% em 2025.</p>
+</section>
+
+<section class="two">
+  <div>
+    <h3>Para onde foi a vegetação natural de 2012</h3>
+    <p class="muted">Vegetação natural em 2012 que era uso antrópico em 2025 (transição direta).</p>
+    <svg viewBox="0 0 430 150" class="chart" role="img"><text x="157" y="19" class="tick" text-anchor="end">Pastagem</text><rect x="165" y="7" width="185.0" height="16" rx="3" class="bar"><title>Pastagem: 1.298 ha</title></rect><text x="356.0" y="19" class="val">1.298 ha</text><text x="157" y="43" class="tick" text-anchor="end">Mosaico de usos</text><rect x="165" y="31" width="86.7" height="16" rx="3" class="bar"><title>Mosaico de usos: 608 ha</title></rect><text x="257.7" y="43" class="val">608 ha</text><text x="157" y="67" class="tick" text-anchor="end">Silvicultura</text><rect x="165" y="55" width="37.1" height="16" rx="3" class="bar"><title>Silvicultura: 260 ha</title></rect><text x="208.1" y="67" class="val">260 ha</text><text x="157" y="91" class="tick" text-anchor="end">Urbano, mineração e outros</text><rect x="165" y="79" width="9.1" height="16" rx="3" class="bar"><title>Urbano, mineração e outros: 64 ha</title></rect><text x="180.1" y="91" class="val">64 ha</text><text x="157" y="115" class="tick" text-anchor="end">Outras lavouras</text><rect x="165" y="103" width="2.0" height="16" rx="3" class="bar"><title>Outras lavouras: 5 ha</title></rect><text x="173.0" y="115" class="val">5 ha</text><text x="157" y="139" class="tick" text-anchor="end">Soja</text><rect x="165" y="127" width="2.0" height="16" rx="3" class="bar"><title>Soja: 2 ha</title></rect><text x="173.0" y="139" class="val">2 ha</text></svg>
+  </div>
+  <div>
+    <h3>De onde veio a regeneração</h3>
+    <p class="muted">Uso antrópico em 2012 que era vegetação natural em 2025.</p>
+    <svg viewBox="0 0 430 102" class="chart" role="img"><text x="157" y="19" class="tick" text-anchor="end">Pastagem</text><rect x="165" y="7" width="185.0" height="16" rx="3" class="bar"><title>Pastagem: 2.255 ha</title></rect><text x="356.0" y="19" class="val">2.255 ha</text><text x="157" y="43" class="tick" text-anchor="end">Mosaico de usos</text><rect x="165" y="31" width="37.0" height="16" rx="3" class="bar"><title>Mosaico de usos: 451 ha</title></rect><text x="208.0" y="43" class="val">451 ha</text><text x="157" y="67" class="tick" text-anchor="end">Silvicultura</text><rect x="165" y="55" width="2.0" height="16" rx="3" class="bar"><title>Silvicultura: 17 ha</title></rect><text x="173.0" y="67" class="val">17 ha</text><text x="157" y="91" class="tick" text-anchor="end">Urbano, mineração e outros</text><rect x="165" y="79" width="2.0" height="16" rx="3" class="bar"><title>Urbano, mineração e outros: 16 ha</title></rect><text x="173.0" y="91" class="val">16 ha</text></svg>
+  </div>
+</section>
+<p class="muted">Dinâmica hidrológica (fora da contabilidade): 7 ha de vegetação natural de 2012 eram água ou areia em 2025, e 2 ha fizeram o caminho inverso. Vegetação que virou água e ficou água em 2020–2025 (possível reservatório): 2 ha.</p>
+
+<section>
+  <h3>Persistência</h3>
+  <table class="num">
+    <tbody>
+      <tr><td>Vegetação natural de 2012 nunca convertida em uso até 2025</td><td>12.283 ha</td><td>81,7%</td></tr>
+      <tr><td>Vegetação natural de 1985 nunca convertida em uso até 2025</td><td>7.879 ha</td><td>42,6%</td></tr>
+      <tr><td>Parcela da vegetação natural de 2025 nunca convertida desde 1985</td><td></td><td>50,7%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">A diferença entre a vegetação de 2025 e a vegetação nunca convertida é vegetação secundária ou regenerada, que conta como natural no MapBiomas.</p>
+</section>
+
+<section>
+  <h3>Alvos de conservação da área (2ª atualização, listas de 2011–2012)</h3>
+  <table class="num"><thead><tr><th>Grupo</th><th>Alvos</th></tr></thead><tbody><tr><td>Plantas</td><td>58</td></tr><tr><td>Répteis</td><td>13</td></tr><tr><td>Mamíferos</td><td>11</td></tr><tr><td>Aves</td><td>5</td></tr><tr><td>Sistemas de terras</td><td>1</td></tr></tbody></table><details><summary>Lista de alvos</summary><ul class="targets"><li><b>Aves:</b> Alectrurus tricolor, Alipiopsitta xanthops, Coryphaspiza melanotis, Poospiza cinerea, Taoniscus nanus</li><li><b>Mamíferos:</b> Carterodon sulcidens, Chrysocyon brachyurus, Clyomys laticeps, Cuniculus paca, Myrmechophaga tridactyla, Ozotoceros bezoarticus, Panthera onca, Priodontes maximus, Puma concolor, Tapirus terrestris, Tayassu pecari</li><li><b>Plantas:</b> Anacardium humile a.st.-hil., Anemopaegma arvense (vell.) stellfeld ex de souza, Aspidosperma camporum mpll.arg., Astraea lobata (l.) klotzsch, Astronium fraxinifolium schott, Astronium graveolens jacq., Callisthene major mart. &amp; zucc., Camarea ericoides a.st.-hil., Campomanesia pubescens (dc.) o.berg, Carpotroche brasiliensis (raddi) endl., Chrysolaena obovata (less.) dematt., Chrysolaena simplex (less.) dematt., Cochlospermum insigne a.st.-hil., Dasyphyllum brasiliense var. latifolium (d.don) c*, Dipteryx alata vogel, Dyckia minarum mez, Eremanthus glomerulatus less., Eugenia aurata o.berg, Eugenia dysenterica dc., Eugenia punicifolia (hbk) dc., Ficus eximia schott, Galactia glaucescens kunth, Gaya domingensis urb., Guadua paniculata munro, Handroanthus impetiginosus mattos, Handroanthus ochraceus (cham.) mattos, Inga fagifolia willd. ex benth, Jacaranda brasiliana (lam.) pers., Jacaranda caroba (vell.) dc., Jacaranda decurrens cham., Lessingianthus bardanoides (less.) h.rob., Lessingianthus virgulatus (mart. ex dc.) h.rob., Mandevilla hirsuta (a.rich.) k.schum., Myracrodruon urundeuva allem.o, Myrcia tomentosa (aubl.) dc., Myrcia uberavensis o.berg, Myrsine guianensis (aubl.) kuntze, Ocotea pulchella (nees &amp; mart.) mez, Pfaffia jubata mart., Pfaffia minarum pedersen, Piptocarpha rotundifolia (less.) baker, Psidium myrsinites dc., Pterandra pyroidea a.juss., Qualea dichotoma (mart.) warm., Qualea grandiflora mart., Qualea jundiahy warm., Qualea multiflora mart., Qualea parviflora mart., Rhynchanthera grandiflora (aubl.) dc., Salvertia convallariodora a.st.-hil., Tabebuia aurea (silva manso) benth. &amp; hook.f. ex *, Tabebuia roseoalba (ridl.) sandwith, Vernonanthura ferruginea (less.) h.rob., Vernonia desertorum mart., Vernonia rubriramea mart. ex dc., Vochysia tucanorum mart., Xylopia aromatica (lam.) mart., Zeyheria digitalis (vell.) hoehne &amp; kuhlm.</li><li><b>Répteis:</b> Apostolepis flavotorquata, Atractus pantostictus, Chironius flavolineatus, Chironius quadricarinatus, Drymoluber brazili, Epicrates crassus, Hoplocercus spinosus, Micrablepharus atticolus, Phalotris nasutus, Phimophis guerini, Tropidurus itambere, Tropidurus montanus, Xenodon nattereri</li><li><b>Sistemas de terras:</b> 1cc1n</li></ul></details>
+  <p class="muted">As listas são históricas e não representam a lista vigente de espécies ameaçadas.</p>
+</section>
+
+<footer>
+  <p>Fonte: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias MMA (Portarias 223/2016 e 463/2018). Método: decisão D13 do projeto. Tendência robusta (Theil–Sen) da área não antrópica, em % ao ano da vegetação natural de 2012; perda e ganho contam só trocas com uso antrópico. Protótipo gerado em 04/10/2026; números sujeitos a revisão.</p>
+</footer>
+</article></main></body></html>
