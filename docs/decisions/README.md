@@ -17,5 +17,6 @@ One file per methodological decision. Each record states context, options, recom
 | [D11](D11_biome_limits.md) | Biome limits: 2004 and 2019 as markers; no biome clipping | Accepted |
 | [D12](D12_scope_generalization.md) | Cerrado as pilot; pipeline parameterized by biome; marine zone out of scope | Accepted |
 | [D13](D13_product1_state_dynamics.md) | Product 1 for MMA: natural-vegetation state and dynamics 2012–2025; categories and flags | Accepted (incl. §5 amendment and calibrated thresholds); land tenure noted as next layer |
+| [D14](D14_visual_identity.md) | Site visual: MapBiomas design system tested, recorded, not applied | Decided |
 
 Template: `Context · Options · Recommendation · Status · Evidence/notes`.
