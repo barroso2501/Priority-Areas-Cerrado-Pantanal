@@ -1,0 +1,168 @@
+---
+pagetitle: "Área híbrida (AMZ_CerraPant022)"
+---
+
+```{=html}
+<style>
+.ap-ficha{--surface:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--muted:#6b6a66;--rule:#e4e2dc;--grid:#ecebe7;
+--main:#2a78d6;--ctx:#8a8984;--bar:#2a78d6;--card:#f4f3ef;color-scheme:light}
+.ap-ficha *{box-sizing:border-box}
+.ap-ficha{color:var(--ink);}
+.ap-ficha .ficha{border-top:3px solid var(--ink);padding-top:16px;margin-bottom:72px}
+.ap-ficha .eyebrow{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);margin:0}
+.ap-ficha h2{font-size:26px;margin:4px 0 12px}
+.ap-ficha h2 .code{font-size:14px;font-weight:400;color:var(--muted)}
+.ap-ficha h3{font-size:16px;margin:28px 0 4px}
+.ap-ficha .ident{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px 24px;margin:0}
+.ap-ficha .ident dt{font-size:12px;color:var(--muted)}
+.ap-ficha .ident dd{margin:0}
+.ap-ficha .verdict{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin:20px 0 8px}
+.ap-ficha .kpi{background:var(--card);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.ap-ficha .kpi-label{font-size:12px;color:var(--muted)}
+.ap-ficha .kpi-value{font-size:30px;font-weight:600;line-height:1.1}
+.ap-ficha .kpi-value.small{font-size:20px}
+.ap-ficha .kpi-note{font-size:13px;color:var(--ink2)}
+.ap-ficha .catbadge{align-self:flex-start;font-weight:600;font-size:17px;padding:3px 10px;border-radius:6px;border-left:6px solid var(--c);background:var(--surface)}
+.ap-ficha .flags{margin:8px 0;padding-left:18px;color:var(--ink2);font-size:14px}
+.ap-ficha .muted{color:var(--muted);font-size:13px;margin:2px 0 8px}
+.ap-ficha table.num{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+.ap-ficha table.num th,.ap-ficha table.num td{padding:4px 8px;border-bottom:1px solid var(--rule);text-align:right}
+.ap-ficha table.num th:first-child,.ap-ficha table.num td:first-child{text-align:left}
+.ap-ficha table.num thead th{font-weight:600;color:var(--ink2);font-size:12px}
+.ap-ficha tr.sub th,.ap-ficha tr.sub td{font-weight:600;background:var(--card)}
+.ap-ficha td.ind{padding-left:20px!important}
+.ap-ficha .chart{width:100%;height:auto;display:block}
+.ap-ficha .chart .grid{stroke:var(--grid);stroke-width:1}
+.ap-ficha .chart .split{stroke:var(--muted);stroke-dasharray:3 3}
+.ap-ficha .chart .tick{fill:var(--muted);font-size:11px}
+.ap-ficha .chart .val{fill:var(--ink2);font-size:12px}
+.ap-ficha .chart .line{fill:none;stroke-width:2;stroke-linejoin:round}
+.ap-ficha .chart .line.main{stroke:var(--main)}
+.ap-ficha .chart .line.ctx{stroke:var(--ctx);stroke-dasharray:6 4}
+.ap-ficha .chart .line.nat{stroke:var(--main);stroke-width:1.5;stroke-dasharray:1.5 3;opacity:.8}
+.ap-ficha .chart .dlabel{font-size:12px;fill:var(--ink2)}
+.ap-ficha .chart .hit{fill:transparent}
+.ap-ficha .chart .hit:hover{fill:var(--main);fill-opacity:.25}
+.ap-ficha .chart .bar{fill:var(--bar)}
+.ap-ficha .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.ap-ficha details{margin:8px 0;font-size:13px}
+.ap-ficha .targets{color:var(--ink2);padding-left:18px}
+.ap-ficha footer{border-top:1px solid var(--rule);margin-top:28px;font-size:12px;color:var(--muted)}
+.ap-ficha .mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
+@media (max-width:700px){.ap-ficha .mapwrap{grid-template-columns:1fr}}
+.ap-ficha .map{display:block;max-width:100%;max-height:560px;width:auto;height:auto;margin:0 auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.ap-ficha .map.placeholder{padding:48px 16px;text-align:center;color:var(--muted);font-size:13px;background:var(--card)}
+.ap-ficha .legend{list-style:none;margin:0;padding:0;font-size:13px}
+.ap-ficha .legend li{display:grid;grid-template-columns:14px 1fr;column-gap:8px;margin-bottom:8px}
+.ap-ficha .legend .sw{width:14px;height:14px;border-radius:3px;margin-top:3px;grid-row:span 2}
+.ap-ficha .legend .lv{color:var(--muted);grid-column:2}
+.ap-ficha table.idx td,.ap-ficha table.idx th{text-align:left!important}
+.ap-ficha table.idx td:nth-child(6),.ap-ficha table.idx td:nth-child(8){text-align:right!important}
+.ap-ficha nav.topnav{font-size:13px;margin-bottom:10px}
+.ap-ficha nav.topnav a{color:var(--main);margin-right:16px}
+.ap-ficha nav.toc{font-size:14px;margin-bottom:24px}
+.ap-ficha nav.toc a{color:var(--main);margin-right:16px}
+</style>
+<div class="ap-ficha">
+
+<article class="ficha" id="uAMZ_CerraPant022">
+<header>
+  
+  <p class="eyebrow">Áreas Prioritárias do Cerrado e Pantanal · 2ª atualização · Ficha de estado e dinâmica 2012–2025</p>
+  <h2>Área híbrida <span class="code">código AMZ_CerraPant022</span></h2>
+  <dl class="ident">
+    <div><dt>UF</dt><dd>MT</dd></div>
+    <div><dt>Área</dt><dd>889 ha</dd></div>
+    <div><dt>Bioma (IBGE 2019)</dt><dd>Amazônia 100%</dd></div>
+    <div><dt>Importância biológica</dt><dd>Muito Alta</dd></div>
+    <div><dt>Prioridade de ação</dt><dd>Alta</dd></div>
+    <div><dt>Ações</dt><dd>Fiscalização e controle de atividades ilegais; Fomento ao uso sustentável</dd></div>
+  </dl>
+</header>
+
+<section class="verdict">
+  <div class="kpi">
+    <span class="kpi-label">Estado em 2025</span>
+    <span class="kpi-value">98%</span>
+    <span class="kpi-note">≥ 80% de vegetação natural · 867 ha</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Dinâmica 2012–2025</span>
+    <span class="catbadge" style="--c:#8a8984">Estável</span>
+    <span class="kpi-note">+0,25 ± 0,09%/ano · tendência entre −0,2 e +0,2%/ano e conversão bruta ≤ 0,5%/ano</span>
+  </div>
+  <div class="kpi">
+    <span class="kpi-label">Principal vetor de conversão</span>
+    <span class="kpi-value small">outras lavouras</span>
+    <span class="kpi-note">77% da vegetação convertida entre 2012 e 2025</span>
+  </div>
+</section>
+<ul class="flags"><li><b>Baixa confiança</b> — a tendência está a menos de um erro-padrão de um limite de categoria</li><li><b>Área pequena</b> — menos de 5 mil ha; taxas instáveis</li><li><b>Área híbrida</b> — área de harmonização entre biomas; classes pós-harmonização</li></ul>
+
+<section>
+  <h3>Mapa de mudanças 2012–2025</h3>
+  <p class="muted">Comparação dos grupos de nível 1 do MapBiomas em 2012 e 2025. A área está em cores plenas e contornada; o entorno aparece esmaecido, como contexto. O mapa é ilustrativo; as áreas da legenda vêm das tabelas.</p>
+  <div class="mapwrap"><img class="map" alt="Mapa de mudanças 2012–2025 da área AMZ_CerraPant022" src="data:image/png;base64,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"><ul class="legend"><li><span class="sw" style="background:#1f6f3a"></span>Vegetação natural estável<span class="lv">816 ha · 91,8%</span></li><li><span class="sw" style="background:#eb6834"></span>Perda de vegetação natural<span class="lv">6 ha · 0,6%</span></li><li><span class="sw" style="background:#4a3aa7"></span>Ganho de vegetação natural<span class="lv">51 ha · 5,8%</span></li><li><span class="sw" style="background:#d8d2c4"></span>Uso antrópico estável<span class="lv">16 ha · 1,8%</span></li></ul></div>
+</section>
+
+<section>
+  <h3>Trajetória da área não convertida</h3>
+  <p class="muted">Vegetação natural mais água e areia, índice 2012 = 100: é a base da categoria. A linha tracejada é a matriz fora das áreas prioritárias no bioma Amazônia, como <b>contexto</b>; não é uma avaliação de efeito.</p>
+  <svg viewBox="0 0 880 260" role="img" aria-label="Área não convertida, índice 2012 = 100" class="chart"><line x1="44" x2="690" y1="230.0" y2="230.0" class="grid"/><text x="38" y="234.0" class="tick" text-anchor="end">94</text><line x1="44" x2="690" y1="176.5" y2="176.5" class="grid"/><text x="38" y="180.5" class="tick" text-anchor="end">97</text><line x1="44" x2="690" y1="123.0" y2="123.0" class="grid"/><text x="38" y="127.0" class="tick" text-anchor="end">100</text><line x1="44" x2="690" y1="69.5" y2="69.5" class="grid"/><text x="38" y="73.5" class="tick" text-anchor="end">103</text><line x1="44" x2="690" y1="16.0" y2="16.0" class="grid"/><text x="38" y="20.0" class="tick" text-anchor="end">107</text><text x="44.0" y="252" class="tick" text-anchor="middle">2012</text><text x="193.1" y="252" class="tick" text-anchor="middle">2015</text><text x="342.2" y="252" class="tick" text-anchor="middle">2018</text><text x="491.2" y="252" class="tick" text-anchor="middle">2021</text><text x="690.0" y="252" class="tick" text-anchor="middle">2025</text><line x1="342.2" x2="342.2" y1="16" y2="230" class="split"/><text x="346.2" y="26" class="tick">2018</text><text x="698.0" y="37.8" class="dlabel main">Esta área 105,5</text><text x="698.0" y="216.2" class="dlabel ctx">Matriz do bioma 95,1</text><polyline points="44.0,128.2 93.7,133.3 143.4,139.1 193.1,144.8 242.8,146.7 292.5,148.7 342.2,153.5 391.8,160.9 441.5,167.9 491.2,179.5 540.9,192.8 590.6,209.0 640.3,208.3 690.0,212.2" class="line ctx"/><circle cx="44.0" cy="128.2" r="7" class="hit"><title>Matriz do bioma, 2012: 100,0</title></circle><circle cx="93.7" cy="133.3" r="7" class="hit"><title>Matriz do bioma, 2013: 99,7</title></circle><circle cx="143.4" cy="139.1" r="7" class="hit"><title>Matriz do bioma, 2014: 99,4</title></circle><circle cx="193.1" cy="144.8" r="7" class="hit"><title>Matriz do bioma, 2015: 99,0</title></circle><circle cx="242.8" cy="146.7" r="7" class="hit"><title>Matriz do bioma, 2016: 98,9</title></circle><circle cx="292.5" cy="148.7" r="7" class="hit"><title>Matriz do bioma, 2017: 98,8</title></circle><circle cx="342.2" cy="153.5" r="7" class="hit"><title>Matriz do bioma, 2018: 98,5</title></circle><circle cx="391.8" cy="160.9" r="7" class="hit"><title>Matriz do bioma, 2019: 98,1</title></circle><circle cx="441.5" cy="167.9" r="7" class="hit"><title>Matriz do bioma, 2020: 97,7</title></circle><circle cx="491.2" cy="179.5" r="7" class="hit"><title>Matriz do bioma, 2021: 97,0</title></circle><circle cx="540.9" cy="192.8" r="7" class="hit"><title>Matriz do bioma, 2022: 96,2</title></circle><circle cx="590.6" cy="209.0" r="7" class="hit"><title>Matriz do bioma, 2023: 95,3</title></circle><circle cx="640.3" cy="208.3" r="7" class="hit"><title>Matriz do bioma, 2024: 95,3</title></circle><circle cx="690.0" cy="212.2" r="7" class="hit"><title>Matriz do bioma, 2025: 95,1</title></circle><polyline points="44.0,128.2 93.7,83.7 143.4,78.1 193.1,76.7 242.8,71.1 292.5,63.7 342.2,54.8 391.8,51.7 441.5,48.7 491.2,69.4 540.9,70.3 590.6,74.3 640.3,33.8 690.0,33.8" class="line main"/><circle cx="44.0" cy="128.2" r="7" class="hit"><title>Esta área, 2012: 100,0</title></circle><circle cx="93.7" cy="83.7" r="7" class="hit"><title>Esta área, 2013: 102,6</title></circle><circle cx="143.4" cy="78.1" r="7" class="hit"><title>Esta área, 2014: 102,9</title></circle><circle cx="193.1" cy="76.7" r="7" class="hit"><title>Esta área, 2015: 103,0</title></circle><circle cx="242.8" cy="71.1" r="7" class="hit"><title>Esta área, 2016: 103,3</title></circle><circle cx="292.5" cy="63.7" r="7" class="hit"><title>Esta área, 2017: 103,8</title></circle><circle cx="342.2" cy="54.8" r="7" class="hit"><title>Esta área, 2018: 104,3</title></circle><circle cx="391.8" cy="51.7" r="7" class="hit"><title>Esta área, 2019: 104,5</title></circle><circle cx="441.5" cy="48.7" r="7" class="hit"><title>Esta área, 2020: 104,7</title></circle><circle cx="491.2" cy="69.4" r="7" class="hit"><title>Esta área, 2021: 103,4</title></circle><circle cx="540.9" cy="70.3" r="7" class="hit"><title>Esta área, 2022: 103,4</title></circle><circle cx="590.6" cy="74.3" r="7" class="hit"><title>Esta área, 2023: 103,2</title></circle><circle cx="640.3" cy="33.8" r="7" class="hit"><title>Esta área, 2024: 105,5</title></circle><circle cx="690.0" cy="33.8" r="7" class="hit"><title>Esta área, 2025: 105,5</title></circle></svg>
+  <table class="num">
+    <thead><tr><th></th><th>2012–2025</th><th>2012–2018</th><th>2018–2025</th><th>Matriz do bioma 2012–2025</th></tr></thead>
+    <tbody>
+      <tr><td>Tendência líquida (%/ano da vegetação de 2012)</td><td>+0,25</td><td>+0,38</td><td>+0,17</td><td>−0,39</td></tr>
+      <tr><td>Conversão bruta (%/ano)</td><td>0,20</td><td></td><td></td><td>0,83</td></tr>
+      <tr><td>Regeneração bruta (%/ano)</td><td>0,62</td><td></td><td></td><td>0,45</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section>
+  <h3>Composição da paisagem (ha)</h3>
+  <table class="num">
+    <thead><tr><th></th><th>2012</th><th>2025</th><th>Variação</th></tr></thead>
+    <tbody><tr class="sub"><th>Vegetação natural</th><td>822</td><td>867</td><td>+45</td></tr><tr><td class="ind">Formação florestal</td><td>766</td><td>785</td><td>+19</td></tr><tr><td class="ind">Formação savânica</td><td>56</td><td>82</td><td>+26</td></tr><tr class="sub"><th>Uso antrópico</th><td>67</td><td>22</td><td>−45</td></tr><tr><td class="ind">Pastagem</td><td>5</td><td>0</td><td>−5</td></tr><tr><td class="ind">Soja</td><td>0</td><td>5</td><td>+5</td></tr><tr><td class="ind">Outras lavouras</td><td>5</td><td>9</td><td>+4</td></tr><tr><td class="ind">Mosaico de usos</td><td>57</td><td>8</td><td>−49</td></tr></tbody>
+  </table>
+  <p class="muted">Vegetação natural: 92,5% da área terrestre em 2012 e 97,6% em 2025.</p>
+</section>
+
+<section class="two">
+  <div>
+    <h3>Para onde foi a vegetação natural de 2012</h3>
+    <p class="muted">Vegetação natural em 2012 que era uso antrópico em 2025 (transição direta).</p>
+    <svg viewBox="0 0 430 54" class="chart" role="img"><text x="157" y="19" class="tick" text-anchor="end">Outras lavouras</text><rect x="165" y="7" width="185.0" height="16" rx="3" class="bar"><title>Outras lavouras: 4 ha</title></rect><text x="356.0" y="19" class="val">4 ha</text><text x="157" y="43" class="tick" text-anchor="end">Mosaico de usos</text><rect x="165" y="31" width="43.5" height="16" rx="3" class="bar"><title>Mosaico de usos: 1 ha</title></rect><text x="214.5" y="43" class="val">1 ha</text></svg>
+  </div>
+  <div>
+    <h3>De onde veio a regeneração</h3>
+    <p class="muted">Uso antrópico em 2012 que era vegetação natural em 2025.</p>
+    <svg viewBox="0 0 430 54" class="chart" role="img"><text x="157" y="19" class="tick" text-anchor="end">Mosaico de usos</text><rect x="165" y="7" width="185.0" height="16" rx="3" class="bar"><title>Mosaico de usos: 50 ha</title></rect><text x="356.0" y="19" class="val">50 ha</text><text x="157" y="43" class="tick" text-anchor="end">Pastagem</text><rect x="165" y="31" width="5.5" height="16" rx="3" class="bar"><title>Pastagem: 1 ha</title></rect><text x="176.5" y="43" class="val">1 ha</text></svg>
+  </div>
+</section>
+
+
+<section>
+  <h3>Persistência</h3>
+  <table class="num">
+    <tbody>
+      <tr><td>Vegetação natural de 2012 nunca convertida em uso até 2025</td><td>811 ha</td><td>98,6%</td></tr>
+      <tr><td>Vegetação natural de 1985 nunca convertida em uso até 2025</td><td>649 ha</td><td>82,8%</td></tr>
+      <tr><td>Parcela da vegetação natural de 2025 nunca convertida desde 1985</td><td></td><td>74,8%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">A diferença entre a vegetação de 2025 e a vegetação nunca convertida é vegetação secundária ou regenerada, que conta como natural no MapBiomas.</p>
+</section>
+
+<section>
+  <h3>Alvos de conservação da área (2ª atualização, listas de 2011–2012)</h3>
+  <p class="muted">Sem ficha de alvos (área sem ficha original ou área híbrida).</p>
+  <p class="muted">As listas são históricas e não representam a lista vigente de espécies ameaçadas.</p>
+</section>
+
+<footer>
+  <p>Autoria: Mario Barroso Ramos Neto e Claude (Anthropic). Fonte: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias para a Conservação, 2ª atualização (Portarias MMA 223/2016 e 463/2018). Método: decisão D13 do projeto. Tendência robusta (Theil–Sen) da área não antrópica, em % ao ano da vegetação natural de 2012; perda e ganho contam só trocas com uso antrópico. Gerado em 05/10/2026; números sujeitos a revisão.</p>
+</footer>
+</article>
+</div>
+```
