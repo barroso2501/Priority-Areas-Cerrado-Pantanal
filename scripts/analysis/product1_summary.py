@@ -301,11 +301,13 @@ table.num thead th{font-weight:600;color:var(--ink2);font-size:12px}
 .leg .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:-1px}
 img.map{width:100%;max-width:720px;display:block;margin:0 auto;border-radius:6px}
 table.hl td:nth-child(-n+4),table.hl th:nth-child(-n+4),table.hl td:nth-child(8),table.hl th:nth-child(8){text-align:left}
+nav.topnav{font-size:13px;margin-bottom:12px}nav.topnav a{color:var(--main);margin-right:16px}
 footer{border-top:1px solid var(--rule);margin-top:40px;font-size:12px;color:var(--muted)}
 '''
 
 body = f'''
-<p class="eyebrow">Ministério do Meio Ambiente · Diretoria de Biodiversidade · Subsídio ao novo ciclo de revisão</p>
+<nav class="topnav"><a href="index.html">Índice das fichas</a></nav>
+<p class="eyebrow">Subsídio ao novo ciclo de revisão das Áreas Prioritárias para a Conservação</p>
 <h1>Áreas Prioritárias do Cerrado e Pantanal: estado e dinâmica da vegetação natural, 2012–2025</h1>
 <p class="muted">Sumário executivo · 2ª atualização (Portarias MMA 223/2016 e 463/2018) · {N} áreas: 294 da camada MMA e 54 áreas híbridas · MapBiomas Coleção 11</p>
 
@@ -397,7 +399,7 @@ body = f'''
   <li>As áreas híbridas não têm nome nem vínculo com as áreas de origem na camada oficial.</li>
 </ul>
 
-<footer><p>Fontes: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias para a Conservação, 2ª atualização, MMA; limites de biomas e UFs, IBGE. Método completo: decisão D13 e scripts do repositório do projeto. Tags: [E] resultado calculado; [H] interpretação a testar. Documento gerado em {date.today():%d/%m/%Y}; versão preliminar para discussão.</p></footer>
+<footer><p>Autoria: Mario Barroso Ramos Neto e Claude (Anthropic). Fontes: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias para a Conservação, 2ª atualização, MMA; limites de biomas e UFs, IBGE. Método completo: decisão D13 e scripts do repositório do projeto. Tags: [E] resultado calculado; [H] interpretação a testar. Documento gerado em {date.today():%d/%m/%Y}; versão preliminar para discussão.</p></footer>
 '''
 
 out = P1 / "sumario_executivo.html"

@@ -39,6 +39,7 @@ scripts/
   zones_municipalities.py   zone x IBGE municipality areas (Product 1 filter, D13)
   analysis/phase1_q1_q6.py  Phase 1 descriptive results (strata, 2006/2012 units, Q6)
   gee/                      Earth Engine extraction (Phase 1); see scripts/gee/README.md
+site/                 Quarto website of Product 1 (summary + fact sheets), published to GitHub Pages
 notebooks/
   colab_phase1_extraction.ipynb   Colab runbook for the Earth Engine steps
 tests/

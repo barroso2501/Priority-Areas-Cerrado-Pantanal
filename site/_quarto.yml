@@ -1,0 +1,36 @@
+project:
+  type: website
+  output-dir: _site
+  resources:
+    - robots.txt
+
+lang: pt-BR
+
+website:
+  title: "Áreas Prioritárias Cerrado–Pantanal"
+  search: true
+  navbar:
+    left:
+      - href: index.qmd
+        text: Início
+      - href: sumario.qmd
+        text: Sumário executivo
+      - href: fichas.qmd
+        text: Fichas por área
+    right:
+      - icon: github
+        href: https://github.com/barroso2501/Priority-Areas-Cerrado-Pantanal
+  page-footer:
+    left: "Autoria: Mario Barroso Ramos Neto e Claude (Anthropic)"
+    right: "Dados: MapBiomas Coleção 11; Áreas Prioritárias, 2ª atualização"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: false
+    page-layout: article
+    grid:
+      body-width: 960px
+    include-in-header:
+      text: '<meta name="robots" content="noindex, nofollow">'

@@ -1,0 +1,24 @@
+---
+title: "Áreas Prioritárias Cerrado–Pantanal"
+subtitle: "Estado e dinâmica da vegetação natural nas Áreas Prioritárias para a Conservação, 2012–2025"
+---
+
+Este site reúne o diagnóstico do estado da vegetação natural nas **348 Áreas Prioritárias para a Conservação do Cerrado e do Pantanal** da 2ª atualização (294 áreas da camada oficial e 54 áreas híbridas) e de como ela mudou entre 2012, ano em que as áreas foram desenhadas, e 2025. A base é a Coleção 11 do MapBiomas.
+
+O diagnóstico **descreve estado e dinâmica**. Ele não avalia a eficácia das áreas como política pública, nem inclui fogo e degradação nesta versão.
+
+## O que há aqui
+
+- **[Sumário executivo](sumario.qmd):** método simplificado, resultados consolidados por importância biológica, prioridade de ação, ação recomendada e UF, mapa das categorias e subsídios para o próximo ciclo de revisão.
+- **[Fichas por área](fichas.qmd):** uma ficha para cada área, com estado em 2025, categoria de dinâmica, alertas, mapa de mudanças 2012–2025, trajetória anual, composição da paisagem, destino da vegetação convertida, persistência e alvos de conservação. A tabela de entrada pode ser filtrada por nome, UF, categoria, importância ou alerta.
+- **Busca:** o ícone de lupa no topo procura em todas as páginas.
+
+## Como ler as categorias
+
+Cada área recebe uma categoria pela tendência anual da área não convertida (vegetação natural mais água e areia) entre 2012 e 2025, em % ao ano da vegetação natural de 2012: ganho líquido, estável, rotatividade, perda moderada (até −1%/ano), perda intensa (−1 a −2%/ano) e perda muito intensa (abaixo de −2%/ano). Cheias e variações de água não contam como perda. Alertas independentes indicam aceleração, baixa confiança, dinâmica hidrológica, possível reservatório, área pequena e área híbrida.
+
+## Situação
+
+Versão preliminar para discussão, gerada em 05/10/2026. Os números podem mudar com revisões de método ou de dados. O código, os dados derivados e o registro das decisões metodológicas estão no [repositório do projeto](https://github.com/barroso2501/Priority-Areas-Cerrado-Pantanal).
+
+**Autoria:** Mario Barroso Ramos Neto e Claude (Anthropic).

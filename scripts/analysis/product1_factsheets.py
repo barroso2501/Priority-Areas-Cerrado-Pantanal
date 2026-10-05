@@ -124,6 +124,7 @@ def fsig(v, d=2):
 
 
 esc = html.escape
+AUTHOR = "Autoria: Mario Barroso Ramos Neto e Claude (Anthropic)."
 
 # --- Data ------------------------------------------------------------------------------------
 lg = pd.read_csv(ROOT / "data/reference/mapbiomas_col11_legend_groups.csv")
@@ -295,6 +296,7 @@ def ficha(u):
     out = f'''
 <article class="ficha" id="u{esc(u)}">
 <header>
+  <nav class="topnav"><a href="index.html">← Índice das fichas</a><a href="sumario.html">Sumário executivo</a></nav>
   <p class="eyebrow">Áreas Prioritárias do Cerrado e Pantanal · 2ª atualização · Ficha de estado e dinâmica 2012–2025</p>
   <h2>{esc(name)} <span class="code">código {esc(u)}</span></h2>
   <dl class="ident">
@@ -315,7 +317,7 @@ def ficha(u):
   </div>
   <div class="kpi">
     <span class="kpi-label">Dinâmica 2012–2025</span>
-    <span class="badge" style="--c:{CAT_COLOR[cat]}">{CAT_PT[cat]}</span>
+    <span class="catbadge" style="--c:{CAT_COLOR[cat]}">{CAT_PT[cat]}</span>
     <span class="kpi-note">{fsig(m.rate)} ± {fnum(m.se_rate, 2)}%/ano · {CAT_RULE.get(cat, "")}</span>
   </div>
   <div class="kpi">
@@ -384,7 +386,7 @@ def ficha(u):
 </section>
 
 <footer>
-  <p>Fonte: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias MMA (Portarias 223/2016 e 463/2018). Método: decisão D13 do projeto. Tendência robusta (Theil–Sen) da área não antrópica, em % ao ano da vegetação natural de 2012; perda e ganho contam só trocas com uso antrópico. Protótipo gerado em {date.today():%d/%m/%Y}; números sujeitos a revisão.</p>
+  <p>Autoria: Mario Barroso Ramos Neto e Claude (Anthropic). Fonte: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias para a Conservação, 2ª atualização (Portarias MMA 223/2016 e 463/2018). Método: decisão D13 do projeto. Tendência robusta (Theil–Sen) da área não antrópica, em % ao ano da vegetação natural de 2012; perda e ganho contam só trocas com uso antrópico. Gerado em {date.today():%d/%m/%Y}; números sujeitos a revisão.</p>
 </footer>
 </article>'''
     return out
@@ -411,7 +413,7 @@ h3{font-size:16px;margin:28px 0 4px}
 .kpi{background:var(--card);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
 .kpi-label{font-size:12px;color:var(--muted)}.kpi-value{font-size:30px;font-weight:600;line-height:1.1}
 .kpi-value.small{font-size:20px}.kpi-note{font-size:13px;color:var(--ink2)}
-.badge{align-self:flex-start;font-weight:600;font-size:17px;padding:3px 10px;border-radius:6px;border-left:6px solid var(--c);background:var(--surface)}
+.catbadge{align-self:flex-start;font-weight:600;font-size:17px;padding:3px 10px;border-radius:6px;border-left:6px solid var(--c);background:var(--surface)}
 .flags{margin:8px 0;padding-left:18px;color:var(--ink2);font-size:14px}
 .muted{color:var(--muted);font-size:13px;margin:2px 0 8px}
 table.num{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
@@ -436,6 +438,7 @@ footer{border-top:1px solid var(--rule);margin-top:28px;font-size:12px;color:var
 .legend{list-style:none;margin:0;padding:0;font-size:13px}.legend li{display:grid;grid-template-columns:14px 1fr;column-gap:8px;margin-bottom:8px}
 .legend .sw{width:14px;height:14px;border-radius:3px;margin-top:3px;grid-row:span 2}.legend .lv{color:var(--muted);grid-column:2}
 table.idx td,table.idx th{text-align:left!important}table.idx td:nth-child(6),table.idx td:nth-child(8){text-align:right!important}
+nav.topnav{font-size:13px;margin-bottom:10px}nav.topnav a{color:var(--main);margin-right:16px}
 nav.toc{font-size:14px;margin-bottom:24px}nav.toc a{color:var(--main);margin-right:16px}
 '''
 
@@ -468,10 +471,10 @@ else:
                     f'<td>{esc(str(m.Import_bio))}</td><td>{esc(str(m.Prior_acao))}</td><td>{fnum(m.nat_share_2025 * 100, 0)}%</td>'
                     f'<td>{CAT_PT[m.category]}</td><td>{fsig(m.rate)}</td><td>{esc(flags_)}</td></tr>')
     body = ('<h1>Áreas Prioritárias do Cerrado e Pantanal — estado e dinâmica 2012–2025</h1>'
-            f'<p class="muted">{len(sel)} fichas. Digite para filtrar (nome, UF, categoria, importância, alerta…).</p>'
+            f'<p><a href="sumario.html" style="color:var(--main)">Ler o sumário executivo</a></p><p class="muted">{AUTHOR} {len(sel)} fichas. Digite para filtrar (nome, UF, categoria, importância, alerta…).</p>'
             '<input id="q" type="search" placeholder="Filtrar" style="width:100%;padding:8px;margin:8px 0 12px;font:inherit">'
-            '<table class="num idx" id="t"><thead><tr><th>Código</th><th>Nome</th><th>UF</th><th>Importância</th><th>Prioridade</th>'
-            '<th>Vegetação natural 2025</th><th>Dinâmica</th><th>%/ano</th><th>Alertas</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table>'
+            '<div style="overflow-x:auto"><table class="num idx" id="t"><thead><tr><th>Código</th><th>Nome</th><th>UF</th><th>Importância</th><th>Prioridade</th>'
+            '<th>Vegetação natural 2025</th><th>Dinâmica</th><th>%/ano</th><th>Alertas</th></tr></thead><tbody>' + "".join(rows) + '</tbody></table></div>'
             '<script>const q=document.getElementById("q"),rs=[...document.querySelectorAll("#t tbody tr")];'
             'q.addEventListener("input",()=>{const v=q.value.toLowerCase();rs.forEach(r=>r.style.display=r.textContent.toLowerCase().includes(v)?"":"none")});</script>')
     (OUT / "index.html").write_text(page("Fichas — índice", body), encoding="utf-8")
