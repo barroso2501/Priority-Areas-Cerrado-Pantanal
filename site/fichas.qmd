@@ -50,7 +50,11 @@ pagetitle: "Fichas por área"
 .ap-idx footer{border-top:1px solid var(--rule);margin-top:28px;font-size:12px;color:var(--muted)}
 .ap-idx .mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
 @media (max-width:700px){.ap-idx .mapwrap{grid-template-columns:1fr}}
-.ap-idx .map{display:block;max-width:100%;max-height:560px;width:auto;height:auto;margin:0 auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.ap-idx .mapbox{position:relative;display:table;margin:0 auto}
+.ap-idx .map{display:block;max-width:100%;max-height:560px;width:auto;height:auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.ap-idx .scalebar{position:absolute;left:0;bottom:10px;right:0;display:flex;align-items:center;gap:6px;pointer-events:none}
+.ap-idx .scalebar .bar{margin-left:10px;height:6px;border:1.5px solid #222;border-top:none;background:rgba(255,255,255,.85)}
+.ap-idx .scalebar .lab{font-size:11px;font-weight:600;color:#222;background:rgba(255,255,255,.85);padding:0 4px;border-radius:3px}
 .ap-idx .map.placeholder{padding:48px 16px;text-align:center;color:var(--muted);font-size:13px;background:var(--card)}
 .ap-idx .legend{list-style:none;margin:0;padding:0;font-size:13px}
 .ap-idx .legend li{display:grid;grid-template-columns:14px 1fr;column-gap:8px;margin-bottom:8px}

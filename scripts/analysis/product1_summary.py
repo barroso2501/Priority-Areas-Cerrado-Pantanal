@@ -189,35 +189,70 @@ def svg_hbars(items, unit="Mha", div=1e6, d=2):
     return "".join(g)
 
 
-def map_png():
-    """Map of the units coloured by dynamics category, with the Cerrado and Pantanal (IBGE
-    2019) and the states as context. PNG, embedded."""
+def map_svg():
+    """Interactive map of the units coloured by dynamics category: every area is a link to its
+    fact sheet (ficha_<unit>.html) with a hover tooltip, plus a scale bar. Inline SVG in the
+    South America Albers Equal Area projection, so the scale bar is exact. Geometries are
+    simplified (1.5 km for the areas, 3 km for context lines), which is invisible at page size."""
     import geopandas as gpd
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+    from shapely.geometry import MultiPolygon, Polygon
     zz = gpd.read_file(ROOT / "data/interim/zones_upload.zip").merge(z[["zone_id", "unit"]], on="zone_id")
-    zz = zz[zz.unit.isin(u.index)].dissolve("unit").join(u[["category"]])
-    zz = zz.to_crs("ESRI:102033")
-    fig, ax = plt.subplots(figsize=(7.5, 8.2), dpi=150)
+    zz = zz[zz.unit.isin(u.index)].dissolve("unit").to_crs("ESRI:102033")
+    zz["geometry"] = zz.geometry.simplify(1500, preserve_topology=True)
+    ctx = []
     try:
-        b = gpd.read_file(ROOT / "data/raw/biomas_2019/lm_bioma_250.shp").to_crs("ESRI:102033")
-        b = b[b.Bioma.isin(["Cerrado", "Pantanal"])]
-        b.plot(ax=ax, color="#f1efe9", edgecolor="#9a988f", linewidth=0.6)
+        bm = gpd.read_file(ROOT / "data/raw/biomas_2019/lm_bioma_250.shp").to_crs("ESRI:102033")
+        bm = bm[bm.Bioma.isin(["Cerrado", "Pantanal"])]
+        bm["geometry"] = bm.geometry.simplify(3000)
         uf = gpd.read_file(ROOT / "data/raw/uf/BR_UF_2025.shp").to_crs("ESRI:102033")
-        uf.boundary.plot(ax=ax, color="#c9c6bd", linewidth=0.35)
+        uf["geometry"] = uf.geometry.simplify(3000)
+        ctx = [(bm, "biome"), (uf, "uf")]
     except Exception as e:  # context layers are optional
         print("WARNING: map context not drawn:", e)
-    for c in CATS:
-        s = zz[zz.category == c]
-        if len(s):
-            s.plot(ax=ax, color=CAT_COL[c], edgecolor="white", linewidth=0.15)
     xmin, ymin, xmax, ymax = zz.total_bounds
     pad = (xmax - xmin) * 0.03
-    ax.set_xlim(xmin - pad, xmax + pad); ax.set_ylim(ymin - pad, ymax + pad)
-    ax.set_axis_off()
-    buf = io.BytesIO(); fig.savefig(buf, format="png", bbox_inches="tight", facecolor="white"); plt.close(fig)
-    return base64.b64encode(buf.getvalue()).decode()
+    xmin, xmax, ymin, ymax = xmin - pad, xmax + pad, ymin - pad, ymax + pad
+    W = 900.0
+    k = W / (xmax - xmin)
+    H = (ymax - ymin) * k
+
+    def path(geom):
+        if isinstance(geom, Polygon):
+            polys = [geom]
+        elif hasattr(geom, "geoms"):   # MultiPolygon or GeometryCollection: keep the polygon parts
+            polys = [p for gg in geom.geoms for p in (gg.geoms if isinstance(gg, MultiPolygon) else [gg]) if isinstance(p, Polygon)]
+        else:
+            polys = []
+        d = []
+        for pg in polys:
+            for ring in [pg.exterior, *pg.interiors]:
+                pts = [f"{(x - xmin) * k:.1f},{(ymax - y) * k:.1f}" for x, y, *_ in ring.coords]
+                if len(pts) > 2:
+                    d.append("M" + "L".join(pts) + "Z")
+        return "".join(d)
+
+    g = [f'<svg viewBox="0 0 {W:.0f} {H:.0f}" class="catmap" role="img" aria-label="Mapa interativo das áreas por categoria de dinâmica">']
+    for gdf, cls in ctx:
+        for geom in gdf.geometry:
+            if cls == "biome":
+                g.append(f'<path class="ctx-biome" d="{path(geom)}"/>')
+            else:
+                g.append(f'<path class="ctx-uf" d="{path(geom)}"/>')
+    for unit, row in zz.iterrows():
+        m = u.loc[unit]
+        name = "Área híbrida" if m.is_hybrid else str(m.NOME)
+        tip = f"{name} ({unit}) · {CAT_PT[m.category]} · {fnum(m.rate, 2)}%/ano · vegetação natural 2025: {fnum(m.nat_share_2025 * 100, 0)}%"
+        g.append(f'<a href="ficha_{esc(unit)}.html" aria-label="{esc(tip)}"><path class="unit" fill="{CAT_COL[m.category]}" '
+                 f'fill-rule="evenodd" d="{path(row.geometry)}"><title>{esc(tip)}</title></path></a>')
+    # Scale bar (Albers metres): 200 km
+    L = 200000 * k
+    x0, y0 = 24, H - 28
+    g.append(f'<g class="scale"><rect x="{x0}" y="{y0}" width="{L / 2:.1f}" height="6" class="s1"/>'
+             f'<rect x="{x0 + L / 2:.1f}" y="{y0}" width="{L / 2:.1f}" height="6" class="s2"/>'
+             f'<text x="{x0}" y="{y0 - 6}" class="st">0</text><text x="{x0 + L / 2:.1f}" y="{y0 - 6}" class="st" text-anchor="middle">100</text>'
+             f'<text x="{x0 + L:.1f}" y="{y0 - 6}" class="st" text-anchor="middle">200 km</text></g>')
+    g.append("</svg>")
+    return "".join(g)
 
 
 # --- Tables ---------------------------------------------------------------------------------------
@@ -241,7 +276,7 @@ def group_table(col, order=None, label=""):
 
 hl = u[u.category.isin(["very intense loss", "intense loss"])].sort_values("rate").head(20)
 hl_rows = "".join(
-    f'<tr><td>{esc(k)}</td><td>{esc("Área híbrida" if m.is_hybrid else str(m.NOME))}</td><td>{esc(str(m.Estados))}</td>'
+    f'<tr><td><a href="ficha_{esc(k)}.html">{esc(k)}</a></td><td><a href="ficha_{esc(k)}.html">{esc("Área híbrida" if m.is_hybrid else str(m.NOME))}</a></td><td>{esc(str(m.Estados))}</td>'
     f'<td>{esc(str(m.Import_bio))}</td><td>{fnum(m.nat_share_2012 * 100, 0)}% → {fnum(m.nat_share_2025 * 100, 0)}%</td>'
     f'<td>{fnum(m.rate, 2)}</td><td>{"sim" if m.flag_acceleration else ""}</td><td>{esc(DRIVER_PT.get(m.driver, str(m.driver)))}</td></tr>'
     for k, m in hl.iterrows())
@@ -302,6 +337,12 @@ table.num thead th{font-weight:600;color:var(--ink2);font-size:12px}
 img.map{width:100%;max-width:720px;display:block;margin:0 auto;border-radius:6px}
 table.hl td:nth-child(-n+4),table.hl th:nth-child(-n+4),table.hl td:nth-child(8),table.hl th:nth-child(8){text-align:left}
 nav.topnav{font-size:13px;margin-bottom:12px}nav.topnav a{color:var(--main);margin-right:16px}
+.mapframe{border:1px solid var(--rule);border-radius:6px;background:#fff;padding:4px;max-width:760px;margin:0 auto}
+.catmap{width:100%;height:auto;display:block}.catmap .ctx-biome{fill:#f1efe9;stroke:#9a988f;stroke-width:.8}
+.catmap .ctx-uf{fill:none;stroke:#c9c6bd;stroke-width:.5}.catmap .unit{stroke:#fff;stroke-width:.4;cursor:pointer}
+.catmap a:hover .unit,.catmap a:focus .unit{stroke:#111;stroke-width:1.6}.catmap a:focus{outline:none}
+.catmap .s1{fill:#222}.catmap .s2{fill:#fff;stroke:#222;stroke-width:1}.catmap .st{font-size:11px;fill:#222}
+table.hl a,p a{color:var(--main)}
 footer{border-top:1px solid var(--rule);margin-top:40px;font-size:12px;color:var(--muted)}
 '''
 
@@ -345,8 +386,8 @@ body = f'''
 
 <h2>Mapa das categorias</h2>
 {legend_cats()}
-<img class="map" alt="Mapa das áreas prioritárias por categoria de dinâmica" src="data:image/png;base64,{map_png()}">
-<p class="muted">Fundo: Cerrado e Pantanal (IBGE 2019) e limites estaduais. Áreas híbridas incluídas.</p>
+<div class="mapframe">{map_svg()}</div>
+<p class="muted">Clique em uma área para abrir a ficha; passe o cursor para ver nome, categoria e taxa. Fundo: Cerrado e Pantanal (IBGE 2019) e limites estaduais. Áreas híbridas incluídas. Projeção cônica equivalente de Albers (América do Sul).</p>
 
 <h2>Categorias por importância, prioridade e tipo de área</h2>
 <p class="muted">Número de áreas em cada categoria. Passe o cursor sobre os segmentos para ver contagens e percentuais.</p>
@@ -373,7 +414,7 @@ body = f'''
 <h3>As 20 áreas com perda mais rápida</h3>
 <div class="wrap"><table class="num hl"><thead><tr><th>Código</th><th>Nome</th><th>UF</th><th>Importância</th><th>Vegetação natural 2012 → 2025</th><th>%/ano</th><th>Aceleração</th><th>Vetor</th></tr></thead><tbody>{hl_rows}</tbody></table></div>
 <h3>Grandes áreas estáveis e bem conservadas</h3>
-<p>{len(big_stable)} áreas estáveis mantêm 80% ou mais de vegetação natural, somando {fnum(big_stable.nat_ha_2025.sum() / 1e6, 1)} Mha; as maiores são {", ".join(esc(str(n)) for n in big_stable.NOME.head(6))}. Várias estão no Pantanal, onde a vegetação oscila com as cheias, mas a área convertida em uso pouco mudou. [E]</p>
+<p>{len(big_stable)} áreas estáveis mantêm 80% ou mais de vegetação natural, somando {fnum(big_stable.nat_ha_2025.sum() / 1e6, 1)} Mha; as maiores são {", ".join(f'<a href="ficha_{esc(k)}.html">{esc(str(n))}</a>' for k, n in big_stable.NOME.head(6).items())}. Várias estão no Pantanal, onde a vegetação oscila com as cheias, mas a área convertida em uso pouco mudou. [E]</p>
 
 <h2>Contexto: a matriz fora das áreas prioritárias</h2>
 <div class="wrap"><table class="num"><thead><tr><th>Bioma (IBGE 2019)</th><th>Vegetação natural 2012</th><th>2025</th><th>Taxa 2012–2025 (%/ano)</th><th>2012–2018</th><th>2018–2025</th></tr></thead><tbody>

@@ -232,6 +232,28 @@ def svg_hbars(items, unit_label="ha"):
     return "".join(g)
 
 
+BOUNDS = pd.read_csv(P1 / "units_bounds.csv", dtype={"unit": str}).set_index("unit")
+
+
+def scale_bar(u):
+    """Scale bar drawn over the map image. The images are in geographic coordinates
+    (EPSG:4326, checked from their aspect ratios), framed by the unit bounds padded by 6% as in
+    31_export_maps.py. Horizontal kilometres per image width are computed at the central
+    latitude; within one area the error is a few percent, hence "aproximada"."""
+    if u not in BOUNDS.index:
+        return ""
+    x0, y0, x1, y1 = BOUNDS.loc[u, ["minx", "miny", "maxx", "maxy"]].astype(float)
+    px = (x1 - x0) * 0.06
+    width_km = (x1 - x0 + 2 * px) * 111.32 * np.cos(np.radians((y0 + y1) / 2))
+    target = width_km * 0.22                                   # bar about a fifth of the width
+    step = 10 ** np.floor(np.log10(target))
+    L = max(v * step for v in (1, 2, 5) if v * step <= target)
+    frac = L / width_km * 100
+    lab = f"{fnum(L, 0 if L >= 1 else 1)} km"
+    return (f'<div class="scalebar" title="Escala aproximada (latitude central)">'
+            f'<span class="bar" style="width:{frac:.2f}%"></span><span class="lab">{lab}</span></div>')
+
+
 def map_section(u):
     """Change map 2012 -> 2025 with a legend whose hectares come from the tables."""
     ha = dt[dt.unit == u].groupby("mapcls").ha.sum()
@@ -239,11 +261,14 @@ def map_section(u):
     leg = "".join(f'<li><span class="sw" style="background:{col}"></span>{lab}<span class="lv">{fnum(ha.get(k, 0))} ha · {fnum(ha.get(k, 0) / tot * 100, 1)}%</span></li>'
                   for k, lab, col in MAP_CLASSES if ha.get(k, 0) >= 1)
     png = MAPS / f"{u}.png"
-    img = (f'<img class="map" alt="Mapa de mudanças 2012–2025 da área {esc(u)}" src="data:image/png;base64,{base64.b64encode(png.read_bytes()).decode()}">'
-           if png.exists() else '<div class="map placeholder">Mapa ainda não gerado (scripts/gee/31_export_maps.py).</div>')
+    if png.exists():
+        img = (f'<figure class="mapbox"><img class="map" alt="Mapa de mudanças 2012–2025 da área {esc(u)}" '
+               f'src="data:image/png;base64,{base64.b64encode(png.read_bytes()).decode()}">{scale_bar(u)}</figure>')
+    else:
+        img = '<div class="map placeholder">Mapa ainda não gerado (scripts/gee/31_export_maps.py).</div>'
     return f'''<section>
   <h3>Mapa de mudanças 2012–2025</h3>
-  <p class="muted">Comparação dos grupos de nível 1 do MapBiomas em 2012 e 2025. A área está em cores plenas e contornada; o entorno aparece esmaecido, como contexto. O mapa é ilustrativo; as áreas da legenda vêm das tabelas.</p>
+  <p class="muted">Comparação dos grupos de nível 1 do MapBiomas em 2012 e 2025. A área está em cores plenas e contornada; o entorno aparece esmaecido, como contexto. O mapa é ilustrativo, em coordenadas geográficas, com escala aproximada; as áreas da legenda vêm das tabelas.</p>
   <div class="mapwrap">{img}<ul class="legend">{leg}</ul></div>
 </section>'''
 
@@ -433,7 +458,11 @@ details{margin:8px 0;font-size:13px}.targets{color:var(--ink2);padding-left:18px
 footer{border-top:1px solid var(--rule);margin-top:28px;font-size:12px;color:var(--muted)}
 .mapwrap{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:16px;align-items:start}
 @media (max-width:700px){.mapwrap{grid-template-columns:1fr}}
-.map{display:block;max-width:100%;max-height:560px;width:auto;height:auto;margin:0 auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.mapbox{position:relative;display:table;margin:0 auto}
+.map{display:block;max-width:100%;max-height:560px;width:auto;height:auto;border:1px solid var(--rule);border-radius:6px;background:#fff}
+.scalebar{position:absolute;left:0;bottom:10px;right:0;display:flex;align-items:center;gap:6px;pointer-events:none}
+.scalebar .bar{margin-left:10px;height:6px;border:1.5px solid #222;border-top:none;background:rgba(255,255,255,.85)}
+.scalebar .lab{font-size:11px;font-weight:600;color:#222;background:rgba(255,255,255,.85);padding:0 4px;border-radius:3px}
 .map.placeholder{padding:48px 16px;text-align:center;color:var(--muted);font-size:13px;background:var(--card)}
 .legend{list-style:none;margin:0;padding:0;font-size:13px}.legend li{display:grid;grid-template-columns:14px 1fr;column-gap:8px;margin-bottom:8px}
 .legend .sw{width:14px;height:14px;border-radius:3px;margin-top:3px;grid-row:span 2}.legend .lv{color:var(--muted);grid-column:2}

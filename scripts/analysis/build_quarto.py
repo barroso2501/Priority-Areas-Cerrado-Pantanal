@@ -134,6 +134,7 @@ body = body.replace('<h1>', '<h1 class="ap-h1">', 1)
 # --- Executive summary ----------------------------------------------------------------------------
 css, body = split_page(P1 / "sumario_executivo.html")
 body = body.replace('href="index.html"', 'href="fichas.html"')
+body = re.sub(r'href="ficha_([^"]+)\.html"', r'href="fichas/\1.html"', body)   # map and table links
 (SITE / "sumario.qmd").write_text(qmd("Sumário executivo", scope_css(css, ".ap-sum"), ".ap-sum", body), encoding="utf-8")
 
 # --- Home page ------------------------------------------------------------------------------------
