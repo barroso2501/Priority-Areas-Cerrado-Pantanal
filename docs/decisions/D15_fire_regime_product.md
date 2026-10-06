@@ -1,6 +1,6 @@
 # D15 — Product 2: fire regime in stable natural vegetation of the priority areas
 
-**Status:** Accepted 2026-10-06 (project lead); categories simplified the same day (§4, project lead); earlier revisions the same day (§4 absence over the full series, prolonged exclusion; §5 critical window by latitude band, north of 12°S confirmed; indicator renamed "sem ignição natural"). Thresholds are parameters, to be calibrated (§7; calibration extraction defined 2026-10-06, project lead: calibration before the presentation). Supersedes the open parts of D3 for this product and implements D9.
+**Status:** Accepted 2026-10-06 (project lead); categories simplified the same day (§4, project lead); earlier revisions the same day (§4 absence over the full series, prolonged exclusion; §5 critical window by latitude band, north of 12°S confirmed; indicator renamed "sem ignição natural"). Thresholds calibrated and retained 2026-10-06 with two robustness levels per flag (§7, accepted by the project lead); main seasonal indicator changed to the July–August share (§5). Supersedes the open parts of D3 for this product and implements D9.
 **Raised:** 2026-10-05
 
 ## 1. Question
@@ -47,15 +47,15 @@ Earlier proposals superseded: pixel classes infrequent/compatible/frequent/conse
 - **Change 2012–2018 → 2019–2025** (fire years), per type:
   - annual burned fraction of the stable area;
   - share of the stable area with at least one pair of consecutive fire years within the sub-period;
-  - **critical-window ratio** = burned area in the critical window of the pixel's latitude band / total burned area (calendar months of the sub-period's years);
-  - **no-natural-ignition ratio** (*sem ignição natural*) = burned area in July–August / total burned area. Natural ignition in the Cerrado comes from lightning, which does not occur in these months, so this fraction is certainly human-caused.
+  - **no-natural-ignition ratio** (*sem ignição natural*) = burned area in July–August / total burned area — **the main seasonal indicator** (accepted 2026-10-06, after the calibration). Natural ignition in the Cerrado comes from lightning, which does not occur in these months, so this fraction is certainly human-caused. Defined by mechanism, it does not depend on where a window boundary falls;
+  - **critical-window ratio** = burned area in the critical window of the pixel's latitude band / total burned area — kept as a **descriptor**, shown with the full monthly profile, not used to read change (see §7: its direction of change depends on the window boundary south of 18°S).
 - **Critical window by latitude band** (project lead, revised 2026-10-06). In 12–18°S the herbaceous layer enters water stress in July, August is the most critical month (higher temperature, shallow soil water exhausted), September continues it with occasional small rains, and rains return in October–November; the season shifts later northwards.
   - South of 12°S (12–18°S and south of 18°S): **July–September**.
   - North of 12°S: **August–October** (northward shift; confirmed by the project lead 2026-10-06).
 
   The fire product is monthly, so windows are whole months.
 - [E] Share of fire in the window, 2012–2025, stable open vegetation in the priority areas: south of 18°S 58% (July–September); 18–12°S 56% (July–September; 34% falls in October, outside the window); 12–8°S 79% and north of 8°S 80% (August–October). July–August: 34%, 15%, 22% and 35%.
-- **Reading of the ratios:** relative, each unit against the stable matrix of the same latitude band (south of 18°S, 18–12°S, 12–8°S, north of 8°S), and change between sub-periods within the unit. No absolute threshold.
+- **Reading of the ratios:** relative, each unit against the stable matrix of the same latitude band (south of 18°S, 18–12°S, 12–8°S, north of 8°S; unit assigned by its centroid; matrix = Cerrado and Pantanal outside the units), and change between sub-periods within the unit. No absolute threshold.
 - **Minimum fire for the ratios:** computed only when the burned area in the sub-period is at least max(1,000 ha, 1% of the stable open vegetation of the unit); otherwise "insufficient fire to assess the season".
 - Fire in forest is never interpreted through season: any recurrence is already a departure.
 
@@ -76,7 +76,39 @@ Earlier proposals superseded: pixel classes infrequent/compatible/frequent/conse
 
 **How (2026-10-06).** One extraction (`scripts/gee/23_extract_fire_calibration.py`, notebook step 11) exports, per zone × type, the stable area by a pixel *signature* — number of intervals < 3 years and of 1-year intervals (each capped at 3), band of the last fire year (2016–2025, 2011–2015, 2006–2010, 2001–2005, ≤ 2000, never), class-stable flag — once on fire years and once on calendar years, plus burned area by month × latitude band × sub-period. Every variant above is rebuilt offline (`scripts/analysis/product2_calibration.py`): category shares inside and outside the units, and how many units change flag (below > 50%, above > 20%, above > 50%, forest affected > 50%) relative to the product setting. The offline test checks the signature rules against direct per-pixel rules for all 24 combinations of N, k and short-interval definition; the decoding QC checks that the product setting rebuilt from the signature equals `fire_regime`.
 
-**Reading criterion (proposed, to confirm with the results).** A threshold is retained when the extremes are robust to it: the global shares move little, and the units flagged at the extremes are largely the same. Where a choice moves many units across a flag, the presentation reports the flag as threshold-dependent instead of choosing the threshold that looks best.
+**Reading criterion.** A threshold is retained when the extremes are robust to it: the global shares move little, and the units flagged at the extremes are largely the same. Where a choice moves many units across a flag, the presentation reports the flag as threshold-dependent instead of choosing the threshold that looks best.
+
+### Results and decision (2026-10-06, accepted by the project lead)
+Stable vegetation inside the units; outputs in `data/derived/product2/calibration_*.csv` and `calibration_report.txt`. [E]
+
+| Variant | Savanna above / below | Grassland above / below | Forest affected | Units > 50% below | > 20% above | > 50% above |
+|---|---|---|---|---|---|---|
+| product (N 20, k 2, < 3 years) | 16.2 / 47.3 | 18.0 / 43.9 | 28.7 | 177 | 74 | 23 |
+| N 15 / N 25 | 15.3–16.6 / 54.7–43.4 | 16.3–19.5 / 51.3–37.5 | = | 218 / 159 | 69 / 79 | 19 / 23 |
+| k 1 / k 3 | 24.8 / 11.5 (above) | 28.1 / 12.6 (above) | = | = | 109 / 49 | 40 / 8 |
+| annual fire only, k 2 | 4.5 (above) | 7.3 (above) | = | = | 25 | 3 |
+| calendar year | 16.5 / 47.3 | 18.1 / 43.9 | 28.7 | 177 | 74 | 23 |
+| class-stable universe | 17.6 / 44.4 | 19.6 / 40.5 | 27.3 | 161 | 75 | 25 |
+
+Findings:
+- **Fire year vs calendar year:** no unit changes flag. The choice is immaterial.
+- **Below expected is robust.** Flags are nested in N (N 25 ⊂ N 20 ⊂ N 15): 159 units stay above 50% even with N = 25; 18 more depend on the threshold.
+- **Above expected rests mostly on the 2-year return.** Counting annual fire only, savanna above falls from 16% to 4.5% and the units above 20% from 74 to 25. The > 50% flag is unstable (23 → 8 with k = 3 → 3 with annual fire only) and is dropped. [H] Part of fire in consecutive years may be commission (re-detected scars); the minimum-scar-size test remains pending.
+- **Class alternation explains little of the forest fire.** Class-stable pixels are 84% of the stable area; forest affected falls only from 28.7% to 27.3%, and 45 of the 52 units above 50% stay. [H] Cerradão mapped consistently as forest is not tested by this; see §10 (IBGE map).
+- **Critical window.** South of 12°S the product window (July–September) holds 53–61% of the burned area, against 71–92% one month later (August–October); north of 12°S it holds 78–81%. South of 18°S the change between sub-periods has opposite signs for the product window (−5 points) and the window one month earlier (+6 points). Hence the change to the July–August share as main indicator (§5).
+
+Decision:
+- **Thresholds kept:** N = 20, k = 2, short interval < 3 years, fire year, domain-stable universe.
+- **Two robustness levels per unit flag**, shown in the presentation:
+
+  | Flag | Robust | Threshold-dependent |
+  |---|---|---|
+  | below > 50% (savanna + grassland) | also with N = 25 (159 units) | N = 20 only (18) |
+  | above > 20% (savanna + grassland) | also counting annual fire only (25) | product rule only (49) |
+  | forest affected > 50% | also in the class-stable universe (45) | domain-stable only (7) |
+
+  Units with less than 1,000 ha of the vegetation concerned are not flagged (47 for open vegetation, 24 for forest). Per-unit table: `scripts/analysis/product2_units.py` → `data/derived/product2/units_fire.csv`.
+- Critical test before recording: the robust level is not "true" and the other "doubtful"; robust means insensitive to the tested choices, all of which share the same fire product. The levels say how much the flag depends on our thresholds, not on detection.
 
 ## 8. Extraction
 `scripts/gee/22_extract_fire_regime.py`: per zone × vegetation type × category (§4), the stable area and, per sub-period, burned fraction, consecutive-pair area and August–October / total burned area. Decoded and checked by `90_collect_exports.py` (sum over classes = stable area of the type, against `fire_intervals`). Calibration: `23_extract_fire_calibration.py` (§7), decoded into `fire_calib.parquet` and `fire_calib_month.parquet`.

@@ -65,6 +65,19 @@ pagetitle: "Fichas por área"
 .ap-idx nav.topnav{font-size:13px;margin-bottom:10px}
 .ap-idx nav.topnav a{color:var(--main);margin-right:16px}
 .ap-idx nav.toc{font-size:14px;margin-bottom:24px}
+.ap-idx h4{font-size:14px;margin:18px 0 2px;color:var(--ink2)}
+.ap-idx .mlegend{font-size:12px;color:var(--ink2);display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;margin:6px 0}
+.ap-idx .mlegend .sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-left:8px}
+.ap-idx .mlegend .sw.b1,.ap-idx .chart .b1{background:var(--ctx);fill:var(--ctx)}
+.ap-idx .mlegend .sw.b2,.ap-idx .chart .b2{background:#c4561d;fill:#c4561d}
+.ap-idx .chart .seg{font-size:11px;fill:#222}
+.ap-idx .chart .seg.on{fill:#fff;font-weight:600}
+.ap-idx .chart .tick.mut{fill:var(--muted);font-style:italic}
+.ap-idx .chart .shade{fill:var(--card)}
+.ap-idx .chart .tick.lab{fill:var(--ink2);font-size:12px}
+.ap-idx .flags.fire li{margin-bottom:4px}
+.ap-idx .fire table.num{table-layout:fixed}
+.ap-idx .mlegend .mut{color:var(--muted);margin-left:8px}
 .ap-idx nav.toc a{color:var(--main);margin-right:16px}
 </style>
 <div class="ap-idx">

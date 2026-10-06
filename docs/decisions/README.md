@@ -18,6 +18,6 @@ One file per methodological decision. Each record states context, options, recom
 | [D12](D12_scope_generalization.md) | Cerrado as pilot; pipeline parameterized by biome; marine zone out of scope | Accepted |
 | [D13](D13_product1_state_dynamics.md) | Product 1 for MMA: natural-vegetation state and dynamics 2012–2025; categories and flags | Accepted (incl. §5 amendment and calibrated thresholds); land tenure noted as next layer |
 | [D14](D14_visual_identity.md) | Site visual: MapBiomas design system tested, recorded, not applied | Decided |
-| [D15](D15_fire_regime_product.md) | Product 2: fire in stable natural vegetation — forest affected/not; open vegetation above/as/below expected (3–20 y), 1985–2025; critical window by latitude band | Accepted; thresholds to calibrate |
+| [D15](D15_fire_regime_product.md) | Product 2: fire in stable natural vegetation — forest affected/not; open vegetation above/as/below expected (3–20 y), 1985–2025; July–August share as seasonal indicator; two robustness levels per flag | Accepted; calibrated 2026-10-06 |
 
 Template: `Context · Options · Recommendation · Status · Evidence/notes`.

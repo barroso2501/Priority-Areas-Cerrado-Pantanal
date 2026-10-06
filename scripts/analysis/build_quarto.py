@@ -145,12 +145,12 @@ subtitle: "Estado e dinâmica da vegetação natural nas Áreas Prioritárias pa
 
 Este site reúne o diagnóstico do estado da vegetação natural nas **348 Áreas Prioritárias para a Conservação do Cerrado e do Pantanal** da 2ª atualização (294 áreas da camada oficial e 54 áreas híbridas) e de como ela mudou entre 2012, ano em que as áreas foram desenhadas, e 2025. A base é a Coleção 11 do MapBiomas.
 
-O diagnóstico **descreve estado e dinâmica**. Ele não avalia a eficácia das áreas como política pública, nem inclui fogo e degradação nesta versão.
+O diagnóstico **descreve estado e dinâmica**. Ele não avalia a eficácia das áreas como política pública. As fichas incluem uma seção sobre o **fogo na vegetação natural estável (1985–2025)**; o sumário executivo ainda não trata do fogo. Degradação não está incluída nesta versão.
 
 ## O que há aqui
 
 - **[Sumário executivo](sumario.qmd):** método simplificado, resultados consolidados por importância biológica, prioridade de ação, ação recomendada e UF, mapa das categorias e subsídios para o próximo ciclo de revisão.
-- **[Fichas por área](fichas.qmd):** uma ficha para cada área, com estado em 2025, categoria de dinâmica, alertas, mapa de mudanças 2012–2025, trajetória anual, composição da paisagem, destino da vegetação convertida, persistência e alvos de conservação. A tabela de entrada pode ser filtrada por nome, UF, categoria, importância ou alerta.
+- **[Fichas por área](fichas.qmd):** uma ficha para cada área, com estado em 2025, categoria de dinâmica, alertas, mapa de mudanças 2012–2025, trajetória anual, composição da paisagem, destino da vegetação convertida, persistência, fogo na vegetação natural estável (regime 1985–2025 e mudança entre 2012–2018 e 2019–2025) e alvos de conservação. A tabela de entrada pode ser filtrada por nome, UF, categoria, importância ou alerta.
 - **Busca:** o ícone de lupa no topo procura em todas as páginas.
 
 ## Como ler as categorias

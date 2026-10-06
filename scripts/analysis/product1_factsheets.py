@@ -15,6 +15,9 @@ Inputs
   data/derived/zones_attributes.csv, data/derived/reconciliation_2nd_update.csv,
   data/derived/fichas_targets.csv, data/reference/mapbiomas_col11_legend_groups.csv
   data/raw/areas_hibridas/... (hybrid actions; optional)
+  data/derived/product2/units_fire.csv, units_fire_months.csv, matrix_regime.csv, matrix_fire.csv
+      fire section (Product 2, D15; product2_units.py). Optional: without them the fact
+      sheets are written without the fire section.
 Output
   data/derived/product1/fichas/ficha_<unit>.html   one self-contained page per unit
   data/derived/product1/fichas/prototipo.html      the selected units on one page (when --units is given)
@@ -273,6 +276,174 @@ def map_section(u):
 </section>'''
 
 
+
+# --- Fire section (Product 2, D15) ------------------------------------------------------------
+P2 = ROOT / "data/derived/product2"
+try:
+    FU = pd.read_csv(P2 / "units_fire.csv", dtype={"unit": str}).set_index("unit")
+    FM = pd.read_csv(P2 / "units_fire_months.csv", dtype={"unit": str})
+    _mr = pd.read_csv(P2 / "matrix_regime.csv")
+    MR = _mr.set_index(["type", "cls"]).share
+    MRH = _mr.groupby("type").ha.sum()        # stable area of the matrix per type
+    MF = pd.read_csv(P2 / "matrix_fire.csv").set_index(["latband", "subperiod"])
+except FileNotFoundError:
+    FU = None
+# Category colours: warm = above expected, cool = below expected, neutral = as expected.
+# Labels and percentages are always printed, so colour never carries the meaning alone.
+REG = [(1, "Acima do esperado", "#c4561d"), (2, "De acordo", "#c9c6bd"), (3, "Abaixo do esperado", "#3b6fb6")]
+FOREST = [(2, "Afetada por fogo", "#c4561d"), (1, "Não afetada", "#c9c6bd")]
+BAND_PT = {0: "ao sul de 18°S", 1: "entre 18°S e 12°S", 2: "entre 12°S e 8°S", 3: "ao norte de 8°S"}
+WIN_PT = {0: "julho–setembro", 1: "julho–setembro", 2: "agosto–outubro", 3: "agosto–outubro"}
+MIN_FIRE_HA = 1000.0
+
+
+def pct(v, d=0):
+    return "–" if v is None or (isinstance(v, float) and np.isnan(v)) else f"{fnum(v * 100, d)}%"
+
+
+def svg_stack(rows):
+    """100% stacked horizontal bars. rows: (title, subtitle, [(share, label, colour)], muted).
+    Two-line label: area name (or matrix), then vegetation type and stable area considered."""
+    W, rowh, l = 880, 42, 300
+    H = rowh * len(rows) + 4
+    g = [f'<svg viewBox="0 0 {W} {H}" class="chart" role="img" aria-label="Composição do regime de fogo">']
+    for i, (lab, sub, segs, muted) in enumerate(rows):
+        y = 2 + i * rowh
+        short = lab if len(lab) <= 44 else lab[:43] + "…"          # long names cut, full name in the tooltip
+        g.append(f'<text x="{l - 10}" y="{y + 16}" class="tick lab{" mut" if muted else ""}" text-anchor="end">'
+                 f'{esc(short)}<title>{esc(lab)}</title></text>'
+                 f'<text x="{l - 10}" y="{y + 30}" class="tick" text-anchor="end">{esc(sub)}</text>')
+        x = l
+        op = ' opacity=".55"' if muted else ""
+        for sh, sl, col in segs:
+            w = (W - l - 4) * sh
+            if w <= 0:
+                continue
+            g.append(f'<rect x="{x:.1f}" y="{y + 8}" width="{w:.1f}" height="24" fill="{col}"'
+                     f'{op}><title>{esc(lab)}, {esc(sub)} — {sl}: {pct(sh, 1)}</title></rect>')
+            if w > 38:
+                dark = col in ("#c4561d", "#3b6fb6")
+                g.append(f'<text x="{x + w / 2:.1f}" y="{y + 24}" class="seg{" on" if dark else ""}" text-anchor="middle">{pct(sh)}</text>')
+            x += w
+    g.append("</svg>")
+    return "".join(g)
+
+
+def svg_months(u):
+    """Share of the burned area of stable savanna + grassland per calendar month, 2012-2018
+    vs 2019-2025; July-August shaded (plain label: no technical term for a general audience)."""
+    d = FM[FM.unit == u].pivot_table(index="month", columns="subperiod", values="burned_ha", aggfunc="sum").reindex(range(1, 13)).fillna(0)
+    if d.empty or (d.sum() < MIN_FIRE_HA).any():
+        return ""
+    sh = d / d.sum()
+    W, H, l, b, t = 880, 190, 40, 24, 10
+    mx = max(sh.max().max(), 0.05) * 1.12      # headroom above the tallest bar
+    cw = (W - l - 10) / 12
+    Y = lambda v: t + (1 - v / mx) * (H - t - b)
+    g = [f'<svg viewBox="0 0 {W} {H}" class="chart" role="img" aria-label="Distribuição mensal do fogo">',
+         f'<rect x="{l + 6 * cw:.1f}" y="{t}" width="{2 * cw:.1f}" height="{H - t - b}" class="shade"/>',
+         f'<text x="{l + 7 * cw:.1f}" y="{t + 11}" class="tick" text-anchor="middle">julho–agosto</text>']
+    for v in np.linspace(0, mx, 4):
+        g.append(f'<line x1="{l}" x2="{W - 10}" y1="{Y(v):.1f}" y2="{Y(v):.1f}" class="grid"/>'
+                 f'<text x="{l - 6}" y="{Y(v) + 4:.1f}" class="tick" text-anchor="end">{fnum(v * 100, 0)}%</text>')
+    MES = "jan fev mar abr mai jun jul ago set out nov dez".split()
+    for i, m_ in enumerate(range(1, 13)):
+        x0 = l + i * cw
+        for j, (sp, cls_, lab) in enumerate((("sp1", "b1", "2012–2018"), ("sp2", "b2", "2019–2025"))):
+            v = sh.loc[m_, sp] if sp in sh else 0
+            bw = cw * 0.36
+            x = x0 + cw * 0.12 + j * (bw + 2)
+            g.append(f'<rect x="{x:.1f}" y="{Y(v):.1f}" width="{bw:.1f}" height="{H - b - Y(v):.1f}" class="{cls_}">'
+                     f'<title>{MES[i]}, {lab}: {pct(v, 1)} do queimado</title></rect>')
+        g.append(f'<text x="{x0 + cw / 2:.1f}" y="{H - 7}" class="tick" text-anchor="middle">{MES[i]}</text>')
+    g.append("</svg>")
+    return ('<div class="mlegend"><span class="sw b1"></span>2012–2018<span class="sw b2"></span>2019–2025</div>' + "".join(g))
+
+
+def flag_line(kind, f):
+    lv = f[f"flag_{kind}"] if isinstance(f[f"flag_{kind}"], str) else ""
+    if lv in ("", "small"):
+        return ""
+    if kind == "below":
+        txt = f"<b>Abaixo do esperado em {pct(f.open_below)}</b> da savana e do campo estáveis"
+        rob = (f"robusto: mantém-se acima de 50% com limiar de 25 anos ({pct(f.open_below_n25)})" if lv == "robust"
+               else f"depende do limiar: com 25 anos sem fogo, {pct(f.open_below_n25)}")
+    elif kind == "above":
+        txt = f"<b>Acima do esperado em {pct(f.open_above)}</b> da savana e do campo estáveis"
+        rob = (f"robusto: mantém-se acima de 20% contando só fogo anual ({pct(f.open_above_annual_only)})" if lv == "robust"
+               else f"depende do limiar: contando só fogo anual, {pct(f.open_above_annual_only)}")
+    else:
+        txt = f"<b>Floresta afetada por fogo em {pct(f.forest_affected)}</b> da floresta estável"
+        rob = ("robusto: mantém-se acima de 50% só com pixels de classe estável" if lv == "robust"
+               else "depende do universo: abaixo de 50% só com pixels de classe estável")
+    return f'<li class="fl-{kind}">{txt} — {rob}.</li>'
+
+
+def fire_section(u):
+    if FU is None or u not in FU.index:
+        return ""
+    f = FU.loc[u]
+    open_ha = 0 if np.isnan(f.open_ha) else f.open_ha
+    forest_ha = 0 if np.isnan(f.forest_ha) else f.forest_ha
+    if open_ha + forest_ha + (0 if np.isnan(f.wetland_ha) else f.wetland_ha) < 1:
+        return ""
+    m_ = units.loc[u]
+    uname = f"Área híbrida {u}" if bool(m_.is_hybrid) else str(m_.NOME)
+    ha_ = lambda v: f"{fnum(v)} ha estáveis"
+    mha = lambda t: f"{fnum(MRH.get(t, 0) / 1e6, 1)} milhões de ha estáveis"
+    rows = []
+    for t, nm, lab in ((2, "savanna", "Savana"), (3, "grassland", "Campo")):
+        if f[f"{nm}_ha"] >= 100:
+            rows.append((uname, f"{lab} · " + ha_(f[f"{nm}_ha"]),
+                         [(f[f"{nm}_{c}"], cl, col) for c, (k, cl, col) in zip(("above", "expected", "below"), REG)], False))
+            rows.append(("Matriz Cerrado–Pantanal", f"{lab} · " + mha(t), [(MR.get((t, k), 0), cl, col) for k, cl, col in REG], True))
+    if f.wetland_ha >= 100:
+        rows.append((uname, "Áreas úmidas · " + ha_(f.wetland_ha) + " · só reportado",
+                     [(f[f"wetland_{c}"], cl, col) for c, (k, cl, col) in zip(("above", "expected", "below"), REG)], False))
+    if forest_ha >= 100:
+        rows.append((uname, "Floresta · " + ha_(forest_ha),
+                     [(f.forest_affected, FOREST[0][1], FOREST[0][2]), (1 - f.forest_affected, FOREST[1][1], FOREST[1][2])], False))
+        rows.append(("Matriz Cerrado–Pantanal", "Floresta · " + mha(1),
+                     [(MR.get((1, 2), 0), FOREST[0][1], FOREST[0][2]), (MR.get((1, 1), 0), FOREST[1][1], FOREST[1][2])], True))
+    leg = "".join(f'<span class="sw" style="background:{c}"></span>{l_}' for _, l_, c in
+                  ((1, "Acima do esperado · floresta afetada", REG[0][2]), (2, "De acordo · floresta não afetada", REG[1][2]), (3, "Abaixo do esperado", REG[2][2]))) + \
+        '<span class="mut">· barras esmaecidas: matriz</span>'
+    fl = "".join(flag_line(k, f) for k in ("below", "above", "forest"))
+    small = []
+    if open_ha < MIN_FIRE_HA:
+        small.append(f"savana e campo estáveis somam {fnum(open_ha)} ha (menos de 1.000 ha)")
+    if forest_ha < MIN_FIRE_HA and forest_ha > 0:
+        small.append(f"floresta estável soma {fnum(forest_ha)} ha (menos de 1.000 ha)")
+    fl_html = (f'<ul class="flags fire">{fl}</ul>' if fl else '<p class="muted">Sem sinalização nos extremos.</p>') + \
+        (f'<p class="muted">Sem sinalização para: {"; ".join(small)}.</p>' if small else "")
+    lb = int(f.latband)
+    jul = lambda sp: pct(f[f"{sp}_julaug"])
+    win = lambda sp: pct(f[f"{sp}_window"])
+    note_fire = "" if not (np.isnan(f.sp1_julaug) or np.isnan(f.sp2_julaug)) else \
+        '<p class="muted">“–” nas razões sazonais: fogo insuficiente no subperíodo (menos de 1.000 ha ou de 1% da vegetação aberta estável).</p>'
+    return f'''<section class="fire">
+  <h3>Fogo na vegetação natural estável, 1985–2025</h3>
+  <p class="muted">Vegetação que permaneceu natural em todos os anos de 1985 a 2025: savana e campo estáveis somam {fnum(open_ha)} ha e floresta estável {fnum(forest_ha)} ha. Savana e campo: <b>acima do esperado</b> = fogo repetido com intervalos menores que 3 anos (ao menos dois); <b>abaixo do esperado</b> = nenhum fogo nos últimos 20 anos (2006–2025), incluindo o que nunca queimou; <b>de acordo</b> = os demais casos, que não são uma afirmação de adequação. Floresta: qualquer fogo é afetação. Os dados são apresentados sem juízo de mérito ou de causa.</p>
+  <div class="mlegend">{leg}</div>
+  {svg_stack(rows)}
+  <p class="muted">Matriz = vegetação estável do Cerrado e do Pantanal fora das áreas prioritárias, como contexto. Áreas úmidas (campo e savana alagáveis): mesma regra, só reportada, sem leitura de categoria, porque o regime depende da inundação.</p>
+  {fl_html}
+  <h4>Mudança entre 2012–2018 e 2019–2025 (savana e campo estáveis)</h4>
+  <table class="num">
+    <colgroup><col style="width:46%"><col style="width:14%"><col style="width:14%"><col style="width:26%"></colgroup>
+    <thead><tr><th></th><th>2012–2018</th><th>2019–2025</th><th>Matriz {BAND_PT[lb]}<br>2012–2018 · 2019–2025</th></tr></thead>
+    <tbody>
+      <tr><td>Área queimada por ano (% da área estável)</td><td>{pct(f.sp1_burned_frac_yr, 1)}</td><td>{pct(f.sp2_burned_frac_yr, 1)}</td><td></td></tr>
+      <tr><td>Área com fogo em anos consecutivos (% da área estável)</td><td>{pct(f.sp1_consec_share, 1)}</td><td>{pct(f.sp2_consec_share, 1)}</td><td></td></tr>
+      <tr><td><b>Fogo em julho–agosto</b> (% do queimado)</td><td><b>{jul("sp1")}</b></td><td><b>{jul("sp2")}</b></td><td>{pct(MF.loc[(lb, "sp1")].julaug)} · {pct(MF.loc[(lb, "sp2")].julaug)}</td></tr>
+      <tr><td>Fogo na janela crítica, {WIN_PT[lb]} (% do queimado; descritor)</td><td>{win("sp1")}</td><td>{win("sp2")}</td><td>{pct(MF.loc[(lb, "sp1")].window)} · {pct(MF.loc[(lb, "sp2")].window)}</td></tr>
+    </tbody>
+  </table>
+  {note_fire}
+  {svg_months(u)}
+  <p class="muted">Julho e agosto são meses sem raios no Cerrado: o fogo nesses meses é iniciado por pessoas. A janela crítica marca o período de maior estresse hídrico da faixa de latitude e é mostrada só como descritor, porque o sentido da sua mudança depende de onde cai o limite da janela. Método: decisão D15 do projeto.</p>
+</section>'''
+
 # --- One fact sheet ------------------------------------------------------------------------------
 def ficha(u):
     m = units.loc[u]
@@ -404,6 +575,8 @@ def ficha(u):
   <p class="muted">A diferença entre a vegetação de 2025 e a vegetação nunca convertida é vegetação secundária ou regenerada, que conta como natural no MapBiomas.{" <b>Nesta área há dinâmica hidrológica:</b> parte da diferença é vegetação que estava alagada em 1985 (água), não vegetação secundária; a terceira linha subestima a vegetação antiga." if bool(m.flag_hydro) else ""}</p>
 </section>
 
+{fire_section(u)}
+
 <section>
   <h3>Alvos de conservação da área (2ª atualização, listas de 2011–2012)</h3>
   {('<table class="num"><thead><tr><th>Grupo</th><th>Alvos</th></tr></thead><tbody>' + tg_rows + '</tbody></table><details><summary>Lista de alvos</summary><ul class="targets">' + tg_list + '</ul></details>') if len(tg) else '<p class="muted">Sem ficha de alvos (área sem ficha original ou área híbrida).</p>'}
@@ -468,7 +641,14 @@ footer{border-top:1px solid var(--rule);margin-top:28px;font-size:12px;color:var
 .legend .sw{width:14px;height:14px;border-radius:3px;margin-top:3px;grid-row:span 2}.legend .lv{color:var(--muted);grid-column:2}
 table.idx td,table.idx th{text-align:left!important}table.idx td:nth-child(6),table.idx td:nth-child(8){text-align:right!important}
 nav.topnav{font-size:13px;margin-bottom:10px}nav.topnav a{color:var(--main);margin-right:16px}
-nav.toc{font-size:14px;margin-bottom:24px}nav.toc a{color:var(--main);margin-right:16px}
+nav.toc{font-size:14px;margin-bottom:24px}
+h4{font-size:14px;margin:18px 0 2px;color:var(--ink2)}
+.mlegend{font-size:12px;color:var(--ink2);display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;margin:6px 0}
+.mlegend .sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-left:8px}
+.mlegend .sw.b1,.chart .b1{background:var(--ctx);fill:var(--ctx)}.mlegend .sw.b2,.chart .b2{background:#c4561d;fill:#c4561d}
+.chart .seg{font-size:11px;fill:#222}.chart .seg.on{fill:#fff;font-weight:600}.chart .tick.mut{fill:var(--muted);font-style:italic}
+.chart .shade{fill:var(--card)}.chart .tick.lab{fill:var(--ink2);font-size:12px}
+.flags.fire li{margin-bottom:4px}.fire table.num{table-layout:fixed}.mlegend .mut{color:var(--muted);margin-left:8px}nav.toc a{color:var(--main);margin-right:16px}
 '''
 
 
