@@ -52,3 +52,23 @@ product1:
   # water (class below) in EVERY one of the last N years of the window.
   water_class: 33
   water_final_years: 6
+
+fire_regime:
+  # Product 2 (D15): fire regime in natural vegetation stable 1985-2025.
+  stability: {start: 1985, end: 2025}       # stable = natural vegetation in every year
+  fire_year_start_month: 4                   # fire year y = April y .. March y+1
+  window: {start: 2012, end: 2025}           # fire years used to classify the regime
+  subperiods:
+    - {name: "sp1", start: 2012, end: 2018}
+    - {name: "sp2", start: 2019, end: 2025}
+  # Critical fire window by latitude band (D15 §5): calendar months, three-month windows.
+  # 12-18 S and south of 18 S: July-September; north of 12 S: August-October (later season
+  # northwards). Both confirmed by the project lead (D15, 2026-10-06).
+  season_bands:
+    - {lat_min: -90, lat_max: -12, months: [7, 8, 9]}
+    - {lat_min: -12, lat_max: 90, months: [8, 9, 10]}
+  no_natural_ignition_months: [7, 8]         # no natural ignition (lightning) in these months
+  # Vegetation types by modal class 1985-2025 (code: classes)
+  types: {1: [3, 6], 2: [4], 3: [12], 4: [11, 7]}   # 1 forest, 2 savanna, 3 grassland, 4 wetland
+  # Thresholds (D15 section 4), in years
+  thresholds: {consecutive: 1, frequent: 2, compatible_max: 5, exclusion_years: 20}

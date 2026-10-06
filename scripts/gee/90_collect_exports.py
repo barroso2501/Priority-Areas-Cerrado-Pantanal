@@ -9,6 +9,7 @@ Output: data/interim/extract/
           fire_month.parquet        zone_id, year, stable, class, month, ha
           fire_intervals.parquet    zone_id, window, modal_class, metric, length, ha
           p1_transitions.parquet    zone_id, start, end, class_start, class_end, ha   (Product 1, D13)
+          fire_regime.parquet       zone_id, type, cls, stable_ha, sp{1,2}_{fireyears,consec,season,nonatural,burned}_ha (D15)
           p1_persistence.parquet    zone_id, window, start, end, k_water, class_start,
                                     nat_start_ha, strict_ha, never_anthropic_ha, water_persistent_ha
         data/interim/extract/qc_report.txt
@@ -23,6 +24,8 @@ QC checks (printed and saved):
   2. Transitions: per zone, total transition area for t->t+1 equals LULC area in t.
   3. Fire intervals: never + sum(left) == stable and never + sum(right) == stable.
   4. Product 1 direct transitions: per zone, total area equals the LULC area of the start year.
+  6. Fire regime (D15): per zone and vegetation type, stable_ha summed over regime classes
+     equals the stable area of the same modal classes in fire_intervals.
   5. Product 1 persistence: nat_start equals the natural-vegetation area of the start year
      in lulc_area; strict <= never_anthropic <= nat_start; water_persistent <= nat_start - strict.
 
@@ -100,6 +103,20 @@ def decode_p1_trans(df):
     k = df["key"].astype(np.int64)
     return pd.DataFrame({"zone_id": k // 10000, "start": df["start"], "end": df["end"],
                          "class_start": (k % 10000) // 100, "class_end": k % 100, "ha": df["sum"]})
+
+
+FR_BANDS = ["stable_ha"] + [f"{sp}_{m}_ha" for sp in ("sp1", "sp2")
+                            for m in ("fireyears", "consec", "season", "nonatural", "burned")]
+
+
+def decode_fire_regime(df):
+    vals = df["sum"].map(lambda v: json.loads(v) if isinstance(v, str) else list(v))
+    out = pd.DataFrame(vals.tolist(), columns=FR_BANDS)
+    k = df["key"].astype(np.int64)
+    out.insert(0, "zone_id", k // 100)
+    out.insert(1, "type", (k % 100) // 10)
+    out.insert(2, "cls", k % 10)
+    return out
 
 
 P1_BANDS = ["nat_start_ha", "strict_ha", "never_anthropic_ha", "water_persistent_ha"]
@@ -209,8 +226,26 @@ def main():
                 qc.append(f"P1 persistence {wname}: nat_start vs LULC natural vegetation {s0}, "
                           f"max relative difference: {(c.p / c.a - 1).abs().max():.2e}")
 
+    fr = read_all("fire_regime*.csv")
+    if fr is not None:
+        fr = decode_fire_regime(fr)
+        fr.to_parquet(OUT / "fire_regime.parquet")
+        fi_pq = OUT / "fire_intervals.parquet"
+        if fi_pq.exists():
+            import yaml
+            cfg = yaml.safe_load(open(ROOT / "scripts/gee/config.yml", encoding="utf-8"))
+            tmap = {int(c): int(t) for t, cl in cfg["fire_regime"]["types"].items() for c in cl}
+            fi_ = pd.read_parquet(fi_pq)
+            ref = (fi_[fi_.metric == "stable"].assign(type=lambda d: d.modal_class.map(tmap))
+                   .dropna(subset=["type"]).groupby(["zone_id", "type"]).ha.sum())
+            got = fr.groupby(["zone_id", "type"]).stable_ha.sum()
+            c = pd.concat([got.rename("r"), ref.rename("i")], axis=1).dropna()
+            qc.append(f"Fire regime: stable area vs fire_intervals, max relative difference "
+                      f"{(c.r / c.i - 1).abs().max():.2e} over {len(c)} zone-type pairs; "
+                      f"classes present {sorted(fr.cls.unique())}")
+
     unrec = [p.name for p in SRC.glob("*.csv")
-             if not re.match(r"(lulc_area|lulc_trans|fire_month|fire_intervals|product1_trans|product1_persist)_",
+             if not re.match(r"(lulc_area|lulc_trans|fire_month|fire_intervals|fire_regime|product1_trans|product1_persist)",
                              p.name)]
     qc.append(f"unrecognized files: {unrec or 'none'}")
     (OUT / "qc_report.txt").write_text("\n".join(qc) + "\n", encoding="utf-8")
