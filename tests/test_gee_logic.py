@@ -134,3 +134,66 @@ oc, fc = algebra(bball)
 ref = np.array([direct(r) for r in bball])
 assert (oc == ref[:, 0]).all() and (fc == ref[:, 1]).all(), "fire-regime categories differ from the rules"
 print("fire regime OK:", {k: int((oc == k).sum()) for k in (1, 2, 3)})
+
+
+# 5) Fire calibration (D15 §7): signature of 23_extract_fire_calibration.py -----------------
+# The signature algebra (as written for Earth Engine) goes through the key encoding and the
+# decoder of 90_collect_exports.py, then classify() of product2_calibration.py must give,
+# for every threshold variant, the categories of the direct per-pixel rules.
+spec2 = importlib.util.spec_from_file_location("p2cal", ROOT / "scripts/analysis/product2_calibration.py")
+p2cal = importlib.util.module_from_spec(spec2); spec2.loader.exec_module(p2cal)
+LAST = ALL[-1]
+EDGES = [LAST - 9, LAST - 14, LAST - 19, LAST - 24]
+
+
+def signature(ball):
+    prev = np.zeros(len(ball)); n3 = np.zeros(len(ball)); n1 = np.zeros(len(ball))
+    for j, y in enumerate(ALL):
+        f = ball[:, j] == 1
+        closed = f & (prev > 0)
+        n3 += closed & ((y - prev) < 3)
+        n1 += closed & ((y - prev) == 1)
+        prev[f] = y
+    n3 = np.minimum(n3, 3); n1 = np.minimum(n1, 3)
+    tsl = np.full(len(ball), 5)
+    tsl[prev > 0] = 4
+    for v, e in zip((3, 2, 1, 0), EDGES[::-1]):
+        tsl[prev >= e] = v
+    return ((n3 * 4 + n1) * 6 + tsl).astype(np.int64)
+
+
+vt = rng.integers(1, 5, size=len(bball)); zz = rng.integers(1, 3388, size=len(bball)); cs = rng.integers(0, 2, size=len(bball))
+key = ((zz * 5 + vt) * 96 + signature(bball)) * 2 + cs
+assert key.max() < 2**31
+dec = collect.decode_fire_calib(pd.DataFrame({"key": key, "sum": 1.0, "window": "fy1985_2025"}))
+assert (dec.zone_id.values == zz).all() and (dec.type.values == vt).all() and (dec.cs.values == cs).all()
+
+
+def direct_v(row, t, N, k, short):
+    yrs = [y for y, v in zip(ALL, row) if v]
+    if t == 1:
+        return 2 if yrs else 1
+    if not yrs or yrs[-1] <= LAST - N:
+        return 3
+    gaps = np.diff(yrs)
+    ns = int((gaps < 3).sum()) if short == 3 else int((gaps == 1).sum())
+    return 1 if ns >= k else 2
+
+
+for N in (10, 15, 20, 25):
+    for k in (1, 2, 3):
+        for short in (3, 1):
+            got = p2cal.classify(dec, N, k, short).values
+            ref = np.array([direct_v(r, t, N, k, short) for r, t in zip(bball, vt)])
+            assert (got == ref).all(), f"calibration classes differ: N={N} k={k} short={short}"
+# the product setting must equal the fire_regime algebra of section 4
+got = p2cal.classify(dec, 20, 2, 3).values
+assert (got[vt != 1] == oc[vt != 1]).all() and (got[vt == 1] == fc[vt == 1]).all()
+
+# month decoder
+mk = (np.array([3387, 1]) * 5 + np.array([3, 2])) * 4 + np.array([2, 0])
+mv = [json.dumps(list(range(24))), json.dumps([0.5] * 24)]
+dm = collect.decode_fire_calib_month(pd.DataFrame({"key": mk, "sum": mv}))
+r = dm.iloc[13]
+assert [r.zone_id, r.type, r.latband, r.subperiod, r.month, r.ha] == [3387, 3, 2, "sp2", 2, 13]
+print("fire calibration OK: 24 variants match the rules")

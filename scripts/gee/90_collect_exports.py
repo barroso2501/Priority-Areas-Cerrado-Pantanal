@@ -10,6 +10,8 @@ Output: data/interim/extract/
           fire_intervals.parquet    zone_id, window, modal_class, metric, length, ha
           p1_transitions.parquet    zone_id, start, end, class_start, class_end, ha   (Product 1, D13)
           fire_regime.parquet       zone_id, type, cls, stable_ha, sp{1,2}_{fireyears,consec,season,nonatural,burned}_ha (D15)
+          fire_calib.parquet        zone_id, window (fy|cy), type, n3, n1, tsl, cs, stable_ha (D15 §7)
+          fire_calib_month.parquet  zone_id, type, latband, subperiod, month, ha (D15 §7)
           p1_persistence.parquet    zone_id, window, start, end, k_water, class_start,
                                     nat_start_ha, strict_ha, never_anthropic_ha, water_persistent_ha
         data/interim/extract/qc_report.txt
@@ -26,6 +28,9 @@ QC checks (printed and saved):
   4. Product 1 direct transitions: per zone, total area equals the LULC area of the start year.
   6. Fire regime (D15): per zone and vegetation type, stable_ha summed over regime classes
      equals the stable area of the same modal classes in fire_intervals.
+  7. Fire calibration (D15 §7): per zone and type, stable area of fire_calib (fire years)
+     equals fire_regime; the classes rebuilt from the signature with the product thresholds
+     equal the fire_regime classes; calendar-year stable area equals fire-year stable area.
   5. Product 1 persistence: nat_start equals the natural-vegetation area of the start year
      in lulc_area; strict <= never_anthropic <= nat_start; water_persistent <= nat_start - strict.
 
@@ -117,6 +122,30 @@ def decode_fire_regime(df):
     out.insert(1, "type", (k % 100) // 10)
     out.insert(2, "cls", k % 10)
     return out
+
+
+def decode_fire_calib(df):
+    # key = (((zone*5 + type)*16 + n3*4 + n1)*6 + tsl)*2 + cs  (23_extract_fire_calibration.py)
+    k = df["key"].astype(np.int64)
+    cs = k % 2; k = k // 2
+    tsl = k % 6; k = k // 6
+    nn = k % 16; k = k // 16
+    out = pd.DataFrame({"zone_id": k // 5, "window": df["window"].str[:2], "type": k % 5,
+                        "n3": nn // 4, "n1": nn % 4, "tsl": tsl, "cs": cs,
+                        "stable_ha": df["sum"].astype(float)})
+    return out
+
+
+def decode_fire_calib_month(df):
+    # key = (zone*5 + type)*4 + latband ; sum = [sp1 months 1-12, sp2 months 1-12]
+    vals = df["sum"].map(lambda v: json.loads(v) if isinstance(v, str) else list(v))
+    k = df["key"].astype(np.int64)
+    rows = []
+    for kk, v in zip(k, vals):
+        z, t, lb = kk // 20, (kk // 4) % 5, kk % 4
+        for i, ha in enumerate(v):
+            rows.append((z, t, lb, f"sp{i // 12 + 1}", i % 12 + 1, ha))
+    return pd.DataFrame(rows, columns=["zone_id", "type", "latband", "subperiod", "month", "ha"])
 
 
 P1_BANDS = ["nat_start_ha", "strict_ha", "never_anthropic_ha", "water_persistent_ha"]
@@ -244,8 +273,47 @@ def main():
                       f"{(c.r / c.i - 1).abs().max():.2e} over {len(c)} zone-type pairs; "
                       f"classes present {sorted(fr.cls.unique())}")
 
+    fc = read_all("fire_calib_[fc]y*.csv")
+    if fc is not None:
+        fc = decode_fire_calib(fc)
+        fc.to_parquet(OUT / "fire_calib.parquet")
+        frp = OUT / "fire_regime.parquet"
+        if frp.exists():
+            import yaml
+            T = yaml.safe_load(open(ROOT / "scripts/gee/config.yml", encoding="utf-8"))["fire_regime"]["thresholds"]
+            n_tsl = {10: 1, 15: 2, 20: 3, 25: 4}[int(T["expected_max"])]
+            fr_ = pd.read_parquet(frp)
+            fy = fc[fc.window == "fy"].copy()
+            # rebuild the product classes from the signature (same rules as 22_extract_fire_regime.py)
+            fy["cls"] = np.where(fy.tsl >= n_tsl, 3, np.where(fy.n3 >= int(T["excess_short_intervals"]), 1, 2))
+            fy.loc[fy.type == 1, "cls"] = np.where(fy.loc[fy.type == 1, "tsl"] < 5, 2, 1)
+            a_ = fy.groupby(["zone_id", "type", "cls"]).stable_ha.sum()
+            b_ = fr_.groupby(["zone_id", "type", "cls"]).stable_ha.sum()
+            c = pd.concat([a_.rename("c"), b_.rename("r")], axis=1).fillna(0)
+            big = c[(c.r > 1) | (c.c > 1)]
+            qc.append(f"Fire calibration: classes rebuilt from signature vs fire_regime, max abs difference "
+                      f"{(c.c - c.r).abs().max():.3g} ha; max relative difference (cells > 1 ha) "
+                      f"{((big.c - big.r).abs() / big[['c', 'r']].max(axis=1)).max():.2e} over {len(big)} cells")
+        for w in ("fy", "cy"):
+            qc.append(f"Fire calibration {w}: stable area {fc[fc.window == w].stable_ha.sum():,.0f} ha, "
+                      f"class-stable share {fc[(fc.window == w) & (fc.cs == 1)].stable_ha.sum() / max(fc[fc.window == w].stable_ha.sum(), 1):.3f}")
+    fm = read_all("fire_calib_month*.csv")
+    if fm is not None:
+        fm = decode_fire_calib_month(fm)
+        fm.to_parquet(OUT / "fire_calib_month.parquet")
+        frp = OUT / "fire_regime.parquet"
+        if frp.exists():
+            fr_ = pd.read_parquet(frp)
+            for sp in ("sp1", "sp2"):
+                a_ = fm[fm.subperiod == sp].groupby(["zone_id", "type"]).ha.sum()
+                b_ = fr_.groupby(["zone_id", "type"])[f"{sp}_burned_ha"].sum()
+                c = pd.concat([a_.rename("m"), b_.rename("r")], axis=1).dropna()
+                c = c[c.r > 1]
+                qc.append(f"Fire calibration months {sp}: sum over months vs fire_regime burned, "
+                          f"max relative difference {(c.m / c.r - 1).abs().max():.2e} over {len(c)} pairs")
+
     unrec = [p.name for p in SRC.glob("*.csv")
-             if not re.match(r"(lulc_area|lulc_trans|fire_month|fire_intervals|fire_regime|product1_trans|product1_persist)",
+             if not re.match(r"(lulc_area|lulc_trans|fire_month|fire_intervals|fire_regime|fire_calib|product1_trans|product1_persist)",
                              p.name)]
     qc.append(f"unrecognized files: {unrec or 'none'}")
     (OUT / "qc_report.txt").write_text("\n".join(qc) + "\n", encoding="utf-8")
