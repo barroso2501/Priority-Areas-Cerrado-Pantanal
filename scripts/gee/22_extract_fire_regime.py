@@ -39,6 +39,12 @@ Decoded by 90_collect_exports.py into fire_regime.parquet.
 Run from the repository root (or the Colab notebook, step 10):
   python scripts/gee/22_extract_fire_regime.py
 
+Variant by latitude band (Colab step 12; for the executive summary, matrix of the same band):
+  python scripts/gee/22_extract_fire_regime.py --latband
+  Output fire_regime_lat.csv: key = ((zone*4 + latband)*5 + type)*10 + class, sum = stable ha
+  latband 0 south of 18 S, 1 18-12 S, 2 12-8 S, 3 north of 8 S (per pixel). The sub-period
+  metrics are not computed in this variant (lighter task).
+
 What can break, and how you would notice:
   - Memory or time-out (41-year stacks, as in 21_extract_fire_intervals.py): raise
     export.tile_scale to 8 or 16 and run again.
@@ -48,6 +54,7 @@ What can break, and how you would notice:
     twice in the same calendar year counts once; the fire-year rule is therefore a lower
     bound for very frequent fire.
 """
+import argparse
 import importlib
 
 import ee
@@ -55,6 +62,10 @@ import ee
 import gee_common as gc
 
 gc = importlib.reload(gc)  # re-read config.yml if it was edited in the same Colab session
+
+ap = argparse.ArgumentParser()
+ap.add_argument("--latband", action="store_true", help="stable area per latitude band only")
+args, _ = ap.parse_known_args()
 
 gc.init()
 gc.check_verified()
@@ -142,28 +153,37 @@ open_cls = (ee.Image(2)                    # 2 as expected
 forest_cls = ee.Image(1).where(n_all.gt(0), 2)    # 1 not affected by fire, 2 affected
 cls = open_cls.where(vtype.eq(1), forest_cls).rename("cls")
 
-# --- Sub-period change metrics -----------------------------------------------------------------
-bands = [area.rename("stable_ha")]
-for sp in R["subperiods"]:
-    a, b = int(sp["start"]), int(sp["end"])
-    nfy = ee.Image(0); cons = ee.Image(0); seas = ee.Image(0); nolt = ee.Image(0); burn = ee.Image(0)
-    prev_flag = None
-    for y in range(a, b + 1):
-        f = fire_year_flag(y)
-        nfy = nfy.add(f)
-        if prev_flag is not None:
-            cons = cons.Or(f.And(prev_flag))
-        prev_flag = f
-        bu, se, nl = calendar_flags(y)
-        burn = burn.add(bu); seas = seas.add(se); nolt = nolt.add(nl)
-    name = sp["name"]
-    bands += [nfy.multiply(area).rename(f"{name}_fireyears_ha"),
-              cons.multiply(area).rename(f"{name}_consec_ha"),
-              seas.multiply(area).rename(f"{name}_season_ha"),
-              nolt.multiply(area).rename(f"{name}_nonatural_ha"),
-              burn.multiply(area).rename(f"{name}_burned_ha")]
+# --- Variant: stable area per zone x latitude band x type x class --------------------------------
+if args.latband:
+    LATB = ee.Image(0).where(LAT.gte(-18), 1).where(LAT.gte(-12), 2).where(LAT.gte(-8), 3)
+    key = (zone.multiply(4).add(LATB).multiply(5).add(vtype).multiply(10).add(cls)
+           .rename("key").int().updateMask(universe))
+    g = gc.grouped_sum(key.addBands(area.rename("stable_ha").updateMask(universe)), 1, region)
+    gc.export_groups(g, "fire_regime_lat", {"window": f"fy{first_year}_{last_year}"})
 
-values = ee.Image.cat(bands).updateMask(universe)
-key = zone.multiply(100).add(vtype.multiply(10)).add(cls).rename("key").int().updateMask(universe)
-g = gc.grouped_sum(key.addBands(values), len(bands), region)
-gc.export_groups(g, "fire_regime", {"window": f"fy{first_year}_{last_year}"})
+# --- Sub-period change metrics -----------------------------------------------------------------
+if not args.latband:
+    bands = [area.rename("stable_ha")]
+    for sp in R["subperiods"]:
+        a, b = int(sp["start"]), int(sp["end"])
+        nfy = ee.Image(0); cons = ee.Image(0); seas = ee.Image(0); nolt = ee.Image(0); burn = ee.Image(0)
+        prev_flag = None
+        for y in range(a, b + 1):
+            f = fire_year_flag(y)
+            nfy = nfy.add(f)
+            if prev_flag is not None:
+                cons = cons.Or(f.And(prev_flag))
+            prev_flag = f
+            bu, se, nl = calendar_flags(y)
+            burn = burn.add(bu); seas = seas.add(se); nolt = nolt.add(nl)
+        name = sp["name"]
+        bands += [nfy.multiply(area).rename(f"{name}_fireyears_ha"),
+                  cons.multiply(area).rename(f"{name}_consec_ha"),
+                  seas.multiply(area).rename(f"{name}_season_ha"),
+                  nolt.multiply(area).rename(f"{name}_nonatural_ha"),
+                  burn.multiply(area).rename(f"{name}_burned_ha")]
+
+    values = ee.Image.cat(bands).updateMask(universe)
+    key = zone.multiply(100).add(vtype.multiply(10)).add(cls).rename("key").int().updateMask(universe)
+    g = gc.grouped_sum(key.addBands(values), len(bands), region)
+    gc.export_groups(g, "fire_regime", {"window": f"fy{first_year}_{last_year}"})

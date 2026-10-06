@@ -10,6 +10,7 @@ Output: data/interim/extract/
           fire_intervals.parquet    zone_id, window, modal_class, metric, length, ha
           p1_transitions.parquet    zone_id, start, end, class_start, class_end, ha   (Product 1, D13)
           fire_regime.parquet       zone_id, type, cls, stable_ha, sp{1,2}_{fireyears,consec,season,nonatural,burned}_ha (D15)
+          fire_regime_lat.parquet   zone_id, latband, type, cls, stable_ha (D15, summary by latitude band)
           fire_calib.parquet        zone_id, window (fy|cy), type, n3, n1, tsl, cs, stable_ha (D15 §7)
           fire_calib_month.parquet  zone_id, type, latband, subperiod, month, ha (D15 §7)
           p1_persistence.parquet    zone_id, window, start, end, k_water, class_start,
@@ -52,12 +53,14 @@ SRC = ROOT / "data/interim/gee_exports"
 OUT = ROOT / "data/interim/extract"
 
 
-def read_all(pattern):
+def read_all(pattern, exclude=None):
     # Re-running a task writes a second file with the same name; Drive then shows
     # "name (1).csv". Keep only the most recent file per logical name, so a year is
     # never counted twice.
     latest = {}
     for f in SRC.glob(pattern):
+        if exclude and re.match(exclude, f.name):
+            continue
         stem = re.sub(r" \(\d+\)$", "", f.stem)
         if stem not in latest or f.stat().st_mtime > latest[stem].stat().st_mtime:
             latest[stem] = f
@@ -122,6 +125,13 @@ def decode_fire_regime(df):
     out.insert(1, "type", (k % 100) // 10)
     out.insert(2, "cls", k % 10)
     return out
+
+
+def decode_fire_regime_lat(df):
+    # key = ((zone*4 + latband)*5 + type)*10 + class  (22_extract_fire_regime.py --latband)
+    k = df["key"].astype(np.int64)
+    return pd.DataFrame({"zone_id": k // 200, "latband": (k // 50) % 4, "type": (k // 10) % 5,
+                         "cls": k % 10, "stable_ha": df["sum"].astype(float)})
 
 
 def decode_fire_calib(df):
@@ -255,7 +265,18 @@ def main():
                 qc.append(f"P1 persistence {wname}: nat_start vs LULC natural vegetation {s0}, "
                           f"max relative difference: {(c.p / c.a - 1).abs().max():.2e}")
 
-    fr = read_all("fire_regime*.csv")
+    frl = read_all("fire_regime_lat*.csv")
+    if frl is not None:
+        frl = decode_fire_regime_lat(frl)
+        frl.to_parquet(OUT / "fire_regime_lat.parquet")
+        if (OUT / "fire_regime.parquet").exists():
+            a_ = frl.groupby(["zone_id", "type", "cls"]).stable_ha.sum()
+            b_ = pd.read_parquet(OUT / "fire_regime.parquet").groupby(["zone_id", "type", "cls"]).stable_ha.sum()
+            c = pd.concat([a_.rename("l"), b_.rename("r")], axis=1).fillna(0)
+            c = c[(c.l > 1) | (c.r > 1)]
+            qc.append(f"Fire regime by latitude band: sum over bands vs fire_regime, max relative difference "
+                      f"{((c.l - c.r).abs() / c[['l', 'r']].max(axis=1)).max():.2e} over {len(c)} cells")
+    fr = read_all("fire_regime*.csv", exclude=r"fire_regime_lat")
     if fr is not None:
         fr = decode_fire_regime(fr)
         fr.to_parquet(OUT / "fire_regime.parquet")

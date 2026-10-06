@@ -197,3 +197,9 @@ dm = collect.decode_fire_calib_month(pd.DataFrame({"key": mk, "sum": mv}))
 r = dm.iloc[13]
 assert [r.zone_id, r.type, r.latband, r.subperiod, r.month, r.ha] == [3387, 3, 2, "sp2", 2, 13]
 print("fire calibration OK: 24 variants match the rules")
+
+# 6) fire regime by latitude band (22_extract_fire_regime.py --latband): key round trip
+kl = ((np.array([3387, 1]) * 4 + np.array([3, 0])) * 5 + np.array([4, 2])) * 10 + np.array([3, 1])
+dl = collect.decode_fire_regime_lat(pd.DataFrame({"key": kl, "sum": [1.0, 2.0]}))
+assert dl[["zone_id", "latband", "type", "cls"]].values.tolist() == [[3387, 3, 4, 3], [1, 0, 2, 1]] and kl.max() < 2**31
+print("fire regime by latitude band OK")
