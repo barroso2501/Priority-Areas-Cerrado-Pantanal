@@ -57,7 +57,6 @@ fire_regime:
   # Product 2 (D15): fire regime in natural vegetation stable 1985-2025.
   stability: {start: 1985, end: 2025}       # stable = natural vegetation in every year
   fire_year_start_month: 4                   # fire year y = April y .. March y+1
-  window: {start: 2012, end: 2025}           # fire years used to classify the regime
   subperiods:
     - {name: "sp1", start: 2012, end: 2018}
     - {name: "sp2", start: 2019, end: 2025}
@@ -70,5 +69,5 @@ fire_regime:
   no_natural_ignition_months: [7, 8]         # no natural ignition (lightning) in these months
   # Vegetation types by modal class 1985-2025 (code: classes)
   types: {1: [3, 6], 2: [4], 3: [12], 4: [11, 7]}   # 1 forest, 2 savanna, 3 grassland, 4 wetland
-  # Thresholds (D15 section 4), in years
-  thresholds: {consecutive: 1, frequent: 2, compatible_max: 5, exclusion_years: 20}
+  # Expected interval 3-20 years; excess = repeated intervals below 3 years (D15 §4)
+  thresholds: {expected_min: 3, expected_max: 20, excess_short_intervals: 2}

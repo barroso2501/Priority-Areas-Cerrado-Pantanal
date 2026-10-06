@@ -9,21 +9,16 @@ Settings: config.yml -> fire_regime. Definitions (D15):
                  4 wetland (11, 7); other natural classes are left out
   fire year y    burned in April..December of y, or January..March of y+1
                  (y = last mapped year: April..December only)
-  regime class   on fire years 2012-2025 (14 years):
-     forest       0 no fire, 1 one event, 2 recurrent (>=2, none consecutive),
-                  3 recurrent with consecutive years
-     open/wetland 0 absence: no fire in the whole series 1985-2025 (41 fire years)
-                  5 prolonged exclusion: burned before, but no fire in the last
-                    `exclusion_years` (20) fire years of the series
-                  4 consecutive (some pair of consecutive fire years in 2012-2025)
-                  3 frequent (shortest interval in 2012-2025 = 2 years)
-                  2 compatible (2012-2025: all intervals 3-5 years and no run of more than 4
-                    fire-free years, edges included)
-                  1 infrequent (everything else, incl. no fire in 2012-2025 but fire 6-19
-                    fire years before 2025)
-     Assignment order: absence -> prolonged exclusion -> consecutive -> frequent ->
-     compatible -> infrequent. Absence and exclusion use the full series (project lead,
-     2026-10-06): the universe is stable over 1985-2025, so absence is judged over 41 years.
+  category       on the full series of fire years 1985-2025 (D15, revised 2026-10-06):
+     forest       1 not affected by fire (no fire in 41 fire years), 2 affected by fire
+     savanna, grassland (wetland reported with the same rule, without interpretation)
+                  1 above expected: at least `excess_short_intervals` (2) intervals shorter
+                    than `expected_min` (3 years), i.e. repeated annual or biennial fire
+                  2 as expected: everything else (intervals mostly within 3-20 years)
+                  3 below expected: no fire in the last `expected_max` (20) fire years,
+                    never-burned pixels included
+     "Below expected" is assigned first: it describes the current state even when the
+     pixel burned too often in the past.
 
 Output (Drive): fire_regime.csv  columns: key, sum (list of 11 ha values), window
   key = zone_id * 100 + type * 10 + class
@@ -124,43 +119,27 @@ def calendar_flags(y):
     return burned.toInt8(), season.toInt8(), nonat.toInt8()
 
 
-# --- Full series: ever burned and last fire year (absence and prolonged exclusion) ----------
-n_all = ee.Image(0); last_fire = ee.Image(0)
+# --- Regime category over the full series (fire years 1985-2025) ------------------------------
+# The universe is stable over 41 years, so the category is judged over the same 41 years.
+emin, emax = int(T["expected_min"]), int(T["expected_max"])        # expected interval, years
+k_short = int(T["excess_short_intervals"])
+n_all = ee.Image(0); last_fire = ee.Image(0); prev = ee.Image(0); n_short = ee.Image(0)
 for y in range(first_year, last_year + 1):
     f = fire_year_flag(y)
     n_all = n_all.add(f)
+    # closed interval ending at this burn, counted as short when below the expected minimum
+    short = f.And(prev.gt(0)).And(ee.Image(y).subtract(prev).lt(emin))
+    n_short = n_short.add(short)
+    prev = prev.where(f, y)
     last_fire = last_fire.where(f, y)
-excl_years = int(T["exclusion_years"])
-prolonged = n_all.gt(0).And(last_fire.lte(last_year - excl_years))   # no fire in the last N fire years
-
-# --- Regime class on the classification window ------------------------------------------------
-w0, w1 = int(R["window"]["start"]), int(R["window"]["end"])
-flags = {y: fire_year_flag(y) for y in range(w0, w1 + 1)}
-n = ee.Image(0); consec = ee.Image(0); prev = ee.Image(0)
-min_int = ee.Image(99); run = ee.Image(0); max_run = ee.Image(0)
-for y in range(w0, w1 + 1):
-    b = flags[y]
-    n = n.add(b)
-    if y > w0:
-        consec = consec.Or(b.And(flags[y - 1]))
-    # closed interval at this burn: y - previous burn year (only if there was one)
-    interval = ee.Image(y).subtract(prev)
-    min_int = min_int.where(b.And(prev.gt(0)).And(interval.lt(min_int)), interval)
-    prev = prev.where(b, y)
-    # longest run of fire-free years, window edges included
-    run = run.add(1).multiply(ee.Image(1).subtract(b))
-    max_run = max_run.max(run)
-
-cmax = int(T["compatible_max"])
-open_cls = (ee.Image(1)                                                   # infrequent
-            .where(n.gte(2).And(min_int.gt(T["frequent"])).And(max_run.lte(cmax - 1)), 2)  # compatible
-            .where(min_int.eq(T["frequent"]), 3)                          # frequent
-            .where(consec, 4)                                             # consecutive
-            .where(prolonged, 5)                                          # prolonged exclusion
-            .where(n_all.eq(0), 0))                                       # absence (41 years)
-forest_cls = (ee.Image(2)                                                 # recurrent
-              .where(n.eq(0), 0).where(n.eq(1), 1)
-              .where(consec, 3))
+# below expected: no fire in the last `expected_max` fire years (never burned included)
+deficit = n_all.eq(0).Or(last_fire.lte(last_year - emax))
+# above expected: repeated short intervals (one isolated short interval is not excess)
+excess = n_short.gte(k_short)
+open_cls = (ee.Image(2)                    # 2 as expected
+            .where(excess, 1)              # 1 above expected
+            .where(deficit, 3))            # 3 below expected (current state wins)
+forest_cls = ee.Image(1).where(n_all.gt(0), 2)    # 1 not affected by fire, 2 affected
 cls = open_cls.where(vtype.eq(1), forest_cls).rename("cls")
 
 # --- Sub-period change metrics -----------------------------------------------------------------
@@ -187,4 +166,4 @@ for sp in R["subperiods"]:
 values = ee.Image.cat(bands).updateMask(universe)
 key = zone.multiply(100).add(vtype.multiply(10)).add(cls).rename("key").int().updateMask(universe)
 g = gc.grouped_sum(key.addBands(values), len(bands), region)
-gc.export_groups(g, "fire_regime", {"window": f"fy{w0}_{w1}"})
+gc.export_groups(g, "fire_regime", {"window": f"fy{first_year}_{last_year}"})

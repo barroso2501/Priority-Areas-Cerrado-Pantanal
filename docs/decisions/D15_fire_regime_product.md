@@ -1,6 +1,6 @@
 # D15 — Product 2: fire regime in stable natural vegetation of the priority areas
 
-**Status:** Accepted 2026-10-06 (project lead); revised the same day (§4 absence over the full series, prolonged exclusion; §5 critical window by latitude band, north of 12°S confirmed; indicator renamed "sem ignição natural"). Thresholds are parameters, to be calibrated (§7). Supersedes the open parts of D3 for this product and implements D9.
+**Status:** Accepted 2026-10-06 (project lead); categories simplified the same day (§4, project lead); earlier revisions the same day (§4 absence over the full series, prolonged exclusion; §5 critical window by latitude band, north of 12°S confirmed; indicator renamed "sem ignição natural"). Thresholds are parameters, to be calibrated (§7). Supersedes the open parts of D3 for this product and implements D9.
 **Raised:** 2026-10-05
 
 ## 1. Question
@@ -19,21 +19,26 @@ What is the state of the fire regime in the natural vegetation that remained nat
 ## 3. Fire year
 Fire year *y* = April of *y* to March of *y+1*. The boundary falls in the wet season: January–April hold 1.3% of the burned area in stable vegetation [E], so a December/January scar pair is not counted as two consecutive years. Fire year 2025 ends in December 2025 (January–March 2026 not yet mapped; about 1% of the annual fire). Sensitivity: calendar year.
 
-## 4. Pixel regime class
-Absence and prolonged exclusion are judged over the **full series** (fire years 1985–2025): the universe is stable over 41 years, and an ecologically significant exclusion signal must be long (project lead). Frequency classes describe the **current** regime on fire years 2012–2025 (14 years); 7-year sub-periods are too short to resolve 3–5-year intervals and are used only for change (§5). Over 41 years almost every pixel that burns would show at least one consecutive pair somewhere, so frequency classes on the full series would not discriminate [H].
+## 4. Pixel category (revised 2026-10-06, project lead)
+**Purpose.** An assessment of the state of stable natural vegetation in relation to fire as a disturbance, which harms communities both in excess and in absence. The **extremes are the most important and the most robust** part of the assessment; what lies between them may or may not be adequate and needs a finer analysis (at fragment level, not at priority-area level), outside this product.
 
-| Forest (expected: no fire or rare, spaced events; window 2012–2025) | Savanna and grassland (expected: return interval 3–5 years) |
+All categories are judged over the **full series of fire years 1985–2025**, the same 41 years over which the vegetation is stable.
+
+| Forest (stable) | Savanna and grassland (stable); expected interval **3–20 years** |
 |---|---|
-| F0 no fire | O0 **absence** — no fire in 1985–2025 (41 fire years). Regime alteration, whatever the cause (without fire, population and ecological processes are biased) |
-| F1 one event | O5 **prolonged exclusion** — burned before, but no fire in the last 20 fire years (2006–2025). Separate class |
-| F2 recurrent — two or more events, none consecutive | O4 consecutive — at least one pair of consecutive fire years in 2012–2025 |
-| F3 recurrent with consecutive years | O3 frequent — shortest interval in 2012–2025 = 2 years |
-| | O2 **compatible** — in 2012–2025, at least two fires, every interval 3–5 years and no run of more than 4 fire-free years at the window edges |
-| | O1 infrequent — all other cases, including no fire in 2012–2025 with a last fire 6–19 years before 2025 |
+| 1 **not affected by fire** — no fire in 1985–2025 | 1 **above expected** — repeated annual or biennial fire: at least **2 intervals shorter than 3 years** |
+| 2 **affected by fire** — at least one fire | 2 **as expected** — all other cases |
+| | 3 **below expected** — **no fire in the last 20 fire years** (2006–2025), never-burned pixels included |
 
-Assignment order: O0 → O5 → O4 → O3 → O2 → O1 (and F3 → F2 → F1 → F0). Thresholds (consecutive = 1, frequent = 2, compatible = 3–5, exclusion = 20 years) are parameters in `config.yml`.
+- "Below expected" is assigned first: it describes the current state, even for a pixel that burned too often in the past.
+- One isolated short interval is not excess (a re-burn of unburnt fuel the following year can happen in a natural mosaic); the excess signal is **repetition**.
+- The upper bound of 20 years matches the prolonged-exclusion threshold set by the project lead; 3 years is the lower bound of the expected interval.
+- Wetlands: the same rule is computed and reported, without interpretation (flood-driven regime).
+- Parameters in `config.yml`: `expected_min` = 3, `expected_max` = 20, `excess_short_intervals` = 2.
 
-[E] For reference (savanna + grassland stable in the priority areas, existing interval tables): 31% never burned in 1985–2025; among the burned pixels, 48% had no fire in the last 10 years and 40% in the last 14.
+[E] Order of magnitude from the existing interval tables (calendar year, priority areas): stable savanna + grassland never burned in 41 years 31.3%, burned but not in the last 20 years 15.6% → **below expected ≈ 47%**; stable forest with at least one fire in 1985–2025 ≈ 29%.
+
+Earlier proposals superseded: pixel classes infrequent/compatible/frequent/consecutive on 2012–2025, and a unit-level "compatibility" from the interval distribution. The interval distribution (mosaic) stays as a descriptive table for the finer, fragment-level analysis.
 
 ## 5. Indicators per unit
 - **Regime composition:** share of stable forest and of stable savanna + grassland in each class (§4). Wetlands reported with the same counts, no class reading.
@@ -56,18 +61,20 @@ Assignment order: O0 → O5 → O4 → O3 → O2 → O1 (and F3 → F2 → F1 �
 - **Forest class may contain cerradão and transition forest** [H]: 35% of closed intervals in "forest" are 1–2 years [E]. Sensitivity: repeat with class-stable pixels (same class every year, D9 option b).
 - **Omission and commission of the fire product.** Understorey fire in forest is under-detected [H], so F0 means "no fire detectable". Spurious scars inflate O3/O4; sensitivity with a minimum scar size is planned.
 - **Latitude.** Handled by a critical window per latitude band (§5) and by comparing each unit with the matrix of the same band. A three-month window per band is coarse for a gradual shift; finer bands are possible later if needed.
-- **The 3–5-year interval is a working expectation** [H] for open physiognomies; fine fuels in grasslands can recover in 1–2 years. Hence parameters and sensitivity (§7).
+- **The 3–20-year expected interval** is deliberately broad: the assessment targets the extremes. The middle class is not a statement of adequacy.
 - Integrated fire management (MIF) does not justify high frequency; no exception is made for it (project lead).
 
 ## 7. Calibration and sensitivity (before publication)
-- Thresholds of §4 varied (compatible 2–5 and 3–6; frequent = 2).
+- Thresholds of §4 varied: expected maximum 15 and 25 years; excess with 1 and 3 short intervals; short interval < 2 years only (annual fire).
 - Calendar year instead of fire year.
 - Class-stable universe instead of domain-stable.
 - Critical windows shifted by one month (earlier and later) in each band.
-- Prolonged exclusion at 15 and 25 years.
 
 ## 8. Extraction
-`scripts/gee/22_extract_fire_regime.py`: per zone × vegetation type × regime class, the stable area and, per sub-period, burned fraction, consecutive-pair area and August–October / total burned area. Decoded and checked by `90_collect_exports.py` (sum over classes = stable area of the type, against `fire_intervals`).
+`scripts/gee/22_extract_fire_regime.py`: per zone × vegetation type × category (§4), the stable area and, per sub-period, burned fraction, consecutive-pair area and August–October / total burned area. Decoded and checked by `90_collect_exports.py` (sum over classes = stable area of the type, against `fire_intervals`).
 
 ## 9. Not in this product
 Fire in land-use areas; fire in transitioning pixels; fire severity; degradation (D3 option 3 cross-check with the MapBiomas degradation module remains open).
+
+## 10. Next step outside this product
+Fragment-level analysis of the "as expected" class: interval distribution and time-since-fire mosaic per fragment of stable open vegetation (mode at 4–6 years, few at 3, long tail from 7, per the project lead), to separate adequate from merely non-extreme regimes.

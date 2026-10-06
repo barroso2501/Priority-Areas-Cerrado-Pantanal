@@ -99,68 +99,38 @@ assert (strict <= never_ant).all() and (water_p & strict).sum() == 0
 print("product 1 OK: nat_start", nat_start.sum(), "strict", strict.sum(), "never_anthropic", never_ant.sum(),
       "water_persistent", water_p.sum())
 
-# 4) Fire regime classes (D15): image algebra of 22_extract_fire_regime.py vs. direct rules ----
-FREQ, CMAX, NEXCL = 2, 5, 20
-ALL = list(range(1985, 2026)); W = list(range(2012, 2026)); off = ALL.index(2012)
-# mix of fire probabilities, including pixels that stop burning early (exclusion)
+# 4) Fire regime categories (D15 revised): image algebra of 22_extract_fire_regime.py vs. rules
+EMIN, EMAX, KSHORT = 3, 20, 2
+ALL = list(range(1985, 2026))
 p_ = rng.uniform(0, 0.7, size=(20000, 1))
 bball = (rng.random((20000, len(ALL))) < p_).astype(int)
 stop = rng.integers(1990, 2026, size=20000); stop[rng.random(20000) < 0.6] = 2100
 bball[np.array(ALL)[None, :] > stop[:, None]] = 0
-bball[rng.random(20000) < 0.1] = 0                     # some never-burned pixels
-bb = bball[:, off:]
+bball[rng.random(20000) < 0.1] = 0
 
 
-def algebra(ball, b):
-    n_all = ball.sum(1); last = np.zeros(len(b))
+def algebra(ball):
+    n_all = ball.sum(1); last = np.zeros(len(ball)); prev = np.zeros(len(ball)); n_short = np.zeros(len(ball))
     for j, y in enumerate(ALL):
-        last[ball[:, j] == 1] = y
-    prolonged = (n_all > 0) & (last <= ALL[-1] - NEXCL)
-    n = b.sum(1); consec = np.zeros(len(b), bool); prev = np.zeros(len(b)); mi = np.full(len(b), 99.)
-    run = np.zeros(len(b)); mr = np.zeros(len(b))
-    for j, y in enumerate(W):
-        f = b[:, j].astype(bool)
-        if j:
-            consec |= f & b[:, j - 1].astype(bool)
-        iv = y - prev
-        upd = f & (prev > 0) & (iv < mi)
-        mi[upd] = iv[upd]
-        prev[f] = y
-        run = (run + 1) * (1 - b[:, j]); mr = np.maximum(mr, run)
-    cls = np.ones(len(b), int)
-    cls[(n >= 2) & (mi > FREQ) & (mr <= CMAX - 1)] = 2
-    cls[mi == FREQ] = 3
-    cls[consec] = 4
-    cls[prolonged] = 5
-    cls[n_all == 0] = 0
-    fcls = np.full(len(b), 2); fcls[n == 0] = 0; fcls[n == 1] = 1; fcls[consec] = 3
+        f = ball[:, j] == 1
+        n_short += f & (prev > 0) & ((y - prev) < EMIN)
+        prev[f] = y; last[f] = y
+    deficit = (n_all == 0) | (last <= ALL[-1] - EMAX)
+    cls = np.full(len(ball), 2); cls[n_short >= KSHORT] = 1; cls[deficit] = 3
+    fcls = np.where(n_all > 0, 2, 1)
     return cls, fcls
 
 
-def direct(rall, row):
-    every = [y for y, v in zip(ALL, rall) if v]
-    yrs = [y for y, v in zip(W, row) if v]
-    iv = np.diff(yrs) if yrs else np.array([])
-    f = 0 if not yrs else (3 if (iv == 1).any() else (1 if len(yrs) == 1 else 2))
-    if not every:
-        return 0, f
-    if every[-1] <= ALL[-1] - NEXCL:
-        return 5, f
-    if not yrs:
-        return 1, f
-    gaps = [yrs[0] - W[0]] + [d - 1 for d in iv] + [W[-1] - yrs[-1]]
-    if (iv == 1).any():
-        o = 4
-    elif (iv == 2).any():
-        o = 3
-    elif len(yrs) >= 2 and all(3 <= d <= CMAX for d in iv) and max(gaps) <= CMAX - 1:
-        o = 2
-    else:
-        o = 1
-    return o, f
+def direct(row):
+    yrs = [y for y, v in zip(ALL, row) if v]
+    f = 2 if yrs else 1
+    if not yrs or yrs[-1] <= ALL[-1] - EMAX:
+        return 3, f
+    short = int((np.diff(yrs) < EMIN).sum())
+    return (1 if short >= KSHORT else 2), f
 
 
-oc, fc = algebra(bball, bb)
-ref = np.array([direct(ra, r) for ra, r in zip(bball, bb)])
-assert (oc == ref[:, 0]).all() and (fc == ref[:, 1]).all(), "fire-regime classes differ from the rules"
-print("fire regime OK:", {k: int((oc == k).sum()) for k in range(6)})
+oc, fc = algebra(bball)
+ref = np.array([direct(r) for r in bball])
+assert (oc == ref[:, 0]).all() and (fc == ref[:, 1]).all(), "fire-regime categories differ from the rules"
+print("fire regime OK:", {k: int((oc == k).sum()) for k in (1, 2, 3)})
