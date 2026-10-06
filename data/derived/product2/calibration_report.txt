@@ -1,0 +1,25 @@
+Fire-regime calibration (D15 §7). Shares of the stable area inside the units (outside in brackets); flags = number of units; changed = units whose flag differs from the baseline.
+
+variant                  sav above            sav below            grs above            grs below      forest affected   below>50%  above>20%  above>50%  forest>50%
+base                16.2% ( 16.7%)       47.3% ( 52.8%)       18.0% ( 24.1%)       43.9% ( 36.8%)       28.7% ( 26.0%)    177          74          23          52      
+N10                 13.6% ( 15.0%)       63.8% ( 66.5%)       14.7% ( 21.7%)       57.6% ( 48.7%)       28.7% ( 26.0%)    245 (+68)    54 (+20)    10 (+13)    52 ( +0)
+N15                 15.3% ( 16.1%)       54.7% ( 59.3%)       16.3% ( 22.8%)       51.3% ( 42.8%)       28.7% ( 26.0%)    218 (+41)    69 ( +5)    19 ( +4)    52 ( +0)
+N25                 16.6% ( 17.1%)       43.4% ( 49.1%)       19.5% ( 24.9%)       37.5% ( 32.6%)       28.7% ( 26.0%)    159 (+18)    79 ( +5)    23 ( +0)    52 ( +0)
+k1                  24.8% ( 23.8%)       47.3% ( 52.8%)       28.1% ( 34.1%)       43.9% ( 36.8%)       28.7% ( 26.0%)    177 ( +0)   109 (+35)    40 (+17)    52 ( +0)
+k3                  11.5% ( 12.9%)       47.3% ( 52.8%)       12.6% ( 18.8%)       43.9% ( 36.8%)       28.7% ( 26.0%)    177 ( +0)    49 (+25)     8 (+15)    52 ( +0)
+short1_k2            4.5% (  6.6%)       47.3% ( 52.8%)        7.3% ( 11.1%)       43.9% ( 36.8%)       28.7% ( 26.0%)    177 ( +0)    25 (+49)     3 (+20)    52 ( +0)
+short1_k1            8.6% ( 10.7%)       47.3% ( 52.8%)       13.2% ( 17.3%)       43.9% ( 36.8%)       28.7% ( 26.0%)    177 ( +0)    52 (+26)     5 (+18)    52 ( +0)
+calendar            16.5% ( 17.2%)       47.3% ( 52.8%)       18.1% ( 24.2%)       43.9% ( 36.8%)       28.7% ( 26.0%)    177 ( +0)    74 ( +0)    23 ( +0)    52 ( +0)
+class_stable        17.6% ( 18.1%)       44.4% ( 50.4%)       19.6% ( 26.6%)       40.5% ( 33.1%)       27.3% ( 24.7%)    161 (+20)    75 ( +7)    25 ( +4)    45 ( +7)
+
+(+n) = units whose flag changed relative to the baseline (in either direction).
+
+Critical window, share of burned stable open vegetation inside it (window shifted -1 / product / +1 month), inside the units:
+  south of 18S  sp1:  29.6%   60.8%   77.5%   (July-August 28.6%)
+  south of 18S  sp2:  35.4%   55.4%   70.7%   (July-August 34.6%)
+  18-12S        sp1:  17.0%   53.2%   87.9%   (July-August 16.1%)
+  18-12S        sp2:  15.9%   57.8%   91.9%   (July-August 14.8%)
+  12-8S         sp1:  55.4%   77.8%   66.0%   (July-August 24.7%)
+  12-8S         sp2:  51.3%   81.1%   72.0%   (July-August 19.1%)
+  north of 8S   sp1:  69.3%   79.3%   56.1%   (July-August 38.2%)
+  north of 8S   sp2:  67.0%   81.4%   66.6%   (July-August 26.9%)
