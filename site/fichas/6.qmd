@@ -65,6 +65,19 @@ pagetitle: "Lagoa Alegre (6)"
 .ap-ficha nav.topnav{font-size:13px;margin-bottom:10px}
 .ap-ficha nav.topnav a{color:var(--main);margin-right:16px}
 .ap-ficha nav.toc{font-size:14px;margin-bottom:24px}
+.ap-ficha h4{font-size:14px;margin:18px 0 2px;color:var(--ink2)}
+.ap-ficha .mlegend{font-size:12px;color:var(--ink2);display:flex;flex-wrap:wrap;align-items:center;gap:4px 6px;margin:6px 0}
+.ap-ficha .mlegend .sw{display:inline-block;width:12px;height:12px;border-radius:2px;margin-left:8px}
+.ap-ficha .mlegend .sw.b1,.ap-ficha .chart .b1{background:var(--ctx);fill:var(--ctx)}
+.ap-ficha .mlegend .sw.b2,.ap-ficha .chart .b2{background:#c4561d;fill:#c4561d}
+.ap-ficha .chart .seg{font-size:11px;fill:#222}
+.ap-ficha .chart .seg.on{fill:#fff;font-weight:600}
+.ap-ficha .chart .tick.mut{fill:var(--muted);font-style:italic}
+.ap-ficha .chart .shade{fill:var(--card)}
+.ap-ficha .chart .tick.lab{fill:var(--ink2);font-size:12px}
+.ap-ficha .flags.fire li{margin-bottom:4px}
+.ap-ficha .fire table.num{table-layout:fixed}
+.ap-ficha .mlegend .mut{color:var(--muted);margin-left:8px}
 .ap-ficha nav.toc a{color:var(--main);margin-right:16px}
 </style>
 <div class="ap-ficha">
@@ -158,6 +171,29 @@ pagetitle: "Lagoa Alegre (6)"
   <p class="muted">A diferença entre a vegetação de 2025 e a vegetação nunca convertida é vegetação secundária ou regenerada, que conta como natural no MapBiomas.</p>
 </section>
 
+<section class="fire">
+  <h3>Fogo na vegetação natural estável, 1985–2025</h3>
+  <p class="muted">Vegetação que permaneceu natural em todos os anos de 1985 a 2025: savana e campo estáveis somam 2.006 ha e floresta estável 75.041 ha. Savana e campo: <b>acima do esperado</b> = fogo repetido com intervalos menores que 3 anos (ao menos dois); <b>abaixo do esperado</b> = nenhum fogo nos últimos 20 anos (2006–2025), incluindo o que nunca queimou; <b>de acordo</b> = os demais casos, que não são uma afirmação de adequação. Floresta: qualquer fogo é afetação. Os dados são apresentados sem juízo de mérito ou de causa.</p>
+  <div class="mlegend"><span class="sw" style="background:#c4561d"></span>Acima do esperado · floresta afetada<span class="sw" style="background:#c9c6bd"></span>De acordo · floresta não afetada<span class="sw" style="background:#3b6fb6"></span>Abaixo do esperado<span class="mut">· barras esmaecidas: matriz</span></div>
+  <svg viewBox="0 0 880 172" class="chart" role="img" aria-label="Composição do regime de fogo"><text x="290" y="18" class="tick lab" text-anchor="end">Lagoa Alegre<title>Lagoa Alegre</title></text><text x="290" y="32" class="tick" text-anchor="end">Savana · 2.006 ha estáveis</text><rect x="300.0" y="10" width="1.8" height="24" fill="#c4561d"><title>Lagoa Alegre, Savana · 2.006 ha estáveis — Acima do esperado: 0,3%</title></rect><rect x="301.8" y="10" width="15.3" height="24" fill="#c9c6bd"><title>Lagoa Alegre, Savana · 2.006 ha estáveis — De acordo: 2,6%</title></rect><rect x="317.0" y="10" width="559.0" height="24" fill="#3b6fb6"><title>Lagoa Alegre, Savana · 2.006 ha estáveis — Abaixo do esperado: 97,0%</title></rect><text x="596.5" y="26" class="seg on" text-anchor="middle">97%</text><text x="290" y="60" class="tick lab mut" text-anchor="end">Matriz Cerrado–Pantanal<title>Matriz Cerrado–Pantanal</title></text><text x="290" y="74" class="tick" text-anchor="end">Savana · 28,4 milhões de ha estáveis</text><rect x="300.0" y="52" width="107.6" height="24" fill="#c4561d" opacity=".55"><title>Matriz Cerrado–Pantanal, Savana · 28,4 milhões de ha estáveis — Acima do esperado: 18,7%</title></rect><text x="353.8" y="68" class="seg on" text-anchor="middle">19%</text><rect x="407.6" y="52" width="177.2" height="24" fill="#c9c6bd" opacity=".55"><title>Matriz Cerrado–Pantanal, Savana · 28,4 milhões de ha estáveis — De acordo: 30,8%</title></rect><text x="496.2" y="68" class="seg" text-anchor="middle">31%</text><rect x="584.8" y="52" width="291.2" height="24" fill="#3b6fb6" opacity=".55"><title>Matriz Cerrado–Pantanal, Savana · 28,4 milhões de ha estáveis — Abaixo do esperado: 50,5%</title></rect><text x="730.4" y="68" class="seg on" text-anchor="middle">51%</text><text x="290" y="102" class="tick lab" text-anchor="end">Lagoa Alegre<title>Lagoa Alegre</title></text><text x="290" y="116" class="tick" text-anchor="end">Floresta · 75.041 ha estáveis</text><rect x="300.0" y="94" width="144.3" height="24" fill="#c4561d"><title>Lagoa Alegre, Floresta · 75.041 ha estáveis — Afetada por fogo: 25,1%</title></rect><text x="372.2" y="110" class="seg on" text-anchor="middle">25%</text><rect x="444.3" y="94" width="431.7" height="24" fill="#c9c6bd"><title>Lagoa Alegre, Floresta · 75.041 ha estáveis — Não afetada: 74,9%</title></rect><text x="660.2" y="110" class="seg" text-anchor="middle">75%</text><text x="290" y="144" class="tick lab mut" text-anchor="end">Matriz Cerrado–Pantanal<title>Matriz Cerrado–Pantanal</title></text><text x="290" y="158" class="tick" text-anchor="end">Floresta · 22,6 milhões de ha estáveis</text><rect x="300.0" y="136" width="159.1" height="24" fill="#c4561d" opacity=".55"><title>Matriz Cerrado–Pantanal, Floresta · 22,6 milhões de ha estáveis — Afetada por fogo: 27,6%</title></rect><text x="379.5" y="152" class="seg on" text-anchor="middle">28%</text><rect x="459.1" y="136" width="416.9" height="24" fill="#c9c6bd" opacity=".55"><title>Matriz Cerrado–Pantanal, Floresta · 22,6 milhões de ha estáveis — Não afetada: 72,4%</title></rect><text x="667.5" y="152" class="seg" text-anchor="middle">72%</text></svg>
+  <p class="muted">Matriz = vegetação estável do Cerrado e do Pantanal fora das áreas prioritárias, como contexto. Áreas úmidas (campo e savana alagáveis): mesma regra, só reportada, sem leitura de categoria, porque o regime depende da inundação.</p>
+  <ul class="flags fire"><li class="fl-below"><b>Abaixo do esperado em 97%</b> da savana e do campo estáveis — robusto: mantém-se acima de 50% com limiar de 25 anos (96%).</li></ul>
+  <h4>Mudança entre 2012–2018 e 2019–2025 (savana e campo estáveis)</h4>
+  <table class="num">
+    <colgroup><col style="width:46%"><col style="width:14%"><col style="width:14%"><col style="width:26%"></colgroup>
+    <thead><tr><th></th><th>2012–2018</th><th>2019–2025</th><th>Matriz ao norte de 8°S<br>2012–2018 · 2019–2025</th></tr></thead>
+    <tbody>
+      <tr><td>Área queimada por ano (% da área estável)</td><td>0,3%</td><td>0,1%</td><td></td></tr>
+      <tr><td>Área com fogo em anos consecutivos (% da área estável)</td><td>0,0%</td><td>0,0%</td><td></td></tr>
+      <tr><td><b>Fogo em julho–agosto</b> (% do queimado)</td><td><b>–</b></td><td><b>–</b></td><td>42% · 32%</td></tr>
+      <tr><td>Fogo na janela crítica, agosto–outubro (% do queimado; descritor)</td><td>–</td><td>–</td><td>79% · 78%</td></tr>
+    </tbody>
+  </table>
+  <p class="muted">“–” nas razões sazonais: fogo insuficiente no subperíodo (menos de 1.000 ha ou de 1% da vegetação aberta estável).</p>
+  
+  <p class="muted">Julho e agosto são meses sem raios no Cerrado: o fogo nesses meses é iniciado por pessoas. A janela crítica marca o período de maior estresse hídrico da faixa de latitude e é mostrada só como descritor, porque o sentido da sua mudança depende de onde cai o limite da janela. Método: decisão D15 do projeto.</p>
+</section>
+
 <section>
   <h3>Alvos de conservação da área (2ª atualização, listas de 2011–2012)</h3>
   <table class="num"><thead><tr><th>Grupo</th><th>Alvos</th></tr></thead><tbody><tr><td>Plantas</td><td>37</td></tr><tr><td>Mamíferos</td><td>14</td></tr><tr><td>Répteis</td><td>11</td></tr><tr><td>Aves</td><td>6</td></tr><tr><td>Anfíbios</td><td>4</td></tr><tr><td>Sistemas de terras</td><td>3</td></tr></tbody></table><details><summary>Lista de alvos</summary><ul class="targets"><li><b>Anfíbios:</b> Dendropsophus cruzi, Rhinella ocellata, Rhinella veredas, Scinax constrictus</li><li><b>Aves:</b> Alipiopsitta xanthops, Anodorhychus hyacinthinus, Porphyrospiza caerulescens, Procnias sp., Suiriri islerorum, Urubitinga coronata</li><li><b>Mamíferos:</b> Alouatta belzebul, Chrysocyon brachyurus, Cuniculus paca, Leopardus wiedii, Lonchophylla dekeyseri, Myrmechophaga tridactyla, Panthera onca, Puma concolor, Tapirus terrestris, Tayassu pecari, Thalpomys cerradensis, Thylamys karimii, Thylamys macrurus, Thyroptera devivoi</li><li><b>Plantas:</b> Aspidosperma duckei huber ex ducke, Callisthene fasciculata mart., Callisthene hassleri briq., Camarea affinis a.st.-hil., Cardiospermum corindum l., Caryocar brasiliense cambess., Centrosema bracteosum benth., Declieuxia chiococcoides kunth, Eugenia dysenterica dc., Eugenia punicifolia (hbk) dc., Galactia striata (jacq.) urb., Gomphrena agrestis mart., Handroanthus impetiginosus mattos, Handroanthus ochraceus (cham.) mattos, Hyptidendron amethystoides (benth.) harley, Jacaranda brasiliana (lam.) pers., Licania gardneri (hook.f.) fritsch, Magonia pubescens a.st.-hil., Mircia lingua (o.berg) mattoso, Pavonia hexaphylla (s.moore) krapov., Peltogyne confertiflora (mart. ex hayne) benth., Phaseolus firmulus mart. ex benth., Piptocarpha rotundifolia (less.) baker, Plathymenia foliolosa benth., Psidium myrsinites dc., Qualea grandiflora mart., Qualea parviflora mart., Salvertia convallariodora a.st.-hil., Sinningia elatior (kunth) chautems, Tabebuia aurea (silva manso) benth. &amp; hook.f. ex *, Tephrosia sessiliflora (poir.) hassl., Vernonanthura ferruginea (less.) h.rob., Vochysia cinnamomea pohl, Vochysia gardneri warm., Vochysia haenkeana mart., Xylopia aromatica (lam.) mart., Zeyheria digitalis (vell.) hoehne &amp; kuhlm.</li><li><b>Répteis:</b> Apostolepis flavotorquata, Apostolepis polylepis, Bothrops lutzi, Coleodactylus brachystoma, Epicrates crassus, Hoplocercus spinosus, Leptotyphlops brasiliensis, Liophis paucidens, Phimophis guerini, Phimophis iglesiasi, Tupinambis quadrilineatus</li><li><b>Sistemas de terras:</b> 1bc8c, 3bc1n, 7ab1n</li></ul></details>
@@ -165,7 +201,7 @@ pagetitle: "Lagoa Alegre (6)"
 </section>
 
 <footer>
-  <p>Autoria: Mario Barroso Ramos Neto e Claude (Anthropic). Fonte: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias para a Conservação, 2ª atualização (Portarias MMA 223/2016 e 463/2018). Método: decisão D13 do projeto. Tendência robusta (Theil–Sen) da área não antrópica, em % ao ano da vegetação natural de 2012; perda e ganho contam só trocas com uso antrópico. Gerado em 05/10/2026; números sujeitos a revisão.</p>
+  <p>Autoria: Mario Barroso Ramos Neto e Claude (Anthropic). Fonte: MapBiomas Coleção 11 (1985–2025); Áreas Prioritárias para a Conservação, 2ª atualização (Portarias MMA 223/2016 e 463/2018). Método: decisão D13 do projeto. Tendência robusta (Theil–Sen) da área não antrópica, em % ao ano da vegetação natural de 2012; perda e ganho contam só trocas com uso antrópico. Gerado em 06/10/2026; números sujeitos a revisão.</p>
 </footer>
 </article>
 </div>
